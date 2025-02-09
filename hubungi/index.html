@@ -168,46 +168,19 @@
 
 
 
-<div class="wp-block-kadence-column kadence-column41_43d787-00">
-  <div class="kt-inside-inner-col">
-    <div class="wp-block-kadence-form kadence-form-41_7ea539-25 kb-form-wrap">
-      <form class="kb-form" action="https://formspree.io/f/xzzdvozj" method="POST">
-        <div class="kadence-blocks-form-field kb-field-desk-width-50 kb-field-mobile-width-100 kb-input-size-standard">
-          <label for="name">First Name</label>
-          <input name="name" id="name" type="text" placeholder="First Name" class="kb-field kb-text-style-field kb-text-field kb-field-0">
-        </div>
-        
-        <div class="kadence-blocks-form-field kb-form-field-1 kb-field-desk-width-50 kb-field-mobile-width-100 kb-input-size-standard">
-          <label for="lastname">Last Name</label>
-          <input name="lastname" id="lastname" type="text" placeholder="Last Name" class="kb-field kb-text-style-field kb-text-field kb-field-1">
-        </div>
-        
-        <div class="kadence-blocks-form-field kb-form-field-2 kb-field-desk-width-100 kb-input-size-standard">
-          <label for="email">Email<span class="required">*</span></label>
-          <input name="email" id="email" type="email" placeholder="Email Address" class="kb-field kb-text-style-field kb-email-field kb-field-2" required>
-        </div>
-        
-        <div class="kadence-blocks-form-field kb-form-field-3 kb-field-desk-width-100 kb-input-size-standard">
-          <label for="subject">Subject</label>
-          <input name="subject" id="subject" type="text" placeholder="Subject" class="kb-field kb-text-style-field kb-text-field kb-field-3">
-        </div>
-        
-        <div class="kadence-blocks-form-field kb-form-field-4 kb-field-desk-width-100 kb-input-size-standard">
-          <label for="message">Your Message<span class="required">*</span></label>
-          <textarea name="message" id="message" placeholder="Your Message" class="kb-field kb-text-style-field kb-textarea-field kb-field-4" rows="4" required></textarea>
-        </div>
-        
-        <div class="kadence-blocks-form-field kb-submit-field kb-field-desk-width-100">
-          <button class="kb-forms-submit button kb-button-size-custom kb-button-width-full">Submit Form</button>
-        </div>
-      </form>
-    </div>
-    <noscript>
-      <div class="kadence-blocks-form-message kadence-blocks-form-warning">Please enable JavaScript in your browser to submit the form</div>
-      <style>.kadence-form-41_7ea539-25 .kadence-blocks-form-field.kb-submit-field { display: none; }</style>
-    </noscript>
-  </div>
-</div>
+<form action="https://formspree.io/f/xzzdvozj" method="POST">
+    <label for="name">Nama:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">E-mel:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="message">Mesej:</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <button type="submit">Hantar</button>
+</form>
+
 
 
 </div>

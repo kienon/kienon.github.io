@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://kienon.github.io/Kienon/sitemap.xml
+Sitemap: https://kienon.github.io/sitemap.xml

@@ -1,1 +1,45 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Leave Application</title>
+</head>
+<body>
+<h1>Apply Leave</h1>
+<form id="leaveForm">
+  <label>User ID: <input type="number" id="userId" required /></label><br />
+  <label>Start Date: <input type="date" id="startDate" required /></label><br />
+  <label>End Date: <input type="date" id="endDate" required /></label><br />
+  <label>Reason: <br />
+    <textarea id="reason" required></textarea>
+  </label><br />
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const backendURL = "https://leave-backend.onrender.com"; // Ganti dengan URL Render anda
+
+  document.getElementById("leaveForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const userId = document.getElementById("userId").value;
+    const start_date = document.getElementById("startDate").value;
+    const end_date = document.getElementById("endDate").value;
+    const reason = document.getElementById("reason").value;
+
+    try {
+      const res = await fetch(`${backendURL}/users/${userId}/leave/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ start_date, end_date, reason }),
+      });
+      const data = await res.json();
+      alert(data.message || "Success");
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  });
+</script>
+</body>
+</html>

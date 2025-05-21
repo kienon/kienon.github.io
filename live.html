@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>TVMalaysia Live Player Demo</title>
+<title>HBO Live from TVMalaysia.live (Test)</title>
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 </head>
 <body>
-  <h1>TVMalaysia Live Stream Demo</h1>
+  <h1>HBO Live Stream Demo</h1>
   <video id="video" width="640" height="360" controls></video>
 
   <script>
     var video = document.getElementById('video');
-    var videoSrc = "https://linearjitp-playback.astro.com.my/dash-wv/linear/2304/default_ott.mpd"; // Example URL (HLS or DASH)
+    var videoSrc = "https://linearjitp-playback.astro.com.my/hls/linear/2304/hbo.m3u8"; // contoh url
 
     if(Hls.isSupported()) {
       var hls = new Hls();
@@ -27,7 +27,7 @@
         video.play();
       });
     } else {
-      alert("Your browser does not support HLS streaming.");
+      alert("Browser tidak support HLS");
     }
   </script>
 </body>

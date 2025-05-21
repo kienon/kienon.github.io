@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HBO Live from TVMalaysia.live (Test)</title>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <meta charset="UTF-8" />
+  <title>Simple HLS Player</title>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <style>
+    body { margin: 0; background: #000; display: flex; justify-content: center; align-items: center; height: 100vh; }
+    video { width: 80vw; height: 45vw; max-width: 960px; max-height: 540px; }
+  </style>
 </head>
 <body>
-  <h1>HBO Live Stream Demo</h1>
-  <video id="video" width="640" height="360" controls></video>
+  <video id="video" controls></video>
 
   <script>
-    var video = document.getElementById('video');
-    var videoSrc = "https://linearjitp-playback.astro.com.my/hls/linear/2304/hbo.m3u8"; // contoh url
+    const video = document.getElementById('video');
+    const videoSrc = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"; // contoh public HLS stream
 
-    if(Hls.isSupported()) {
-      var hls = new Hls();
+    if (Hls.isSupported()) {
+      const hls = new Hls();
       hls.loadSource(videoSrc);
       hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      hls.on(Hls.Events.MANIFEST_PARSED, function () {
         video.play();
       });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = videoSrc;
-      video.addEventListener('loadedmetadata', function() {
+      video.addEventListener('loadedmetadata', function () {
         video.play();
       });
     } else {
-      alert("Browser tidak support HLS");
+      alert('HLS not supported in your browser');
     }
   </script>
 </body>

@@ -1,45 +1,139 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Leave Application</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HR Leave Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #f0f2f5;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      background: white;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 5px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .output {
+      background: white;
+      padding: 1rem;
+      border-radius: 5px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
 </head>
 <body>
-<h1>Apply Leave</h1>
-<form id="leaveForm">
-  <label>User ID: <input type="number" id="userId" required /></label><br />
-  <label>Start Date: <input type="date" id="startDate" required /></label><br />
-  <label>End Date: <input type="date" id="endDate" required /></label><br />
-  <label>Reason: <br />
-    <textarea id="reason" required></textarea>
-  </label><br />
-  <button type="submit">Submit</button>
+
+<h1>HR Leave Management</h1>
+
+<form id="applyLeaveForm">
+  <h2>Apply Leave</h2>
+  <label for="email">Email:</label>
+  <input type="email" id="email" required />
+  <label for="startDate">Start Date (YYYY-MM-DD):</label>
+  <input type="date" id="startDate" required />
+  <label for="endDate">End Date (YYYY-MM-DD):</label>
+  <input type="date" id="endDate" required />
+  <label for="reason">Reason:</label>
+  <textarea id="reason" rows="3" required></textarea>
+  <button type="submit">Submit Leave</button>
 </form>
 
-<script>
-  const backendURL = "https://leave-backend.onrender.com"; // Ganti dengan URL Render anda
+<button id="getRecordsBtn">Get Leave Records</button>
+<button id="getBalanceBtn">Get Leave Balance</button>
 
-  document.getElementById("leaveForm").addEventListener("submit", async (e) => {
+<div class="output" id="output"></div>
+
+<script>
+  const API_BASE = "https://your-render-url.onrender.com"; // Ganti dengan URL backend anda
+
+  const output = document.getElementById("output");
+  const form = document.getElementById("applyLeaveForm");
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const userId = document.getElementById("userId").value;
-    const start_date = document.getElementById("startDate").value;
-    const end_date = document.getElementById("endDate").value;
-    const reason = document.getElementById("reason").value;
+
+    const data = {
+      employee_email: document.getElementById("email").value,
+      start_date: document.getElementById("startDate").value,
+      end_date: document.getElementById("endDate").value,
+      reason: document.getElementById("reason").value,
+    };
 
     try {
-      const res = await fetch(`${backendURL}/users/${userId}/leave/`, {
+      const res = await fetch(`${API_BASE}/apply-leave`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ start_date, end_date, reason }),
+        body: JSON.stringify(data),
       });
-      const data = await res.json();
-      alert(data.message || "Success");
+      const json = await res.json();
+      output.textContent = JSON.stringify(json, null, 2);
     } catch (err) {
-      alert("Error: " + err.message);
+      output.textContent = "Error: " + err.message;
+    }
+  });
+
+  document.getElementById("getRecordsBtn").addEventListener("click", async () => {
+    const email = prompt("Enter your email:");
+    if (!email) return;
+    try {
+      const res = await fetch(`${API_BASE}/leave-records/${email}`);
+      const json = await res.json();
+      output.textContent = JSON.stringify(json, null, 2);
+    } catch (err) {
+      output.textContent = "Error: " + err.message;
+    }
+  });
+
+  document.getElementById("getBalanceBtn").addEventListener("click", async () => {
+    const email = prompt("Enter your email:");
+    if (!email) return;
+    try {
+      const res = await fetch(`${API_BASE}/leave-balance/${email}`);
+      const json = await res.json();
+      output.textContent = JSON.stringify(json, null, 2);
+    } catch (err) {
+      output.textContent = "Error: " + err.message;
     }
   });
 </script>
+
 </body>
 </html>

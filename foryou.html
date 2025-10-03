@@ -8,30 +8,25 @@
   body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #a8dadc, #caf0f8); /* biru lembut */
     font-family: 'Comic Sans MS', cursive, sans-serif;
     overflow: hidden;
+    color: #1d3557;
     cursor: pointer;
+    background: linear-gradient(to bottom, #a8dadc, #caf0f8); /* biru lembut */
   }
   #message {
     position: fixed;
-    top: 10%;
+    top: 15%;
     width: 100%;
     text-align: center;
     font-size: 2em;
-    font-weight: bold;
+    color: #1d3557;
     text-shadow: 1px 1px 5px #fff;
     pointer-events: none;
-    animation: colorFade 5s infinite alternate;
-  }
-  @keyframes colorFade {
-    0% { color: #1d3557; }
-    50% { color: #457b9d; }
-    100% { color: #1d3557; }
   }
   #lyrics {
     position: fixed;
-    top: 55%;
+    top: 50%;
     width: 100%;
     text-align: center;
     font-size: 1.5em;
@@ -54,6 +49,7 @@
     position: fixed;
     top:0; left:0;
     pointer-events:none;
+    z-index:0;
   }
 </style>
 </head>
@@ -142,7 +138,9 @@ function syncLyrics() {
   const currentTime = audio.currentTime;
   let currentLine = "";
   for (let i = 0; i < lyrics.length; i++) {
-    if (currentTime >= lyrics[i].time) currentLine = lyrics[i].text;
+    if (currentTime >= lyrics[i].time) {
+      currentLine = lyrics[i].text;
+    }
   }
   lyricsEl.textContent = currentLine;
   requestAnimationFrame(syncLyrics);
@@ -160,19 +158,17 @@ function random(min,max){return Math.random()*(max-min)+min;}
 class Particle {
   constructor(x,y,type){
     this.x=x; this.y=y; this.type=type;
-    this.size=random(5,18);
-    this.speedY=type==='balloon'?random(-0.2,-0.7):random(-1.2,-3.2);
+    this.size=random(5,15);
+    this.speedY=type==='balloon'?random(-0.3,-1):random(-1.5,-3);
     this.speedX=random(-1,1);
     this.opacity=1;
-    this.life=0;
-    this.color = type==='heart'? '#ff6b6b': type==='confetti'? `hsl(${random(0,360)},90%,60%)`: type==='balloon'?'#ff9f1c':'#caf0f8';
+    this.color = type==='heart'? '#ff6b6b': type==='confetti'? `hsl(${random(0,360)},80%,60%)`: type==='balloon'?'#ff9f1c':'#caf0f8';
   }
   update(){
     this.y += this.speedY;
     this.x += this.speedX;
-    if(this.type==='balloon'){ this.y+= Math.sin(this.life/15)*0.5; } // floating motion
-    this.opacity -= (this.type==='balloon'?0.001:0.012);
-    this.life++;
+    if(this.type==='balloon'){ this.y+= this.speedY/2; }
+    this.opacity -= (this.type==='balloon'?0.001:0.01);
     if(this.opacity<0) this.opacity=0;
   }
   draw(){
@@ -199,9 +195,9 @@ class Particle {
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // floating balloons randomly
-  if(Math.random()<0.015){
-    particles.push(new Particle(random(0,canvas.width),canvas.height+30,'balloon'));
+  // Add floating balloons randomly
+  if(Math.random()<0.02){
+    particles.push(new Particle(random(0,canvas.width),canvas.height+20,'balloon'));
   }
 
   for(let i=particles.length-1;i>=0;i--){
@@ -213,21 +209,19 @@ function animate(){
 }
 animate();
 
-// mouse sparkle / heart / confetti
 window.addEventListener('mousemove', function(e){
-  for(let i=0;i<5;i++){
-    particles.push(new Particle(e.clientX+random(-15,15),e.clientY+random(-15,15),'heart'));
-    particles.push(new Particle(e.clientX+random(-15,15),e.clientY+random(-15,15),'confetti'));
+  for(let i=0;i<3;i++){
+    particles.push(new Particle(e.clientX+random(-10,10),e.clientY+random(-10,10),'heart'));
+    particles.push(new Particle(e.clientX+random(-10,10),e.clientY+random(-10,10),'confetti'));
   }
 });
 
-// resize canvas
 window.addEventListener('resize', function(){
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
 });
 
-// click to start music
+// ===== Click to start music =====
 const startOverlay = document.getElementById("startOverlay");
 startOverlay.addEventListener('click', ()=>{
   audio.play();

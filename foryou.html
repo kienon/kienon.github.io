@@ -3,53 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Aiwa Jailin! 🎉</title>
+<title>Selamat Hari Jadi Aiwa Jailin! 🎉</title>
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to bottom, #a8dadc, #caf0f8); /* biru lembut */
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    overflow: hidden;
-    color: #1d3557;
-    cursor: pointer;
-  }
-  #message {
-    position: fixed;
-    top: 15%;
-    width: 100%;
-    text-align: center;
-    font-size: 2em;
-    color: #1d3557;
-    text-shadow: 1px 1px 5px #fff;
-    pointer-events: none;
-  }
-  #lyrics {
-    position: fixed;
-    top: 50%;
-    width: 100%;
-    text-align: center;
-    font-size: 1.5em;
-    pointer-events: none;
-    text-shadow: 1px 1px 2px #fff;
-  }
-  #startOverlay {
-    position: fixed;
-    top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.3);
-    color: #fff;
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    font-size:2em;
-    z-index:1000;
-    text-align:center;
-  }
-  canvas {
-    position: fixed;
-    top:0; left:0;
-    pointer-events:none;
-  }
+body {
+  margin:0; padding:0;
+  background: linear-gradient(to bottom, #a8dadc, #caf0f8);
+  font-family:'Comic Sans MS', cursive, sans-serif;
+  overflow:hidden;
+  cursor:pointer;
+  color:#1d3557;
+}
+#startOverlay {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.3);
+  color:#fff;
+  display:flex; justify-content:center; align-items:center;
+  font-size:2em; z-index:1000; text-align:center;
+}
+#message {
+  position:fixed; top:15%; width:100%; text-align:center; font-size:2em;
+  text-shadow: 1px 1px 5px #fff;
+  pointer-events:none;
+}
+#lyrics {
+  position:fixed; top:50%; width:100%; text-align:center; font-size:1.5em;
+  text-shadow:1px 1px 2px #fff;
+  pointer-events:none;
+}
+canvas { position:fixed; top:0; left:0; pointer-events:none; z-index:999; }
+.balloon {
+  position:absolute; bottom:-100px; width:60px; height:80px;
+  border-radius:50%; animation:float 10s ease-in-out infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-200px); }
+  100% { transform: translateY(0); }
+}
 </style>
 </head>
 <body>
@@ -57,176 +47,96 @@
 <div id="startOverlay">Klik mana-mana untuk mula 🎵</div>
 <div id="message"></div>
 <div id="lyrics"></div>
-
 <audio id="bgMusic" src="CanICallYouTonight.mp3"></audio>
 <canvas id="particleCanvas"></canvas>
 
 <script>
-// ===== Birthday typing message =====
-const birthdayMessage = "Happy Birthday Aiwa Jailin! 🎉💙\nSemoga hubungan kita makin erat, ke arah yang lebih baik, till Jannah. Semoga Allah sentiasa merahmati dan melindungi awak 💕";
-const messageEl = document.getElementById("message");
-let msgIndex = 0;
+// ===== Typing Birthday Message =====
+const birthdayMessage = `Selamat Hari Jadi Aiwa Jailin! 🎉💙
+Semoga hubungan kita makin erat, ke arah yang lebih baik, till Jannah.
+Semoga Allah sentiasa merahmati kamu.`;
 
-function typeMessage() {
-  if (msgIndex < birthdayMessage.length) {
-    if (birthdayMessage[msgIndex] === "\n") messageEl.innerHTML += "<br>";
-    else messageEl.innerHTML += birthdayMessage[msgIndex];
-    msgIndex++;
-    setTimeout(typeMessage, 80);
-  }
+function typeMessage(element, text, delay=50){
+  let i=0;
+  const interval = setInterval(()=>{
+    element.textContent += text[i];
+    i++;
+    if(i>=text.length) clearInterval(interval);
+  }, delay);
 }
 
-// ===== Lyrics syncing =====
+// ===== Lyrics with timing (starts 48s) =====
 const lyrics = [
-  { time: 48, text: "I feel close" },
-  { time: 51, text: "Well, maybe I'm not, heaven knows" },
-  { time: 55, text: "It's a spotlight stuck on the ceiling" },
-  { time: 59, text: "Why are these the things that I'm feeling?" },
-  { time: 63, text: "There's so much time" },
-  { time: 66, text: "For me to speak up, but I keep quiet" },
-  { time: 70, text: "I'll complicate the most of the mantra" },
-  { time: 73, text: "The power is out and I can't turn the fan on" },
-  { time: 77, text: "So can I call you tonight?" },
-  { time: 80, text: "I'm trying to make up my mind" },
-  { time: 84, text: "Just how I feel" },
-  { time: 88, text: "Could you tell me what's real?" },
-  { time: 92, text: "I hear your voice on the phone" },
-  { time: 96, text: "Now I'm no longer alone" },
-  { time: 100, text: "Just how I feel" },
-  { time: 104, text: "Could you tell me what's real anymore?" },
-  { time: 108, text: "'Cause I wouldn't know" },
-  { time: 112, text: "Voice so low" },
-  { time: 116, text: "Sneaking around, so it goes" },
-  { time: 120, text: "I always try my best to listen" },
-  { time: 124, text: "Picking up things that I can fidget" },
-  { time: 128, text: "Circle speed, pacing around, watching my feet" },
-  { time: 132, text: "Batteries drain, I get the memo" },
-  { time: 136, text: "I think that I might have to let you go" },
-  { time: 140, text: "So can I call you tonight?" },
-  { time: 144, text: "I'm trying to make up my mind" },
-  { time: 148, text: "Just how I feel" },
-  { time: 152, text: "Could you tell me what's real?" },
-  { time: 156, text: "I hear your voice on the phone" },
-  { time: 160, text: "Now I'm no longer alone" },
-  { time: 164, text: "Just how I feel" },
-  { time: 168, text: "Could you tell me what's real anymore?" },
-  { time: 172, text: "'Cause I wouldn't know" },
-  { time: 176, text: "Don't go, don't go so easy" },
-  { time: 180, text: "Don't go, don't go and leave me" },
-  { time: 184, text: "Don't go, don't go so easy" },
-  { time: 188, text: "Don't go, don't go and leave me" },
-  { time: 192, text: "Don't go, don't go so easy" },
-  { time: 196, text: "Don't go, don't go and leave me" },
-  { time: 200, text: "Don't go, don't go so easy" },
-  { time: 204, text: "Don't go, go" },
-  { time: 208, text: "So can I call you tonight?" },
-  { time: 212, text: "I'm trying to make up my mind" },
-  { time: 216, text: "Just how I feel" },
-  { time: 220, text: "Could you tell me what's real?" },
-  { time: 224, text: "I hear your voice on the phone" },
-  { time: 228, text: "Now I'm no longer alone" },
-  { time: 232, text: "Just how I feel" },
-  { time: 236, text: "Could you tell me what's real anymore?" },
-  { time: 240, text: "'Cause I wouldn't know" },
+  {time:0, text:"I feel close"},
+  {time:3, text:"Well, maybe I'm not, heaven knows"},
+  {time:7, text:"It's a spotlight stuck on the ceiling"},
+  {time:12, text:"Why are these the things that I'm feeling?"},
+  {time:16, text:"There's so much time"},
+  {time:19, text:"For me to speak up, but I keep quiet"},
+  {time:23, text:"I'll complicate the most of the mantra"},
+  {time:28, text:"The power is out and I can't turn the fan on"},
+  {time:33, text:"So can I call you tonight?"},
+  {time:37, text:"I'm trying to make up my mind"},
+  {time:41, text:"Just how I feel"},
+  {time:44, text:"Could you tell me what's real?"}
 ];
 
-const audio = document.getElementById("bgMusic");
-const lyricsEl = document.getElementById("lyrics");
-
-function syncLyrics() {
-  const currentTime = audio.currentTime;
-  let currentLine = "";
-  for (let i = 0; i < lyrics.length; i++) {
-    if (currentTime >= lyrics[i].time) {
-      currentLine = lyrics[i].text;
-    }
-  }
-  lyricsEl.textContent = currentLine;
-  requestAnimationFrame(syncLyrics);
-}
-
-// ===== Particle & sparkle effects =====
+// ===== Particles & Sparkle =====
 const canvas = document.getElementById("particleCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-let particles = [];
-
-function random(min,max){return Math.random()*(max-min)+min;}
-
-class Particle {
-  constructor(x,y,type){
-    this.x=x; this.y=y; this.type=type;
-    this.size=random(5,15);
-    this.speedY=type==='balloon'?random(-0.3,-1):random(-1.5,-3);
-    this.speedX=random(-1,1);
-    this.opacity=1;
-    this.color = type==='heart'? '#ff6b6b': type==='confetti'? `hsl(${random(0,360)},80%,60%)`: type==='balloon'?'#ff9f1c':'#caf0f8';
-  }
-  update(){
-    this.y += this.speedY;
-    this.x += this.speedX;
-    if(this.type==='balloon'){ this.y+= this.speedY/2; } // floating slow
-    this.opacity -= (this.type==='balloon'?0.001:0.01);
-    if(this.opacity<0) this.opacity=0;
-  }
-  draw(){
-    ctx.globalAlpha=this.opacity;
-    if(this.type==='heart'){
-      ctx.fillStyle=this.color;
-      ctx.beginPath();
-      ctx.moveTo(this.x,this.y);
-      ctx.bezierCurveTo(this.x,this.y-this.size/2,this.x-this.size,this.y-this.size/2,this.x-this.size,this.y);
-      ctx.bezierCurveTo(this.x-this.size,this.y+this.size/2,this.x,this.y+this.size/1.5,this.x,this.y+this.size);
-      ctx.bezierCurveTo(this.x,this.y+this.size/1.5,this.x+this.size,this.y+this.size/2,this.x+this.size,this.y);
-      ctx.bezierCurveTo(this.x+this.size,this.y-this.size/2,this.x,this.y-this.size/2,this.x,this.y);
-      ctx.fill();
-    } else {
-      ctx.fillStyle=this.color;
-      ctx.beginPath();
-      ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-      ctx.fill();
-    }
-    ctx.globalAlpha=1;
-  }
+const particles = [];
+function createParticle(x,y){
+  particles.push({x,y,dx:(Math.random()-0.5)*2,dy:(Math.random()-1)*2,r:Math.random()*3+2,life:100});
 }
-
-function animate(){
+function animateParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  // Add floating balloons randomly
-  if(Math.random()<0.02){
-    particles.push(new Particle(random(0,canvas.width),canvas.height+20,'balloon'));
-  }
-
   for(let i=particles.length-1;i>=0;i--){
-    particles[i].update();
-    particles[i].draw();
-    if(particles[i].opacity<=0) particles.splice(i,1);
+    const p = particles[i];
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(255,182,193,${p.life/100})`; // pink sparkle
+    ctx.fill();
+    p.x += p.dx; p.y += p.dy; p.life--;
+    if(p.life<=0) particles.splice(i,1);
   }
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateParticles);
 }
-animate();
+animateParticles();
+window.addEventListener("mousemove", e=>{ for(let i=0;i<3;i++) createParticle(e.clientX,e.clientY); });
 
-window.addEventListener('mousemove', function(e){
-  for(let i=0;i<3;i++){
-    particles.push(new Particle(e.clientX+random(-10,10),e.clientY+random(-10,10),'heart'));
-    particles.push(new Particle(e.clientX+random(-10,10),e.clientY+random(-10,10),'confetti'));
-  }
-});
+// ===== Balloons =====
+function createBalloon(){
+  const balloon = document.createElement("div");
+  balloon.classList.add("balloon");
+  balloon.style.backgroundColor = `hsl(${Math.random()*360},70%,70%)`;
+  balloon.style.left = `${Math.random()*window.innerWidth}px`;
+  balloon.style.animationDuration = `${7+Math.random()*5}s`;
+  document.body.appendChild(balloon);
+  setTimeout(()=>balloon.remove(),12000);
+}
+setInterval(createBalloon,800);
 
-window.addEventListener('resize', function(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
-
-// ===== Click to start music =====
+// ===== Start Music and messages =====
 const startOverlay = document.getElementById("startOverlay");
-startOverlay.addEventListener('click', ()=>{
-  audio.play();
-  typeMessage();
-  syncLyrics();
-  startOverlay.style.display = 'none';
+const bgMusic = document.getElementById("bgMusic");
+const messageEl = document.getElementById("message");
+const lyricsEl = document.getElementById("lyrics");
+
+startOverlay.addEventListener("click", ()=>{
+  startOverlay.style.display = "none";
+  bgMusic.play();
+  typeMessage(messageEl, birthdayMessage, 60);
+  
+  let lyricIndex=0;
+  function showLyrics(){
+    if(lyricIndex>=lyrics.length) return;
+    lyricsEl.textContent = lyrics[lyricIndex].text;
+    lyricIndex++;
+    setTimeout(showLyrics, (lyrics[lyricIndex]? (lyrics[lyricIndex].time - lyrics[lyricIndex-1].time)*1000 : 3000));
+  }
+  setTimeout(showLyrics, 48000); // start at 48s
 });
 </script>
 

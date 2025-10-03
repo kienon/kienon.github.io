@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selamat Hari Jadi Aiwa Jailin!</title>
+<title>Happy Birthday Aiwa Jailin! 🎉</title>
 <style>
   body {
     margin: 0;
@@ -14,23 +14,23 @@
     color: #1d3557;
     cursor: pointer;
   }
-  #lyrics {
-    position: fixed;
-    top: 40%;
-    width: 100%;
-    text-align: center;
-    font-size: 1.5em;
-    pointer-events: none;
-    text-shadow: 1px 1px 2px #fff;
-  }
   #message {
     position: fixed;
-    top: 20%;
+    top: 15%;
     width: 100%;
     text-align: center;
     font-size: 2em;
     color: #1d3557;
     text-shadow: 1px 1px 5px #fff;
+  }
+  #lyrics {
+    position: fixed;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    pointer-events: none;
+    text-shadow: 1px 1px 2px #fff;
   }
   #startOverlay {
     position: fixed;
@@ -57,34 +57,76 @@
 <div id="message"></div>
 <div id="lyrics"></div>
 
-<audio id="bgMusic" src="CanICallYouTonight.mp3" loop></audio>
-
+<audio id="bgMusic" src="CanICallYouTonight.mp3"></audio>
 <canvas id="particleCanvas"></canvas>
 
 <script>
-// ===== Typing effect =====
-const message = "Selamat Hari Jadi Aiwa Jailin! 🌸 Semoga hari ini penuh bahagia 💙";
+// ===== Birthday typing message =====
+const birthdayMessage = "Happy Birthday Aiwa Jailin! 🎉💙\nSemoga hubungan kita makin erat, ke arah yang lebih baik, till Jannah. Semoga Allah sentiasa merahmati dan melindungi awak 💕";
 const messageEl = document.getElementById("message");
-let index = 0;
+let msgIndex = 0;
+
 function typeMessage() {
-  if (index < message.length) {
-    messageEl.textContent += message[index];
-    index++;
-    setTimeout(typeMessage, 100);
+  if (msgIndex < birthdayMessage.length) {
+    if (birthdayMessage[msgIndex] === "\n") messageEl.innerHTML += "<br>";
+    else messageEl.innerHTML += birthdayMessage[msgIndex];
+    msgIndex++;
+    setTimeout(typeMessage, 80);
   }
 }
 
 // ===== Lyrics syncing =====
 const lyrics = [
-  { time: 48, text: "So can I call you tonight?" },
-  { time: 52, text: "I'm trying to make up my mind" },
-  { time: 56, text: "Just how I feel" },
-  { time: 60, text: "Could you tell me what's real?" },
-  { time: 64, text: "I hear your voice on the phone" },
-  { time: 68, text: "Now I'm no longer alone" },
-  { time: 72, text: "Just how I feel" },
-  { time: 76, text: "Could you tell me what's real anymore?" },
-  { time: 80, text: "Cause I wouldn't know" },
+  { time: 48, text: "I feel close" },
+  { time: 51, text: "Well, maybe I'm not, heaven knows" },
+  { time: 55, text: "It's a spotlight stuck on the ceiling" },
+  { time: 59, text: "Why are these the things that I'm feeling?" },
+  { time: 63, text: "There's so much time" },
+  { time: 66, text: "For me to speak up, but I keep quiet" },
+  { time: 70, text: "I'll complicate the most of the mantra" },
+  { time: 73, text: "The power is out and I can't turn the fan on" },
+  { time: 77, text: "So can I call you tonight?" },
+  { time: 80, text: "I'm trying to make up my mind" },
+  { time: 84, text: "Just how I feel" },
+  { time: 88, text: "Could you tell me what's real?" },
+  { time: 92, text: "I hear your voice on the phone" },
+  { time: 96, text: "Now I'm no longer alone" },
+  { time: 100, text: "Just how I feel" },
+  { time: 104, text: "Could you tell me what's real anymore?" },
+  { time: 108, text: "'Cause I wouldn't know" },
+  { time: 112, text: "Voice so low" },
+  { time: 116, text: "Sneaking around, so it goes" },
+  { time: 120, text: "I always try my best to listen" },
+  { time: 124, text: "Picking up things that I can fidget" },
+  { time: 128, text: "Circle speed, pacing around, watching my feet" },
+  { time: 132, text: "Batteries drain, I get the memo" },
+  { time: 136, text: "I think that I might have to let you go" },
+  { time: 140, text: "So can I call you tonight?" },
+  { time: 144, text: "I'm trying to make up my mind" },
+  { time: 148, text: "Just how I feel" },
+  { time: 152, text: "Could you tell me what's real?" },
+  { time: 156, text: "I hear your voice on the phone" },
+  { time: 160, text: "Now I'm no longer alone" },
+  { time: 164, text: "Just how I feel" },
+  { time: 168, text: "Could you tell me what's real anymore?" },
+  { time: 172, text: "'Cause I wouldn't know" },
+  { time: 176, text: "Don't go, don't go so easy" },
+  { time: 180, text: "Don't go, don't go and leave me" },
+  { time: 184, text: "Don't go, don't go so easy" },
+  { time: 188, text: "Don't go, don't go and leave me" },
+  { time: 192, text: "Don't go, don't go so easy" },
+  { time: 196, text: "Don't go, don't go and leave me" },
+  { time: 200, text: "Don't go, don't go so easy" },
+  { time: 204, text: "Don't go, go" },
+  { time: 208, text: "So can I call you tonight?" },
+  { time: 212, text: "I'm trying to make up my mind" },
+  { time: 216, text: "Just how I feel" },
+  { time: 220, text: "Could you tell me what's real?" },
+  { time: 224, text: "I hear your voice on the phone" },
+  { time: 228, text: "Now I'm no longer alone" },
+  { time: 232, text: "Just how I feel" },
+  { time: 236, text: "Could you tell me what's real anymore?" },
+  { time: 240, text: "'Cause I wouldn't know" },
 ];
 
 const audio = document.getElementById("bgMusic");
@@ -102,7 +144,7 @@ function syncLyrics() {
   requestAnimationFrame(syncLyrics);
 }
 
-// ===== Particle & confetti =====
+// ===== Particle & sparkle effects =====
 const canvas = document.getElementById("particleCanvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -179,5 +221,6 @@ startOverlay.addEventListener('click', ()=>{
   startOverlay.style.display = 'none';
 });
 </script>
+
 </body>
 </html>

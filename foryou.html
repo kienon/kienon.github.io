@@ -5,91 +5,71 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Selamat Hari Jadi!</title>
   <style>
-    /* Background & font */
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #B3DDF2; /* biru lembut */
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background-color: #e0f7fa; /* biru lembut */
+      color: #007bb5;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       text-align: center;
-      color: #333;
+      overflow: hidden;
+      flex-direction: column;
     }
 
-    /* Ucapan container */
-    .container {
-      background: rgba(255,255,255,0.8);
-      padding: 40px 20px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    #typing {
+      font-size: 2rem;
       max-width: 90%;
     }
 
-    h1 {
-      font-size: 2.2em;
-      margin-bottom: 20px;
+    #tapToStart {
+      position: absolute;
+      bottom: 50px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      animation: blink 1s infinite;
     }
 
-    .typing {
-      font-size: 1.2em;
-      white-space: pre-wrap;
-      min-height: 60px;
-    }
-
-    /* Music control (hidden) */
-    audio {
-      display: none;
+    @keyframes blink {
+      0%, 50%, 100% { opacity: 1; }
+      25%, 75% { opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Selamat Hari Jadi Aiwa Jailin! 🎉</h1>
-    <div class="typing" id="typing"></div>
-  </div>
+  <div id="typing"></div>
+  <div id="tapToStart">Tap mana-mana untuk mulakan 🎶</div>
 
-  <!-- Audio autoplay -->
-  <audio id="bg-music" autoplay loop>
-    <source src="CanICallYouTonight.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <audio id="birthdayAudio" src="CanICallYouTonight.mp3"></audio>
 
   <script>
-    // Typing effect
-    const text = `Hai Aiwa! 💙
-Semoga hari jadi awak penuh dengan senyuman, kebahagiaan, dan segala yang manis-manis sahaja. 
-Terima kasih sebab wujud dalam hidup aku. 
-Harap awak suka surprise kecil ni. 😘`;
-
-    let index = 0;
-    const typingSpeed = 40; // milliseconds
+    const message = "Selamat Hari Jadi Aiwa Jailin! Semoga hari kamu penuh bahagia dan senyuman 😊";
     const typingElement = document.getElementById('typing');
+    const audio = document.getElementById('birthdayAudio');
+    const tapText = document.getElementById('tapToStart');
+    let index = 0;
 
-    function type() {
-      if(index < text.length) {
-        typingElement.innerHTML += text.charAt(index);
+    function typeEffect() {
+      if (index < message.length) {
+        typingElement.innerHTML += message.charAt(index);
         index++;
-        setTimeout(type, typingSpeed);
+        setTimeout(typeEffect, 80); // adjust speed here
       }
     }
 
-    window.onload = () => {
-      type();
+    function startCelebration() {
+      audio.play();
+      typeEffect();
+      tapText.style.display = 'none';
+      document.body.removeEventListener('click', startCelebration);
+    }
 
-      // Try play audio (some browsers require user interaction)
-      const audio = document.getElementById("bg-music");
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.log("Audio autoplay blocked, user interaction needed.");
-        });
-      }
-    };
+    // Wait for user interaction
+    document.body.addEventListener('click', startCelebration);
   </script>
-
 </body>
 </html>

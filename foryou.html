@@ -31,16 +31,19 @@
     }
     .btn {
       margin-top: 20px;
-      background: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.8);
       border: 2px solid #003366;
-      padding: 10px 20px;
-      border-radius: 25px;
+      padding: 12px 24px;
+      border-radius: 30px;
       color: #003366;
       font-size: 1rem;
+      font-weight: bold;
       cursor: pointer;
+      transition: 0.3s;
     }
     .btn:hover {
-      background: rgba(255,255,255,0.4);
+      background: #003366;
+      color: #fff;
     }
     canvas {
       position: fixed;
@@ -57,7 +60,7 @@
   <h1>🎉 Selamat Hari Jadi Aiwa 🎂</h1>
   <div id="message"></div>
 
-  <button class="btn" id="playBtn">🎵 Play Music</button>
+  <button class="btn" id="playBtn">🎶 Tekan sini untuk dengar lagu</button>
 
   <audio id="bg-music" loop>
     <source src="https://archive.org/download/the-walters-i-love-you-so_20230927_2012/The%20Walters%20-%20I%20Love%20You%20So.mp3" type="audio/mpeg">
@@ -81,10 +84,14 @@ Harap tahun ni bawa banyak senyuman dan moment indah untuk kau 🥰`;
     }
     typeWriter();
 
-    // play music
+    // play music on button click
     document.getElementById("playBtn").addEventListener("click", () => {
       const music = document.getElementById("bg-music");
-      music.play();
+      music.play().then(() => {
+        document.getElementById("playBtn").style.display = "none"; // hide button after play
+      }).catch(err => {
+        console.log("Browser block audio:", err);
+      });
     });
 
     // confetti animation

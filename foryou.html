@@ -1,75 +1,190 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Selamat Hari Jadi!</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background-color: #e0f7fa; /* biru lembut */
-      color: #007bb5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
-      flex-direction: column;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selamat Hari Jadi Aiwa Jailin!</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #e0f7fa; /* biru lembut */
+    color: #007bb5;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
 
-    #typing {
-      font-size: 2rem;
-      max-width: 90%;
-    }
+  #typing {
+    font-size: 2rem;
+    max-width: 90%;
+    z-index: 10;
+    position: relative;
+  }
 
-    #tapToStart {
-      position: absolute;
-      bottom: 50px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      animation: blink 1s infinite;
-    }
+  #lyrics {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    max-width: 90%;
+    z-index: 10;
+    position: relative;
+  }
 
-    @keyframes blink {
-      0%, 50%, 100% { opacity: 1; }
-      25%, 75% { opacity: 0; }
-    }
-  </style>
+  #tapToStart {
+    position: absolute;
+    bottom: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    animation: blink 1s infinite;
+    z-index: 10;
+  }
+
+  @keyframes blink {
+    0%, 50%, 100% { opacity: 1; }
+    25%, 75% { opacity: 0; }
+  }
+
+  .heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    transform: rotate(45deg);
+    z-index: 5;
+  }
+
+  .heart:before,
+  .heart:after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+  }
+
+  .heart:before {
+    top: -10px;
+    left: 0;
+  }
+
+  .heart:after {
+    left: 10px;
+    top: 0;
+  }
+
+  .balloon {
+    position: absolute;
+    width: 30px;
+    height: 40px;
+    background: #ff7f50;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    z-index: 5;
+  }
+</style>
 </head>
 <body>
 
-  <div id="typing"></div>
-  <div id="tapToStart">Tap mana-mana untuk mulakan 🎶</div>
+<div id="typing"></div>
+<div id="lyrics"></div>
+<div id="tapToStart">Tap mana-mana untuk mulakan 🎶</div>
 
-  <audio id="birthdayAudio" src="CanICallYouTonight.mp3"></audio>
+<audio id="birthdayAudio" src="CanICallYouTonight.mp3"></audio>
 
-  <script>
-    const message = "Selamat Hari Jadi Aiwa Jailin! Semoga hari kamu penuh bahagia dan senyuman 😊";
-    const typingElement = document.getElementById('typing');
-    const audio = document.getElementById('birthdayAudio');
-    const tapText = document.getElementById('tapToStart');
-    let index = 0;
+<script>
+  const message = "Selamat Hari Jadi Aiwa Jailin! Semoga hari kamu penuh bahagia dan senyuman 😊";
+  const typingElement = document.getElementById('typing');
+  const lyricsElement = document.getElementById('lyrics');
+  const tapText = document.getElementById('tapToStart');
+  const audio = document.getElementById('birthdayAudio');
+  let index = 0;
 
-    function typeEffect() {
-      if (index < message.length) {
-        typingElement.innerHTML += message.charAt(index);
-        index++;
-        setTimeout(typeEffect, 80); // adjust speed here
+  const lyrics = [
+    "Can I call you tonight?", 
+    "I just want to hear your voice",
+    "Even if it’s just a little while",
+    "You make my heart smile"
+  ];
+  let lyricIndex = 0;
+
+  function typeEffect() {
+    if (index < message.length) {
+      typingElement.innerHTML += message.charAt(index);
+      index++;
+      setTimeout(typeEffect, 80);
+    } else {
+      showLyrics();
+    }
+  }
+
+  function showLyrics() {
+    if (lyricIndex < lyrics.length) {
+      lyricsElement.innerHTML = lyrics[lyricIndex];
+      lyricIndex++;
+      setTimeout(showLyrics, 2000);
+    }
+  }
+
+  function createHeart(x, y) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = x + 'px';
+    heart.style.top = y + 'px';
+    document.body.appendChild(heart);
+    let floatUp = 0;
+    const interval = setInterval(() => {
+      floatUp += 2;
+      heart.style.top = (y - floatUp) + 'px';
+      heart.style.opacity = 1 - floatUp / 200;
+      if (floatUp > 200) {
+        clearInterval(interval);
+        heart.remove();
       }
-    }
+    }, 20);
+  }
 
-    function startCelebration() {
-      audio.play();
-      typeEffect();
-      tapText.style.display = 'none';
-      document.body.removeEventListener('click', startCelebration);
-    }
+  function createBalloon(x, y) {
+    const balloon = document.createElement('div');
+    balloon.className = 'balloon';
+    balloon.style.left = x + 'px';
+    balloon.style.top = y + 'px';
+    document.body.appendChild(balloon);
+    let floatUp = 0;
+    const interval = setInterval(() => {
+      floatUp += 2;
+      balloon.style.top = (y - floatUp) + 'px';
+      if (floatUp > 300) {
+        clearInterval(interval);
+        balloon.remove();
+      }
+    }, 20);
+  }
 
-    // Wait for user interaction
-    document.body.addEventListener('click', startCelebration);
-  </script>
+  function startCelebration() {
+    audio.play();
+    typeEffect();
+    tapText.style.display = 'none';
+    document.body.removeEventListener('click', startCelebration);
+  }
+
+  document.body.addEventListener('click', startCelebration);
+
+  // love particles every few seconds
+  setInterval(() => {
+    const x = Math.random() * window.innerWidth;
+    const y = window.innerHeight;
+    createHeart(x, y);
+  }, 500);
+
+  // balloons follow mouse
+  document.addEventListener('mousemove', e => {
+    if (Math.random() < 0.2) createBalloon(e.clientX, e.clientY);
+  });
+
+</script>
 </body>
 </html>

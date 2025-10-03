@@ -3,188 +3,166 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Selamat Hari Jadi Aiwa Jailin!</title>
+<title>Selamat Hari Jadi!</title>
 <style>
   body {
     margin: 0;
     padding: 0;
+    background: linear-gradient(to bottom, #a8dadc, #f1faee);
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background-color: #e0f7fa; /* biru lembut */
-    color: #007bb5;
     overflow: hidden;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    color: #1d3557;
   }
-
-  #typing {
-    font-size: 2rem;
-    max-width: 90%;
-    z-index: 10;
-    position: relative;
-  }
-
   #lyrics {
-    font-size: 1.2rem;
-    margin-top: 20px;
-    max-width: 90%;
-    z-index: 10;
-    position: relative;
+    position: fixed;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5em;
+    pointer-events: none;
+    text-shadow: 1px 1px 2px #fff;
   }
-
-  #tapToStart {
-    position: absolute;
-    bottom: 50px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    animation: blink 1s infinite;
-    z-index: 10;
+  #message {
+    position: fixed;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
   }
-
-  @keyframes blink {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0; }
-  }
-
-  .heart {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: red;
-    transform: rotate(45deg);
-    z-index: 5;
-  }
-
-  .heart:before,
-  .heart:after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background: red;
-    border-radius: 50%;
-  }
-
-  .heart:before {
-    top: -10px;
-    left: 0;
-  }
-
-  .heart:after {
-    left: 10px;
+  canvas {
+    position: fixed;
     top: 0;
-  }
-
-  .balloon {
-    position: absolute;
-    width: 30px;
-    height: 40px;
-    background: #ff7f50;
-    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-    z-index: 5;
+    left: 0;
+    pointer-events: none;
   }
 </style>
 </head>
 <body>
 
-<div id="typing"></div>
+<div id="message"></div>
 <div id="lyrics"></div>
-<div id="tapToStart">Tap mana-mana untuk mulakan 🎶</div>
 
-<audio id="birthdayAudio" src="CanICallYouTonight.mp3"></audio>
+<audio id="bgMusic" src="CanICallYouTonight.mp3" autoplay loop></audio>
+
+<canvas id="particleCanvas"></canvas>
 
 <script>
-  const message = "Selamat Hari Jadi Aiwa Jailin! Semoga hari kamu penuh bahagia dan senyuman 😊";
-  const typingElement = document.getElementById('typing');
-  const lyricsElement = document.getElementById('lyrics');
-  const tapText = document.getElementById('tapToStart');
-  const audio = document.getElementById('birthdayAudio');
-  let index = 0;
+// ===== Typing effect for birthday message =====
+const message = "Selamat Hari Jadi Aiwa Jailin! 🌸 Semoga hari ini penuh bahagia 💙";
+const messageEl = document.getElementById("message");
+let index = 0;
+function typeMessage() {
+  if (index < message.length) {
+    messageEl.textContent += message[index];
+    index++;
+    setTimeout(typeMessage, 100);
+  }
+}
+typeMessage();
 
-  const lyrics = [
-    "Can I call you tonight?", 
-    "I just want to hear your voice",
-    "Even if it’s just a little while",
-    "You make my heart smile"
-  ];
-  let lyricIndex = 0;
+// ===== Lyrics syncing =====
+const lyrics = [
+  { time: 48, text: "So can I call you tonight?" },
+  { time: 52, text: "I'm trying to make up my mind" },
+  { time: 56, text: "Just how I feel" },
+  { time: 60, text: "Could you tell me what's real?" },
+  { time: 64, text: "I hear your voice on the phone" },
+  { time: 68, text: "Now I'm no longer alone" },
+  { time: 72, text: "Just how I feel" },
+  { time: 76, text: "Could you tell me what's real anymore?" },
+  { time: 80, text: "Cause I wouldn't know" },
+  // Tambah lirik seterusnya ikut video YouTube
+];
 
-  function typeEffect() {
-    if (index < message.length) {
-      typingElement.innerHTML += message.charAt(index);
-      index++;
-      setTimeout(typeEffect, 80);
+const audio = document.getElementById("bgMusic");
+const lyricsEl = document.getElementById("lyrics");
+
+function syncLyrics() {
+  const currentTime = audio.currentTime;
+  let currentLine = "";
+  for (let i = 0; i < lyrics.length; i++) {
+    if (currentTime >= lyrics[i].time) {
+      currentLine = lyrics[i].text;
+    }
+  }
+  lyricsEl.textContent = currentLine;
+  requestAnimationFrame(syncLyrics);
+}
+syncLyrics();
+
+// ===== Particle & balloons =====
+const canvas = document.getElementById("particleCanvas");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function random(min, max) { return Math.random() * (max - min) + min; }
+
+class Particle {
+  constructor(x, y, type) {
+    this.x = x;
+    this.y = y;
+    this.type = type; // 'heart' or 'balloon'
+    this.size = random(5, 15);
+    this.speedY = random(-1, -3);
+    this.speedX = random(-0.5, 0.5);
+    this.opacity = 1;
+    this.color = type === 'heart' ? '#ff6b6b' : `hsl(${random(0, 360)}, 80%, 60%)`;
+  }
+  update() {
+    this.y += this.speedY;
+    this.x += this.speedX;
+    this.opacity -= 0.005;
+    if (this.opacity < 0) this.opacity = 0;
+  }
+  draw() {
+    ctx.globalAlpha = this.opacity;
+    if (this.type === 'heart') {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.moveTo(this.x, this.y);
+      ctx.bezierCurveTo(this.x, this.y - this.size / 2, this.x - this.size, this.y - this.size / 2, this.x - this.size, this.y);
+      ctx.bezierCurveTo(this.x - this.size, this.y + this.size / 2, this.x, this.y + this.size / 1.5, this.x, this.y + this.size);
+      ctx.bezierCurveTo(this.x, this.y + this.size / 1.5, this.x + this.size, this.y + this.size / 2, this.x + this.size, this.y);
+      ctx.bezierCurveTo(this.x + this.size, this.y - this.size / 2, this.x, this.y - this.size / 2, this.x, this.y);
+      ctx.fill();
     } else {
-      showLyrics();
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].draw();
+    if (particles[i].opacity <= 0) {
+      particles.splice(i, 1);
     }
   }
+  requestAnimationFrame(animate);
+}
+animate();
 
-  function showLyrics() {
-    if (lyricIndex < lyrics.length) {
-      lyricsElement.innerHTML = lyrics[lyricIndex];
-      lyricIndex++;
-      setTimeout(showLyrics, 2000);
-    }
+window.addEventListener('mousemove', function(e) {
+  for (let i = 0; i < 2; i++) {
+    particles.push(new Particle(e.clientX + random(-10,10), e.clientY + random(-10,10), 'heart'));
+    particles.push(new Particle(e.clientX + random(-10,10), e.clientY + random(-10,10), 'balloon'));
   }
+});
 
-  function createHeart(x, y) {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.style.left = x + 'px';
-    heart.style.top = y + 'px';
-    document.body.appendChild(heart);
-    let floatUp = 0;
-    const interval = setInterval(() => {
-      floatUp += 2;
-      heart.style.top = (y - floatUp) + 'px';
-      heart.style.opacity = 1 - floatUp / 200;
-      if (floatUp > 200) {
-        clearInterval(interval);
-        heart.remove();
-      }
-    }, 20);
-  }
-
-  function createBalloon(x, y) {
-    const balloon = document.createElement('div');
-    balloon.className = 'balloon';
-    balloon.style.left = x + 'px';
-    balloon.style.top = y + 'px';
-    document.body.appendChild(balloon);
-    let floatUp = 0;
-    const interval = setInterval(() => {
-      floatUp += 2;
-      balloon.style.top = (y - floatUp) + 'px';
-      if (floatUp > 300) {
-        clearInterval(interval);
-        balloon.remove();
-      }
-    }, 20);
-  }
-
-  function startCelebration() {
-    audio.play();
-    typeEffect();
-    tapText.style.display = 'none';
-    document.body.removeEventListener('click', startCelebration);
-  }
-
-  document.body.addEventListener('click', startCelebration);
-
-  // love particles every few seconds
-  setInterval(() => {
-    const x = Math.random() * window.innerWidth;
-    const y = window.innerHeight;
-    createHeart(x, y);
-  }, 500);
-
-  // balloons follow mouse
-  document.addEventListener('mousemove', e => {
-    if (Math.random() < 0.2) createBalloon(e.clientX, e.clientY);
-  });
-
+window.addEventListener('resize', function() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
 </script>
+
 </body>
 </html>

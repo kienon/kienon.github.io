@@ -14,7 +14,7 @@
       color: white;
     }
 
-    /* Background video / image */
+    /* Background image */
     .bg {
       position: fixed;
       top: 0; left: 0;
@@ -28,11 +28,11 @@
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.45);
       z-index: -1;
     }
 
-    /* Center content like TikTok */
+    /* Content like TikTok text overlay */
     .content {
       position: absolute;
       bottom: 15%;
@@ -49,7 +49,7 @@
     }
     #typed {
       font-size: 1.1rem;
-      line-height: 1.5;
+      line-height: 1.6;
       white-space: pre-line;
       animation: fadeInUp 1.5s ease-out;
     }
@@ -90,14 +90,12 @@
   </style>
 </head>
 <body>
-  <!-- Guna video / gambar -->
-  <video class="bg" autoplay muted loop>
-    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-  </video>
+  <!-- Gambar background -->
+  <img class="bg" src="https://picsum.photos/720/1280?blur" alt="aiwa">
   <div class="overlay"></div>
 
   <div class="content">
-    <h1>🎂 Happy Birthday Aiwa 🎂</h1>
+    <h1>💙 Selamat Hari Jadi Aiwa 💙</h1>
     <div id="typed"></div>
     <button id="playBtn">🎵 Play Lagu</button>
   </div>
@@ -111,7 +109,7 @@
   <script>
     // Typing effect
     const msg = `Semoga hari lahir kau penuh dengan cinta, senyuman & kejutan manis.
-Kau adalah insan istimewa yang buat saya senyum tiap hari 💙`;
+Kau adalah insan istimewa yang selalu buat saya senyum 💙`;
     let i = 0;
     function typeWriter() {
       if (i < msg.length) {
@@ -128,7 +126,7 @@ Kau adalah insan istimewa yang buat saya senyum tiap hari 💙`;
       document.getElementById("playBtn").style.display = "none";
     });
 
-    // Confetti
+    // Confetti animation
     const canvas = document.getElementById("confetti");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;

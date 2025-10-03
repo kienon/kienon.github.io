@@ -1,176 +1,110 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Aiwa 🎂💖</title>
+  <title>Happy Birthday Aiwa 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
-      background-size: 300% 300%;
-      animation: gradientBG 12s ease infinite;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
       font-family: 'Poppins', sans-serif;
-      text-align: center;
-      color: white;
       overflow: hidden;
+      text-align: center;
+      padding: 20px;
     }
-
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-
     h1 {
+      font-family: 'Pacifico', cursive;
       font-size: 2.5rem;
-      margin-top: 60px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-      animation: fadeIn 3s ease-in-out;
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     }
-
-    h2 {
-      font-size: 1.3rem;
-      margin: 10px 0 30px;
-      animation: fadeIn 4s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
     #typed {
       font-size: 1.2rem;
-      margin: 20px auto;
-      width: 80%;
       color: #fff;
-      text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+      max-width: 90%;
+      line-height: 1.8;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
     }
-
-    .btn {
-      background: #fff;
-      color: #ff4b5c;
-      border: none;
-      padding: 12px 25px;
-      font-size: 1rem;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-    .btn:hover {
-      background: #ff4b5c;
-      color: #fff;
-      transform: scale(1.1);
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .floating {
+    .hearts {
       position: absolute;
-      bottom: -150px;
+      bottom: -10px;
       font-size: 2rem;
-      animation: floatUp 8s linear infinite;
+      animation: floatUp 6s infinite;
+      opacity: 0.7;
     }
-
     @keyframes floatUp {
-      from {transform: translateY(0);}
-      to {transform: translateY(-120vh);}
+      0% {transform: translateY(0) scale(0.8); opacity: 0.7;}
+      50% {opacity: 1;}
+      100% {transform: translateY(-100vh) scale(1.2); opacity: 0;}
     }
-
-    #countdown {
-      font-size: 1rem;
-      margin-top: 15px;
-      color: #fff;
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #fff;
+      color: #e91e63;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+    }
+    button:hover {
+      transform: scale(1.05);
+      background: #ffe6ec;
     }
   </style>
 </head>
 <body>
-
-  <h1>🎉 Happy Birthday Aiwa Jailin 🎂💖</h1>
-  <h2>Today is your special day ✨</h2>
-
+  <h1>🎂 Happy Birthday Aiwa 🎂</h1>
   <div id="typed"></div>
-  <div id="countdown"></div>
-  <button class="btn" onclick="startCelebration()">🎁 Open Your Surprise</button>
 
-  <canvas id="confetti"></canvas>
+  <!-- Floating hearts -->
+  <div class="hearts" style="left:10%;">❤️</div>
+  <div class="hearts" style="left:30%;">💖</div>
+  <div class="hearts" style="left:50%;">💕</div>
+  <div class="hearts" style="left:70%;">💓</div>
+  <div class="hearts" style="left:90%;">💗</div>
 
-  <audio id="music" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+  <!-- Music -->
+  <audio id="bg-music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_92f8433c24.mp3?filename=happy-birthday-113170.mp3" type="audio/mpeg">
   </audio>
+  <button onclick="toggleMusic()">🎵 Play / Pause Music</button>
 
-  <!-- Typed.js -->
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
-    // Typing effect
-    var typed = new Typed("#typed", {
+    var typed = new Typed('#typed', {
       strings: [
-        "Dear Aiwa 💌,",
-        "On your birthday, I wish you endless happiness, joy, and success.",
-        "May today be as wonderful as your smile 😊",
-        "And may this year bring you closer to all your dreams 💖"
+        "Selamat Hari Jadi Aiwa ✨",
+        "Semoga panjang umur, murah rezeki, dan happy selalu 💕",
+        "Kau ni orang special bah… sebab tu saya berani buat benda ni khas untuk kau ❤️",
+        "Harap tahun ni bawa banyak senyuman dan moment indah untuk kau 🥰"
       ],
-      typeSpeed: 50,
-      backSpeed: 25,
+      typeSpeed: 45,
+      backSpeed: 0,
+      smartBackspace: false,
       loop: false
     });
 
-    // Countdown
-    const targetDate = new Date("Oct 16, 2025 00:00:00").getTime();
-    setInterval(() => {
-      let now = new Date().getTime();
-      let distance = targetDate - now;
-
-      if (distance > 0) {
-        let days = Math.floor(distance / (1000*60*60*24));
-        let hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
-        let minutes = Math.floor((distance % (1000*60*60))/(1000*60));
-        let seconds = Math.floor((distance % (1000*60))/1000);
-        document.getElementById("countdown").innerText = 
-          `⏳ ${days}d ${hours}h ${minutes}m ${seconds}s left until your birthday 🎂`;
+    function toggleMusic() {
+      var music = document.getElementById("bg-music");
+      if (music.paused) {
+        music.play();
       } else {
-        document.getElementById("countdown").innerText = "🎂 It's your birthday today, Aiwa! 🎉";
-      }
-    }, 1000);
-
-    // Celebration
-    function startCelebration() {
-      let music = document.getElementById("music");
-      music.play();
-
-      // Confetti burst
-      var duration = 6 * 1000;
-      var end = Date.now() + duration;
-
-      (function frame() {
-        confetti({ particleCount: 7, angle: 60, spread: 55, origin: { x: 0 } });
-        confetti({ particleCount: 7, angle: 120, spread: 55, origin: { x: 1 } });
-        if (Date.now() < end) requestAnimationFrame(frame);
-      }());
-
-      // Floating hearts & balloons
-      for (let i = 0; i < 15; i++) {
-        let el = document.createElement("div");
-        el.className = "floating";
-        el.innerHTML = Math.random() > 0.5 ? "🎈" : "❤️";
-        el.style.left = Math.random() * 100 + "vw";
-        el.style.animationDuration = (5 + Math.random() * 5) + "s";
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 10000);
+        music.pause();
       }
     }
   </script>
-
 </body>
 </html>

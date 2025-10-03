@@ -1,196 +1,169 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Happy Birthday Aiwa</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Aiwa 🎉</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body, html {
       width: 100%;
       height: 100%;
       overflow: hidden;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #003366;
+      color: white;
     }
 
-    .container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-
-    .video-bg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.3;
-      z-index: 1;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      backdrop-filter: blur(3px);
-      z-index: 2;
-    }
-
-    .content {
-      position: relative;
-      z-index: 3;
-      padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      animation: fadeInDown 1s ease-out;
-    }
-    #typed {
-      font-size: 1.2rem;
-      max-width: 90%;
-      margin: 0 auto;
-      white-space: pre-line;
-      animation: fadeInUp 1.5s ease-out;
-    }
-
-    button {
-      margin-top: 30px;
-      padding: 12px 24px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 25px;
-      background: #003366;
-      color: #fff;
-      cursor: pointer;
-      transition: 0.3s;
-      opacity: 0;
-      animation: fadeIn 2s forwards 2s;
-    }
-    button:hover {
-      background: #001f4d;
-    }
-
-    canvas {
+    /* Background video / image */
+    .bg {
       position: fixed;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
-      z-index: 4;
+      object-fit: cover;
+      z-index: -2;
+    }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: -1;
+    }
+
+    /* Center content like TikTok */
+    .content {
+      position: absolute;
+      bottom: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      padding: 20px;
+      width: 90%;
+    }
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      animation: fadeInDown 1s ease-out;
+    }
+    #typed {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      white-space: pre-line;
+      animation: fadeInUp 1.5s ease-out;
+    }
+
+    /* Play button style */
+    #playBtn {
+      margin-top: 25px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem;
+      background: #ff2d55;
+      color: white;
+      cursor: pointer;
+      animation: fadeIn 2s forwards 2s;
     }
 
     @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-50px); }
-      to { opacity:1; transform: translateY(0); }
+      from {opacity:0; transform:translate(-50%,-60%);}
+      to {opacity:1; transform:translate(-50%,-50%);}
     }
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity:1; transform: translateY(0); }
+      from {opacity:0; transform:translateY(30px);}
+      to {opacity:1; transform:translateY(0);}
     }
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from {opacity:0;}
+      to {opacity:1;}
+    }
+
+    /* Confetti Canvas */
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- kalau ada video, guna ini -->
-    <video class="video-bg" autoplay muted loop>
-      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-    </video>
-    <div class="overlay"></div>
+  <!-- Guna video / gambar -->
+  <video class="bg" autoplay muted loop>
+    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
 
-    <div class="content">
-      <h1>🎉 Selamat Hari Jadi Aiwa 🎂</h1>
-      <div id="typed"></div>
-      <button id="playBtn">🎵 Dengar Lagu</button>
-    </div>
-
-    <canvas id="confetti"></canvas>
+  <div class="content">
+    <h1>🎂 Happy Birthday Aiwa 🎂</h1>
+    <div id="typed"></div>
+    <button id="playBtn">🎵 Play Lagu</button>
   </div>
 
+  <canvas id="confetti"></canvas>
+
   <audio id="bg-music" loop>
-    <source src="https://archive.org/download/the-walters-i-love-you-so_20230927_2012/The%20Walters%20-%20I%20Love%20You%20So.mp3" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   </audio>
 
   <script>
     // Typing effect
-    const text = `Semoga hari jadi kau penuh kegembiraan, senyuman & kasih sayang.
-Kau adalah insan yang sangat istimewa untuk saya ❤️`;
-    let idx = 0;
+    const msg = `Semoga hari lahir kau penuh dengan cinta, senyuman & kejutan manis.
+Kau adalah insan istimewa yang buat saya senyum tiap hari 💙`;
+    let i = 0;
     function typeWriter() {
-      if (idx < text.length) {
-        document.getElementById('typed').innerHTML += text.charAt(idx);
-        idx++;
+      if (i < msg.length) {
+        document.getElementById("typed").innerHTML += msg.charAt(i);
+        i++;
         setTimeout(typeWriter, 50);
       }
     }
     typeWriter();
 
-    // Play music when button clicked
-    document.getElementById('playBtn').addEventListener('click', () => {
-      const music = document.getElementById('bg-music');
-      music.play().then(() => {
-        document.getElementById('playBtn').style.display = 'none';
-      }).catch(err => {
-        console.log('Audio play blocked:', err);
-      });
+    // Music play
+    document.getElementById("playBtn").addEventListener("click", () => {
+      document.getElementById("bg-music").play();
+      document.getElementById("playBtn").style.display = "none";
     });
 
     // Confetti
-    const canvas = document.getElementById('confetti');
-    const ctx = canvas.getContext('2d');
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const pieces = [];
-    const count = 150;
-    for (let i = 0; i < count; i++) {
-      pieces.push({
+    const confettiCount = 150;
+    const confetti = [];
+    for (let i = 0; i < confettiCount; i++) {
+      confetti.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height - canvas.height,
-        w: Math.random() * 8 + 4,
-        h: Math.random() * 8 + 4,
-        color: `hsl(${Math.random()*360}, 100%, 70%)`,
-        speed: Math.random() * 3 + 2,
-        angle: Math.random() * 360,
-        spin: Math.random()*0.2 - 0.1
+        r: Math.random() * 6 + 4,
+        d: Math.random() * confettiCount,
+        color: "hsl(" + Math.random() * 360 + ",100%,50%)"
       });
     }
 
     function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      pieces.forEach(p => {
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.angle);
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
-        ctx.restore();
-
-        p.y += p.speed;
-        p.angle += p.spin;
-        if (p.y > canvas.height) {
-          p.y = -10;
-          p.x = Math.random() * canvas.width;
+      confetti.forEach((c, idx) => {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, 2 * Math.PI);
+        ctx.fillStyle = c.color;
+        ctx.fill();
+        c.y += Math.cos(c.d) + 1 + c.r/2;
+        if (c.y > canvas.height) {
+          confetti[idx].y = -10;
+          confetti[idx].x = Math.random() * canvas.width;
         }
       });
       requestAnimationFrame(draw);
     }
     draw();
 
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     });

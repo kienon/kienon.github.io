@@ -1,123 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday Aiwa 💙</title>
+  <title>Selamat Hari Jadi!</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;700&display=swap');
-
+    /* Background & font */
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #b3e5fc, #e1f5fe);
-      color: #333;
-      text-align: center;
-      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #B3DDF2; /* biru lembut */
+      display: flex;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
+      text-align: center;
+      color: #333;
     }
 
+    /* Ucapan container */
     .container {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      padding: 20px;
+      background: rgba(255,255,255,0.8);
+      padding: 40px 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      max-width: 90%;
     }
 
     h1 {
-      font-family: 'Pacifico', cursive;
-      font-size: 2.5em;
-      color: #1565c0;
-      margin-bottom: 10px;
+      font-size: 2.2em;
+      margin-bottom: 20px;
     }
 
-    p {
+    .typing {
       font-size: 1.2em;
-      color: #0d47a1;
+      white-space: pre-wrap;
+      min-height: 60px;
     }
 
-    .btn {
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #1565c0;
-      color: #fff;
-      border: none;
-      border-radius: 25px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: #0d47a1;
-    }
-
-    /* Floating hearts animation */
-    .heart {
-      position: absolute;
-      bottom: -50px;
-      width: 25px;
-      height: 25px;
-      background: rgba(255, 82, 82, 0.8);
-      transform: rotate(45deg);
-      animation: floatUp 6s linear infinite;
-    }
-
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      background: rgba(255, 82, 82, 0.8);
-    }
-
-    .heart::before { top: -12px; left: 0; }
-    .heart::after { left: -12px; top: 0; }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
+    /* Music control (hidden) */
+    audio {
+      display: none;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h1>Selamat Hari Lahir 💙</h1>
-    <p>Happy Birthday Aiwa 🎂</p>
-    <p>Semoga panjang umur, murah rezeki, dan bahagia selalu ✨</p>
-    <button class="btn" onclick="playMusic()">Klik sini 🎶</button>
+    <h1>Selamat Hari Jadi Aiwa Jailin! 🎉</h1>
+    <div class="typing" id="typing"></div>
   </div>
 
-  <!-- Audio -->
-  <audio id="bg-music" loop>
-    <source src="iloveyouso.mp3" type="audio/mpeg">
+  <!-- Audio autoplay -->
+  <audio id="bg-music" autoplay loop>
+    <source src="can-i-call-you-tonight.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
   </audio>
 
   <script>
-    function playMusic() {
-      let audio = document.getElementById("bg-music");
-      audio.play();
-      document.querySelector(".btn").style.display = "none"; // hide button after clicked
+    // Typing effect
+    const text = `Hai Aiwa! 💙
+Semoga hari jadi awak penuh dengan senyuman, kebahagiaan, dan segala yang manis-manis sahaja. 
+Terima kasih sebab wujud dalam hidup aku. 
+Harap awak suka surprise kecil ni. 😘`;
+
+    let index = 0;
+    const typingSpeed = 40; // milliseconds
+    const typingElement = document.getElementById('typing');
+
+    function type() {
+      if(index < text.length) {
+        typingElement.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(type, typingSpeed);
+      }
     }
 
-    // Generate floating hearts
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      document.body.appendChild(heart);
+    window.onload = () => {
+      type();
 
-      setTimeout(() => heart.remove(), 6000);
-    }
-    setInterval(createHeart, 500);
+      // Try play audio (some browsers require user interaction)
+      const audio = document.getElementById("bg-music");
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log("Audio autoplay blocked, user interaction needed.");
+        });
+      }
+    };
   </script>
 
 </body>

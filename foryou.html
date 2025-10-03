@@ -1,86 +1,152 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday 💙</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Aiwa</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-      font-family: "Comic Sans MS", cursive, sans-serif;
-      text-align: center;
-      overflow: hidden;
-    }
-    h1 {
-      font-size: 2.5em;
       color: #003366;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .video-bg {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: 1;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(3px);
+      z-index: 2;
+    }
+
+    .content {
+      position: relative;
+      z-index: 3;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
       margin-bottom: 20px;
+      animation: fadeInDown 1s ease-out;
     }
-    #typing {
-      font-size: 1.2em;
-      color: #004080;
-      max-width: 80%;
+    #typed {
+      font-size: 1.2rem;
+      max-width: 90%;
+      margin: 0 auto;
+      white-space: pre-line;
+      animation: fadeInUp 1.5s ease-out;
     }
+
     button {
-      margin-top: 20px;
+      margin-top: 30px;
       padding: 12px 24px;
-      font-size: 1em;
+      font-size: 1rem;
       border: none;
       border-radius: 25px;
-      background: #4da6ff;
-      color: white;
+      background: #003366;
+      color: #fff;
       cursor: pointer;
       transition: 0.3s;
+      opacity: 0;
+      animation: fadeIn 2s forwards 2s;
     }
     button:hover {
-      background: #3399ff;
-      transform: scale(1.05);
+      background: #001f4d;
     }
+
     canvas {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
+      z-index: 4;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <h1>💙 Selamat Hari Jadi, Aiwa! 💙</h1>
-  <p id="typing"></p>
-  <button onclick="playMusic()">💖 Tekan untuk Dengar Lagu 💖</button>
+  <div class="container">
+    <!-- kalau ada video, guna ini -->
+    <video class="video-bg" autoplay muted loop>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
 
-  <audio id="bg-music">
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    Browser kau tidak support audio.
+    <div class="content">
+      <h1>🎉 Selamat Hari Jadi Aiwa 🎂</h1>
+      <div id="typed"></div>
+      <button id="playBtn">🎵 Dengar Lagu</button>
+    </div>
+
+    <canvas id="confetti"></canvas>
+  </div>
+
+  <audio id="bg-music" loop>
+    <source src="https://archive.org/download/the-walters-i-love-you-so_20230927_2012/The%20Walters%20-%20I%20Love%20You%20So.mp3" type="audio/mpeg">
   </audio>
-
-  <canvas id="confetti"></canvas>
 
   <script>
     // Typing effect
-    const text = "Semoga hari jadi kau dipenuhi dengan senyuman, kebahagiaan, dan cinta. Dari saya, yang selalu mahu tengok kau bahagia. 💙";
-    let i = 0;
-    function typing() {
-      if (i < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typing, 50); // laju sikit, tak slow
+    const text = `Semoga hari jadi kau penuh kegembiraan, senyuman & kasih sayang.
+Kau adalah insan yang sangat istimewa untuk saya ❤️`;
+    let idx = 0;
+    function typeWriter() {
+      if (idx < text.length) {
+        document.getElementById('typed').innerHTML += text.charAt(idx);
+        idx++;
+        setTimeout(typeWriter, 50);
       }
     }
-    typing();
+    typeWriter();
 
-    // Music play function
-    function playMusic() {
-      const music = document.getElementById("bg-music");
-      music.play().catch(err => console.log("Autoplay block:", err));
-    }
+    // Play music when button clicked
+    document.getElementById('playBtn').addEventListener('click', () => {
+      const music = document.getElementById('bg-music');
+      music.play().then(() => {
+        document.getElementById('playBtn').style.display = 'none';
+      }).catch(err => {
+        console.log('Audio play blocked:', err);
+      });
+    });
 
     // Confetti
     const canvas = document.getElementById('confetti');
@@ -88,51 +154,46 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const confettiCount = 200;
-    const confetti = [];
-    for (let i = 0; i < confettiCount; i++) {
-      confetti.push({
+    const pieces = [];
+    const count = 150;
+    for (let i = 0; i < count; i++) {
+      pieces.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height - canvas.height,
-        r: Math.random() * 6 + 4,
-        d: Math.random() * confettiCount,
-        color: "hsl(" + Math.random() * 360 + ",100%,50%)",
-        tilt: Math.floor(Math.random() * 10) - 10
+        w: Math.random() * 8 + 4,
+        h: Math.random() * 8 + 4,
+        color: `hsl(${Math.random()*360}, 100%, 70%)`,
+        speed: Math.random() * 3 + 2,
+        angle: Math.random() * 360,
+        spin: Math.random()*0.2 - 0.1
       });
     }
 
-    function drawConfetti() {
+    function draw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = 0; i < confettiCount; i++) {
-        const c = confetti[i];
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2, false);
-        ctx.fillStyle = c.color;
-        ctx.fill();
-      }
-      update();
-      requestAnimationFrame(drawConfetti);
-    }
+      pieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
 
-    function update() {
-      for (let i = 0; i < confettiCount; i++) {
-        const c = confetti[i];
-        c.y += Math.cos(c.d) + 1 + c.r / 2;
-        c.x += Math.sin(c.d);
-        if (c.y > canvas.height) {
-          confetti[i] = {
-            x: Math.random() * canvas.width,
-            y: -10,
-            r: c.r,
-            d: c.d,
-            color: c.color,
-            tilt: c.tilt
-          };
+        p.y += p.speed;
+        p.angle += p.spin;
+        if (p.y > canvas.height) {
+          p.y = -10;
+          p.x = Math.random() * canvas.width;
         }
-      }
+      });
+      requestAnimationFrame(draw);
     }
+    draw();
 
-    drawConfetti();
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 </body>
 </html>

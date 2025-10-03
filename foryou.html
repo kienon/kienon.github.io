@@ -12,10 +12,11 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb); /* biru lembut */
       font-family: 'Poppins', sans-serif;
-      color: #fff;
+      color: #003366;
       text-align: center;
+      overflow: hidden;
     }
     h1 {
       font-size: 2.2rem;
@@ -31,15 +32,23 @@
     .btn {
       margin-top: 20px;
       background: rgba(255,255,255,0.2);
-      border: 2px solid #fff;
+      border: 2px solid #003366;
       padding: 10px 20px;
       border-radius: 25px;
-      color: #fff;
+      color: #003366;
       font-size: 1rem;
       cursor: pointer;
     }
     .btn:hover {
       background: rgba(255,255,255,0.4);
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -48,13 +57,16 @@
   <h1>🎉 Selamat Hari Jadi Aiwa 🎂</h1>
   <div id="message"></div>
 
-  <button class="btn" onclick="playMusic()">🎵 Play Music</button>
+  <button class="btn" id="playBtn">🎵 Play Music</button>
 
   <audio id="bg-music" loop>
     <source src="https://archive.org/download/the-walters-i-love-you-so_20230927_2012/The%20Walters%20-%20I%20Love%20You%20So.mp3" type="audio/mpeg">
   </audio>
 
+  <canvas id="confetti"></canvas>
+
   <script>
+    // typing effect
     const text = `Semoga panjang umur, murah rezeki, dan happy selalu 💖
 Kau ni orang special bah… sebab tu saya berani buat benda ni khas untuk kau ❤️
 Harap tahun ni bawa banyak senyuman dan moment indah untuk kau 🥰`;
@@ -64,14 +76,65 @@ Harap tahun ni bawa banyak senyuman dan moment indah untuk kau 🥰`;
       if (i < text.length) {
         document.getElementById("message").innerHTML += text.charAt(i);
         i++;
-        setTimeout(typeWriter, 60); // speed typing (60ms)
+        setTimeout(typeWriter, 60);
       }
     }
     typeWriter();
 
-    function playMusic() {
-      document.getElementById("bg-music").play();
+    // play music
+    document.getElementById("playBtn").addEventListener("click", () => {
+      const music = document.getElementById("bg-music");
+      music.play();
+    });
+
+    // confetti animation
+    const confetti = document.getElementById("confetti");
+    const ctx = confetti.getContext("2d");
+    confetti.width = window.innerWidth;
+    confetti.height = window.innerHeight;
+
+    const pieces = [];
+    const numPieces = 150;
+
+    for (let i = 0; i < numPieces; i++) {
+      pieces.push({
+        x: Math.random() * confetti.width,
+        y: Math.random() * confetti.height - confetti.height,
+        w: 10,
+        h: 10,
+        color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+        speed: Math.random() * 3 + 2,
+        angle: Math.random() * 360,
+        spin: Math.random() * 0.2 - 0.1
+      });
     }
+
+    function draw() {
+      ctx.clearRect(0, 0, confetti.width, confetti.height);
+      pieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+
+        p.y += p.speed;
+        p.angle += p.spin;
+
+        if (p.y > confetti.height) {
+          p.y = -10;
+          p.x = Math.random() * confetti.width;
+        }
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    window.addEventListener("resize", () => {
+      confetti.width = window.innerWidth;
+      confetti.height = window.innerHeight;
+    });
   </script>
 </body>
 </html>

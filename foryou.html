@@ -161,12 +161,15 @@ class Particle {
     this.speedY=type==='balloon'?random(-0.3,-1):random(-1.5,-3);
     this.speedX=random(-1,1);
     this.opacity=1;
-    this.color = type==='heart'? '#ff6b6b': type==='confetti'? `hsl(${random(0,360)},80%,60%)`: type==='balloon'?'#ff9f1c':'#caf0f8';
+    this.color = type==='heart'? '#ff6b6b': type==='confetti'? `hsl(${random(0,360)},80%,60%)`: 
+                 type==='balloon'?'#ff9f1c': type==='candle'?'#ffd166':'#caf0f8';
+    this.flicker = random(0.5,1.5); // untuk glow/flicker effect
   }
   update(){
     this.y += this.speedY;
     this.x += this.speedX;
-    if(this.type==='balloon'){ this.y+= this.speedY/2; } // floating slow
+    if(this.type==='balloon'){ this.y+= this.speedY/2; } 
+    if(this.type==='candle'){ this.size = 5 + Math.sin(Date.now()/100*this.flicker)*2; }
     this.opacity -= (this.type==='balloon'?0.001:0.01);
     if(this.opacity<0) this.opacity=0;
   }
@@ -194,11 +197,10 @@ class Particle {
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // Floating balloons randomly
-  if(Math.random()<0.02){
-    particles.push(new Particle(random(0,canvas.width),canvas.height+20,'balloon'));
-  }
-
+  // Floating balloons, candles, cakes
+  if(Math.random()<0.02) particles.push(new Particle(random(0,canvas.width),canvas.height+20,'balloon'));
+  if(Math.random()<0.005) particles.push(new Particle(random(0,canvas.width),canvas.height+20,'candle'));
+  
   for(let i=particles.length-1;i>=0;i--){
     particles[i].update();
     particles[i].draw();
@@ -208,7 +210,7 @@ function animate(){
 }
 animate();
 
-// Mouse sparkle particles
+// Mouse sparkle particles (tidak diubah)
 window.addEventListener('mousemove', function(e){
   for(let i=0;i<3;i++){
     particles.push(new Particle(e.clientX+random(-10,10),e.clientY+random(-10,10),'heart'));

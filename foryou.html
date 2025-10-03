@@ -21,19 +21,24 @@ body {
   font-size:2em; z-index:1000; text-align:center;
 }
 #message {
-  position:fixed; top:15%; width:100%; text-align:center; font-size:2em;
+  position:fixed; top:10%; width:100%; text-align:center; font-size:2em;
   text-shadow: 1px 1px 5px #fff;
   pointer-events:none;
 }
 #lyrics {
-  position:fixed; top:50%; width:100%; text-align:center; font-size:1.5em;
+  position:fixed; top:60%; width:100%; text-align:center; font-size:1.5em;
   text-shadow:1px 1px 2px #fff;
   pointer-events:none;
 }
 canvas { position:fixed; top:0; left:0; pointer-events:none; z-index:999; }
-.balloon {
+.balloon, .cake {
   position:absolute; bottom:-100px; width:60px; height:80px;
   border-radius:50%; animation:float 10s ease-in-out infinite;
+}
+.cake {
+  width:50px; height:50px; border-radius:10px; background:#ffb6b9;
+  text-align:center; line-height:50px; color:#fff; font-weight:bold;
+  font-size:1.2em;
 }
 @keyframes float {
   0% { transform: translateY(0); }
@@ -51,7 +56,7 @@ canvas { position:fixed; top:0; left:0; pointer-events:none; z-index:999; }
 <canvas id="particleCanvas"></canvas>
 
 <script>
-// ===== Typing Birthday Message =====
+// ===== Birthday Message =====
 const birthdayMessage = `Selamat Hari Jadi Aiwa Jailin! 🎉💙
 Semoga hubungan kita makin erat, ke arah yang lebih baik, till Jannah.
 Semoga Allah sentiasa merahmati kamu.`;
@@ -106,7 +111,7 @@ function animateParticles(){
 animateParticles();
 window.addEventListener("mousemove", e=>{ for(let i=0;i<3;i++) createParticle(e.clientX,e.clientY); });
 
-// ===== Balloons =====
+// ===== Balloons & Cakes =====
 function createBalloon(){
   const balloon = document.createElement("div");
   balloon.classList.add("balloon");
@@ -116,7 +121,16 @@ function createBalloon(){
   document.body.appendChild(balloon);
   setTimeout(()=>balloon.remove(),12000);
 }
-setInterval(createBalloon,800);
+function createCake(){
+  const cake = document.createElement("div");
+  cake.classList.add("cake");
+  cake.style.left = `${Math.random()*window.innerWidth}px`;
+  cake.textContent = "🎂";
+  cake.style.animationDuration = `${7+Math.random()*5}s`;
+  document.body.appendChild(cake);
+  setTimeout(()=>cake.remove(),12000);
+}
+setInterval(()=>{createBalloon(); createCake();},800);
 
 // ===== Start Music and messages =====
 const startOverlay = document.getElementById("startOverlay");

@@ -10,28 +10,27 @@
     padding: 0;
     font-family: 'Comic Sans MS', cursive, sans-serif;
     overflow: hidden;
-    color: #1d3557;
     cursor: pointer;
     background: linear-gradient(to bottom, #a8dadc, #caf0f8); /* biru lembut */
   }
   #message {
     position: fixed;
-    top: 15%;
+    top: 12%;
     width: 100%;
     text-align: center;
     font-size: 2em;
     color: #1d3557;
-    text-shadow: 1px 1px 5px #fff;
+    text-shadow: 2px 2px 8px #fff;
     pointer-events: none;
   }
   #lyrics {
     position: fixed;
-    top: 50%;
+    top: 55%;
     width: 100%;
     text-align: center;
     font-size: 1.5em;
     pointer-events: none;
-    text-shadow: 1px 1px 2px #fff;
+    text-shadow: 1px 1px 3px #fff;
   }
   #startOverlay {
     position: fixed;
@@ -73,7 +72,7 @@ function typeMessage() {
     if (birthdayMessage[msgIndex] === "\n") messageEl.innerHTML += "<br>";
     else messageEl.innerHTML += birthdayMessage[msgIndex];
     msgIndex++;
-    setTimeout(typeMessage, 80);
+    setTimeout(typeMessage, 70); // lebih smooth
   }
 }
 
@@ -96,39 +95,6 @@ const lyrics = [
   { time: 100, text: "Just how I feel" },
   { time: 104, text: "Could you tell me what's real anymore?" },
   { time: 108, text: "'Cause I wouldn't know" },
-  { time: 112, text: "Voice so low" },
-  { time: 116, text: "Sneaking around, so it goes" },
-  { time: 120, text: "I always try my best to listen" },
-  { time: 124, text: "Picking up things that I can fidget" },
-  { time: 128, text: "Circle speed, pacing around, watching my feet" },
-  { time: 132, text: "Batteries drain, I get the memo" },
-  { time: 136, text: "I think that I might have to let you go" },
-  { time: 140, text: "So can I call you tonight?" },
-  { time: 144, text: "I'm trying to make up my mind" },
-  { time: 148, text: "Just how I feel" },
-  { time: 152, text: "Could you tell me what's real?" },
-  { time: 156, text: "I hear your voice on the phone" },
-  { time: 160, text: "Now I'm no longer alone" },
-  { time: 164, text: "Just how I feel" },
-  { time: 168, text: "Could you tell me what's real anymore?" },
-  { time: 172, text: "'Cause I wouldn't know" },
-  { time: 176, text: "Don't go, don't go so easy" },
-  { time: 180, text: "Don't go, don't go and leave me" },
-  { time: 184, text: "Don't go, don't go so easy" },
-  { time: 188, text: "Don't go, don't go and leave me" },
-  { time: 192, text: "Don't go, don't go so easy" },
-  { time: 196, text: "Don't go, don't go and leave me" },
-  { time: 200, text: "Don't go, don't go so easy" },
-  { time: 204, text: "Don't go, go" },
-  { time: 208, text: "So can I call you tonight?" },
-  { time: 212, text: "I'm trying to make up my mind" },
-  { time: 216, text: "Just how I feel" },
-  { time: 220, text: "Could you tell me what's real?" },
-  { time: 224, text: "I hear your voice on the phone" },
-  { time: 228, text: "Now I'm no longer alone" },
-  { time: 232, text: "Just how I feel" },
-  { time: 236, text: "Could you tell me what's real anymore?" },
-  { time: 240, text: "'Cause I wouldn't know" },
 ];
 
 const audio = document.getElementById("bgMusic");
@@ -159,7 +125,7 @@ class Particle {
   constructor(x,y,type){
     this.x=x; this.y=y; this.type=type;
     this.size=random(5,15);
-    this.speedY=type==='balloon'?random(-0.3,-1):random(-1.5,-3);
+    this.speedY=type==='balloon'?random(-0.5,-1.5):random(-1.5,-3);
     this.speedX=random(-1,1);
     this.opacity=1;
     this.color = type==='heart'? '#ff6b6b': type==='confetti'? `hsl(${random(0,360)},80%,60%)`: type==='balloon'?'#ff9f1c':'#caf0f8';
@@ -184,9 +150,12 @@ class Particle {
       ctx.fill();
     } else {
       ctx.fillStyle=this.color;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = '#fff';
       ctx.beginPath();
       ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
       ctx.fill();
+      ctx.shadowBlur = 0;
     }
     ctx.globalAlpha=1;
   }
@@ -195,8 +164,8 @@ class Particle {
 function animate(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  // Add floating balloons randomly
-  if(Math.random()<0.02){
+  // Floating balloons randomly
+  if(Math.random()<0.03){
     particles.push(new Particle(random(0,canvas.width),canvas.height+20,'balloon'));
   }
 
@@ -230,6 +199,5 @@ startOverlay.addEventListener('click', ()=>{
   startOverlay.style.display = 'none';
 });
 </script>
-
 </body>
 </html>

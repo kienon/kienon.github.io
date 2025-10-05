@@ -13,265 +13,201 @@
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Bootstrap icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
-    /* === HACKING STYLE === */
-    :root {
-      --accent: #00ff88;
-      --bg: #0a0f0b;
-      --panel: rgba(255, 255, 255, 0.04);
-      --muted: #8ca795;
-    }
-
+    /* === MATRIX BACKGROUND === */
     body {
-      background: radial-gradient(1000px 300px at 10% 10%, rgba(0,255,136,0.08), transparent),
-                  linear-gradient(180deg, #050706 0%, #0a0f0b 100%);
-      color: #e6ffe9;
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      color: #0f0;
       font-family: "Roboto Mono", monospace;
-      padding-top: 40px;
-      position: relative;
-      overflow-x: hidden;
     }
 
-    .matrix {
-      pointer-events: none;
+    canvas {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 0;
-      background-image: linear-gradient(transparent 50%, rgba(0,255,136,0.02) 50%),
-                        linear-gradient(90deg, transparent 50%, rgba(0,255,136,0.02) 50%);
-      background-size: 2px 40px, 40px 2px;
-      opacity: 0.1;
     }
 
+    .content {
+      position: relative;
+      z-index: 2;
+      color: #e6ffe9;
+      min-height: 100vh;
+      padding-top: 60px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+    }
+
+    .hidden { display: none !important; }
     .panel {
-      background: var(--panel);
-      border: 1px solid rgba(0,255,136,0.15);
+      background: rgba(0,255,136,0.08);
+      border: 1px solid rgba(0,255,136,0.2);
       border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      backdrop-filter: blur(5px);
+      padding: 2rem;
     }
-
-    .title { color: var(--accent); font-weight: bold; }
-    .muted { color: var(--muted); }
 
     .pw-input {
       background: transparent;
-      border: 1px dashed rgba(0,255,136,0.2);
       color: #dfffe9;
-      border-radius: 8px;
-      transition: 0.2s;
-    }
-    .pw-input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 12px rgba(0,255,136,0.2);
+      border: 1px dashed rgba(0,255,136,0.3);
     }
 
     .error-glow {
       animation: glowRed 0.3s ease;
     }
-
     @keyframes glowRed {
-      0% { box-shadow: 0 0 10px rgba(255,0,0,0.5); }
+      0% { box-shadow: 0 0 10px rgba(255,0,0,0.7); }
       100% { box-shadow: none; }
     }
 
-    .hidden { display: none !important; }
-
     .status-badge {
       background: rgba(0,255,136,0.08);
-      border: 1px solid rgba(0,255,136,0.2);
-      color: var(--accent);
-      padding: 5px 10px;
+      border: 1px solid rgba(0,255,136,0.3);
+      color: #00ff88;
       border-radius: 8px;
-      font-size: 0.9rem;
+      padding: 4px 10px;
     }
 
-    .download-list a {
-      color: #e6ffe9;
-      text-decoration: none;
-    }
-    .download-list a:hover { color: var(--accent); }
+    a { color: #aaffcc; text-decoration: none; }
+    a:hover { color: #00ff88; }
   </style>
 </head>
 
 <body>
-  <div class="matrix"></div>
+  <canvas id="matrix"></canvas>
 
-  <div class="container py-5" style="position:relative; z-index:2;">
-    <div class="row justify-content-center">
-      <div class="col-lg-8 col-md-10">
-        <div class="panel p-4 p-md-5">
+  <div class="content">
+    <div class="container">
+      <div class="col-lg-8 mx-auto">
+        <div class="panel">
+          <h3 class="fw-bold text-success">🔒 Fail Muat Turun O2024</h3>
+          <div class="mb-3"><span class="status-badge" id="status-badge">Status: Locked</span></div>
 
-          <div class="d-flex align-items-center justify-content-between mb-3">
-            <div>
-              <div class="title fs-5">/secret/o2024</div>
-              <h3 class="fw-bold text-white">Akses Terhad — Muat Turun Fail</h3>
-              <div class="muted small">Masukkan kata laluan untuk akses fail.</div>
-            </div>
-            <div class="text-end">
-              <div class="status-badge" id="status-badge">Status: Locked</div>
-            </div>
-          </div>
-
-          <!-- Password Section -->
+          <!-- PASSWORD SECTION -->
           <div id="password-section">
-            <div class="mb-3">
-              <label for="password-input" class="form-label muted">Kata Laluan</label>
-              <input id="password-input" class="form-control pw-input" type="password" placeholder="Taip kata laluan" />
-            </div>
-
-            <div class="d-flex gap-2 align-items-center">
-              <button id="submit-btn" class="btn btn-success">Masuk</button>
-              <button id="clear-btn" class="btn btn-outline-secondary">Kosong</button>
-              <div class="ms-auto text-end">
-                <div class="muted small">Percubaan salah: <span id="attempts-left">—</span></div>
-                <div id="lock-info" class="muted small"></div>
-              </div>
-            </div>
-
-            <div class="mt-3">
-              <div id="error-msg" class="text-danger fw-semibold"></div>
-              <div id="info-msg" class="text-success fw-semibold"></div>
-            </div>
+            <p class="text-muted">Masukkan kata laluan untuk akses:</p>
+            <input type="password" id="password-input" class="form-control pw-input" placeholder="Kata laluan (contoh: kienon2024)">
+            <button class="btn btn-success mt-3" id="submit-btn">Masuk</button>
+            <div id="error-msg" class="text-danger mt-2"></div>
+            <div id="lock-msg" class="text-warning mt-2"></div>
           </div>
 
-          <!-- Download Section -->
-          <div id="download-section" class="hidden mt-4">
-            <h5 class="fw-bold text-white">📂 Muat Turun Fail O2024</h5>
-            <p class="muted">Klik untuk muat turun terus dari sini. Fail disimpan dalam folder <code>/o2024</code>.</p>
+          <!-- DOWNLOAD SECTION -->
+          <div id="download-section" class="hidden">
+            <h5 class="text-white mt-4">📂 Senarai Fail</h5>
+            <ul class="list-group mt-2">
+              <li class="list-group-item bg-transparent border-secondary">
+                <a href="o2024/configuration.xml" download><i class="bi bi-file-earmark-code"></i> configuration.xml</a>
+              </li>
+              <li class="list-group-item bg-transparent border-secondary">
+                <a href="o2024/activation-code-run-in-powershell.txt" download><i class="bi bi-terminal"></i> activation powershell</a>
+              </li>
+              <li class="list-group-item bg-transparent border-secondary">
+                <a href="o2024/run-configuration-using-this-code-first.txt" download><i class="bi bi-file-earmark-text"></i> run config first</a>
+              </li>
+              <li class="list-group-item bg-transparent border-secondary">
+                <a href="o2024/setup.exe" download><i class="bi bi-box-seam"></i> setup.exe</a>
+              </li>
+            </ul>
 
-            <div class="list-group download-list shadow-sm">
-              <a class="list-group-item bg-transparent border-0" href="o2024/configuration.xml" download>
-                <i class="bi bi-file-earmark-code-fill text-warning me-2"></i> configuration.xml
-              </a>
-              <a class="list-group-item bg-transparent border-0" href="o2024/activation-code-run-in-powershell.txt" download>
-                <i class="bi bi-terminal-fill text-info me-2"></i> activation-code-run-in-powershell.txt
-              </a>
-              <a class="list-group-item bg-transparent border-0" href="o2024/run-configuration-using-this-code-first.txt" download>
-                <i class="bi bi-file-earmark-text-fill text-success me-2"></i> run-configuration-using-this-code-first.txt
-              </a>
-              <a class="list-group-item bg-transparent border-0" href="o2024/setup.exe" download>
-                <i class="bi bi-box-seam-fill text-danger me-2"></i> setup.exe
-              </a>
-            </div>
-
-            <div class="mt-4 d-flex gap-2">
-              <button class="btn btn-outline-danger" id="logout-btn">Log Keluar</button>
-              <button class="btn btn-outline-secondary" id="lock-now-btn">Lock Now</button>
-            </div>
+            <button class="btn btn-outline-danger mt-4" id="logout-btn">Log Keluar</button>
           </div>
-
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== MD5 HASH FUNCTION ===== -->
-  <script>
-    function md5cycle(x, k) {
-      var a = x[0], b = x[1], c = x[2], d = x[3];
-      function cmn(q, a, b, x, s, t){ a = (a + q + x + t) | 0; return ((a << s) | (a >>> (32 - s))) + b | 0; }
-      function ff(a,b,c,d,x,s,t){ return cmn((b & c) | ((~b) & d), a, b, x, s, t); }
-      function gg(a,b,c,d,x,s,t){ return cmn((b & d) | (c & (~d)), a, b, x, s, t); }
-      function hh(a,b,c,d,x,s,t){ return cmn(b ^ c ^ d, a, b, x, s, t); }
-      function ii(a,b,c,d,x,s,t){ return cmn(c ^ (b | (~d)), a, b, x, s, t); }
-      a = ff(a,b,c,d,k[0],7,-680876936); d = ff(d,a,b,c,k[1],12,-389564586);
-      c = ff(c,d,a,b,k[2],17,606105819); b = ff(b,c,d,a,k[3],22,-1044525330);
-      a = gg(a,b,c,d,k[1],5,-165796510); d = gg(d,a,b,c,k[6],9,-1069501632);
-      c = gg(c,d,a,b,k[11],14,643717713); b = gg(b,c,d,a,k[0],20,-373897302);
-      a = hh(a,b,c,d,k[5],4,-378558); d = hh(d,a,b,c,k[8],11,-2022574463);
-      c = hh(c,d,a,b,k[11],16,1839030562); b = hh(b,c,d,a,k[14],23,-35309556);
-      a = ii(a,b,c,d,k[0],6,-198630844); d = ii(d,a,b,c,k[7],10,1126891415);
-      c = ii(c,d,a,b,k[14],15,-1416354905); b = ii(b,c,d,a,k[5],21,-57434055);
-      x[0] = (a + x[0]) | 0; x[1] = (b + x[1]) | 0; x[2] = (c + x[2]) | 0; x[3] = (d + x[3]) | 0;
-    }
-    function md5blk(s) {
-      var md5blks = [], i; for (i = 0; i < 64; i += 4)
-        md5blks[i>>2] = s.charCodeAt(i) + (s.charCodeAt(i+1)<<8) + (s.charCodeAt(i+2)<<16) + (s.charCodeAt(i+3)<<24);
-      return md5blks;
-    }
-    function md51(s) {
-      var n = s.length, state = [1732584193, -271733879, -1732584194, 271733878], i;
-      for (i = 64; i <= s.length; i += 64) md5cycle(state, md5blk(s.substring(i-64, i)));
-      s = s.substring(i-64);
-      var tail = new Array(16).fill(0);
-      for (i = 0; i < s.length; i++) tail[i>>2] |= s.charCodeAt(i) << ((i%4)<<3);
-      tail[i>>2] |= 0x80 << ((i%4)<<3);
-      if (i > 55) { md5cycle(state, tail); tail.fill(0); }
-      tail[14] = n*8; md5cycle(state, tail);
-      return state;
-    }
-    function rhex(n) {
-      var s = '', j = 0; for (; j < 4; j++) s += ((n >> (j * 8 + 4)) & 0x0F).toString(16) + ((n >> (j * 8)) & 0x0F).toString(16);
-      return s;
-    }
-    function md5(s) { return md51(s).map(rhex).join(''); }
-  </script>
+  <!-- MD5 LIBRARY -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
 
-  <!-- ===== PASSWORD LOGIC ===== -->
   <script>
-    const CORRECT_MD5 = "71675337ca0d558c15f36c1c3d85e31d"; 
+    // === MATRIX ANIMATION ===
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const chars = "アカサタナハマヤラワ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0F0";
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 35);
+
+    window.addEventListener("resize", () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
+
+    // === PASSWORD SYSTEM ===
+    const CORRECT_MD5 = "71675337ca0d558c15f36c1c3d85e31d"; // kienon2024
     const MAX_ATTEMPTS = 3;
     const LOCK_BASE_MINUTES = 1;
     const LOCK_MAX_MINUTES = 1440;
-    const STORAGE_KEY = "o2024_protect_v1";
 
     const input = document.getElementById("password-input");
     const submitBtn = document.getElementById("submit-btn");
-    const clearBtn = document.getElementById("clear-btn");
     const errorMsg = document.getElementById("error-msg");
-    const infoMsg = document.getElementById("info-msg");
-    const attemptsLeftEl = document.getElementById("attempts-left");
-    const lockInfoEl = document.getElementById("lock-info");
+    const lockMsg = document.getElementById("lock-msg");
     const statusBadge = document.getElementById("status-badge");
+
     const passwordSection = document.getElementById("password-section");
     const downloadSection = document.getElementById("download-section");
     const logoutBtn = document.getElementById("logout-btn");
-    const lockNowBtn = document.getElementById("lock-now-btn");
 
     function beep() {
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.type = 'square'; o.frequency.value = 500;
-        o.connect(g); g.connect(ctx.destination);
-        g.gain.setValueAtTime(0.1, ctx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
-        o.start(); o.stop(ctx.currentTime + 0.3);
-      } catch {}
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "square"; osc.frequency.value = 400;
+      osc.connect(gain); gain.connect(ctx.destination);
+      gain.gain.value = 0.1;
+      osc.start();
+      setTimeout(() => osc.stop(), 200);
     }
 
     function now() { return Date.now(); }
-    function loadState() {
-      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { attempts:0, lockedUntil:0, totalLocks:0 }; }
-      catch { return { attempts:0, lockedUntil:0, totalLocks:0 }; }
+    function getState() {
+      try { return JSON.parse(localStorage.getItem("lockData")) || { attempts: 0, lockedUntil: 0 }; }
+      catch { return { attempts: 0, lockedUntil: 0 }; }
     }
-    function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
-    function formatTime(ms){ return new Date(ms).toLocaleString(); }
-
-    function calcLockMinutes(n){ return Math.min(LOCK_BASE_MINUTES * Math.pow(2, n-1), LOCK_MAX_MINUTES); }
-
-    let state = loadState();
+    function saveState(s) { localStorage.setItem("lockData", JSON.stringify(s)); }
 
     function updateUI() {
-      const locked = state.lockedUntil && state.lockedUntil > now();
-      const authed = sessionStorage.getItem("o2024_auth") === "true";
-
-      statusBadge.textContent = locked ? "Status: Locked" : (authed ? "Status: Unlocked" : "Status: Locked");
-      attemptsLeftEl.textContent = Math.max(0, MAX_ATTEMPTS - (state.attempts || 0));
+      const s = getState();
+      const locked = s.lockedUntil && s.lockedUntil > now();
+      const authed = sessionStorage.getItem("auth") === "true";
 
       if (locked) {
-        const mins = Math.ceil((state.lockedUntil - now()) / 60000);
-        lockInfoEl.textContent = `🚫 Dikunci — boleh cuba semula pada ${formatTime(state.lockedUntil)} (${mins} minit lagi)`;
-        input.disabled = true; submitBtn.disabled = true;
+        const minsLeft = Math.ceil((s.lockedUntil - now()) / 60000);
+        lockMsg.textContent = `🚫 Akaun dikunci. Cuba semula pada ${new Date(s.lockedUntil).toLocaleString()} (${minsLeft} minit lagi).`;
+        input.disabled = true;
+        submitBtn.disabled = true;
+        statusBadge.textContent = "Status: Locked";
       } else {
-        lockInfoEl.textContent = "";
-        input.disabled = false; submitBtn.disabled = false;
+        lockMsg.textContent = "";
+        input.disabled = false;
+        submitBtn.disabled = false;
       }
 
       if (authed) {
@@ -284,58 +220,45 @@
       }
     }
 
-    function lockFor(mins){
-      state.totalLocks++;
-      state.lockedUntil = now() + mins * 60000;
-      state.attempts = 0;
-      saveState(state);
-      errorMsg.textContent = `🔒 Akaun dikunci selama ${mins} minit. Boleh cuba semula pada ${formatTime(state.lockedUntil)}.`;
-      infoMsg.textContent = "";
-      updateUI();
-    }
-
-    function checkPassword(){
-      errorMsg.textContent = ""; infoMsg.textContent = "";
-      if (state.lockedUntil && state.lockedUntil > now()) {
-        errorMsg.textContent = `🔒 Masih dikunci. Cuba semula pada ${formatTime(state.lockedUntil)}`;
-        updateUI(); return;
-      }
-
-      const val = input.value.trim(); if(!val){ errorMsg.textContent="Sila masukkan kata laluan."; return; }
+    function checkPassword() {
+      const val = input.value.trim();
+      if (!val) return;
 
       const hash = md5(val);
-      if(hash === CORRECT_MD5){
-        sessionStorage.setItem("o2024_auth","true");
-        state.attempts=0; state.lockedUntil=0;
-        saveState(state);
-        infoMsg.textContent="✅ Akses dibenarkan. Anda boleh muat turun sekarang.";
+      const s = getState();
+
+      if (s.lockedUntil && s.lockedUntil > now()) {
+        updateUI();
+        return;
+      }
+
+      if (hash === CORRECT_MD5) {
+        sessionStorage.setItem("auth", "true");
+        s.attempts = 0; s.lockedUntil = 0;
+        saveState(s);
         updateUI();
       } else {
         beep();
         input.classList.add("error-glow");
-        setTimeout(()=>input.classList.remove("error-glow"),300);
-        state.attempts++;
-        saveState(state);
-        const remain = Math.max(0, MAX_ATTEMPTS - state.attempts);
-        if(state.attempts >= MAX_ATTEMPTS){
-          const mins = calcLockMinutes(state.totalLocks+1);
-          lockFor(mins);
+        setTimeout(() => input.classList.remove("error-glow"), 300);
+        s.attempts++;
+        if (s.attempts >= MAX_ATTEMPTS) {
+          const mins = Math.min(LOCK_BASE_MINUTES * Math.pow(2, s.attempts - MAX_ATTEMPTS), LOCK_MAX_MINUTES);
+          s.lockedUntil = now() + mins * 60000;
+          s.attempts = 0;
+          lockMsg.textContent = `❌ Terlalu banyak percubaan. Dikunci selama ${mins} minit.`;
         } else {
-          errorMsg.textContent=`❌ Kata laluan salah. Percubaan tinggal: ${remain}`;
+          errorMsg.textContent = `❌ Salah. Percubaan ${s.attempts}/${MAX_ATTEMPTS}`;
         }
+        saveState(s);
         updateUI();
       }
     }
 
-    input.addEventListener("keydown", e => { if(e.key==="Enter"){ e.preventDefault(); checkPassword(); } });
     submitBtn.addEventListener("click", checkPassword);
-    clearBtn.addEventListener("click", ()=>{ input.value=""; errorMsg.textContent=""; infoMsg.textContent=""; input.focus(); });
-    logoutBtn.addEventListener("click", ()=>{ if(sessionStorage.getItem("o2024_auth")==="true"){ state.lockedUntil=0; state.attempts=0; saveState(state); }
-      sessionStorage.removeItem("o2024_auth"); infoMsg.textContent="Anda telah logout."; updateUI(); });
-    lockNowBtn.addEventListener("click", ()=>{ lockFor(5); });
-
-    setInterval(()=>{ if(state.lockedUntil && state.lockedUntil <= now()){ state.lockedUntil=0; state.attempts=0; saveState(state); } updateUI(); },1000);
-    window.addEventListener("load", updateUI);
+    input.addEventListener("keydown", e => { if (e.key === "Enter") checkPassword(); });
+    logoutBtn.addEventListener("click", () => { sessionStorage.removeItem("auth"); updateUI(); });
+    window.onload = updateUI;
   </script>
 </body>
 </html>

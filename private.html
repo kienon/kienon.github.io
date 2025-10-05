@@ -1,334 +1,321 @@
 <!DOCTYPE html>
 <html lang="ms">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="robots" content="noindex, nofollow" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fail Muat Turun O2024</title>
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- CryptoJS untuk MD5 hashing -->
+  <!-- CryptoJS for MD5 hashing -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-
-  <!-- Bootstrap icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
     :root{
-      --bg-1: #071016;
-      --bg-2: #00120a;
-      --accent: #00ff88;
-      --muted: #9aa9a3;
+      --bg:#0f1724;
+      --panel:#0b1117;
+      --accent:#00d084;
+      --muted: #9aa7b2;
     }
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,24,10,0.12), transparent),
-                  linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
-      color: #d7efe6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      display:flex;
-      align-items:center;
+    body {
+      background: radial-gradient( circle at 10% 10%, rgba(0,208,132,0.06), transparent 10%),
+                  radial-gradient( circle at 90% 90%, rgba(0,208,132,0.03), transparent 10%),
+                  linear-gradient(180deg, #071024 0%, var(--bg) 100%);
+      color: #e6eef3;
       min-height:100vh;
-    }
-
-    .matrix {
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index:0;
-      opacity:0.08;
-      mix-blend-mode:screen;
-    }
-    .matrix canvas{width:100%;height:100%;display:block}
-
-    .container-wrap{
-      z-index:5;
-      width:100%;
-      padding:40px 16px;
-    }
-
-    .card-panel{
-      max-width:960px;
-      margin:0 auto;
-      background: linear-gradient(180deg, rgba(0,20,10,0.65), rgba(0,10,6,0.55));
-      border: 1px solid rgba(0,255,136,0.08);
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-      backdrop-filter: blur(6px) saturate(120%);
-      border-radius:12px;
-      padding:28px;
-    }
-
-    h2, h1 { color: var(--accent); letter-spacing: .6px; }
-    p.muted { color: var(--muted); }
-
-    .form-control{
-      background: rgba(0,0,0,0.45);
-      border: 1px solid rgba(255,255,255,0.04);
-      color: #dfffe9;
-    }
-    .form-control::placeholder{ color: rgba(215,239,230,0.45); }
-    .btn-green{
-      background: linear-gradient(90deg,#00c77c,#00ffb1);
-      color:#01220f;
-      font-weight:700;
-      border-radius:999px;
-      box-shadow: 0 6px 18px rgba(0,255,136,0.08);
-    }
-
-    .btn-ghost{
-      border: 1px solid rgba(255,255,255,0.06);
-      color: #cfeee2;
-      background: transparent;
-    }
-
-    .list-group-item{
-      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
-      color: #e6fff2;
-      border: 1px solid rgba(0,255,136,0.03);
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .list-group-item:hover{
-      transform: translateY(-4px);
-      box-shadow: 0 10px 30px rgba(0,255,136,0.04);
-      border-color: rgba(0,255,136,0.14);
-    }
-    .list-group-item i { font-size:1.05rem; margin-right:.6rem; color:var(--accent); }
-
-    .meta {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       display:flex;
-      gap:12px;
       align-items:center;
-      color:var(--muted);
-      font-size:.92rem;
+      justify-content:center;
+      padding:40px 20px;
+    }
+    .card-panel{
+      width:100%;
+      max-width:820px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      padding:36px;
+      border-radius:12px;
+      box-shadow: 0 10px 40px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
     }
 
-    .hidden { display:none!important; }
+    .muted { color: var(--muted); }
+    .accent { color: var(--accent); }
 
-    @media (max-width:576px){
-      .card-panel{ padding:18px; border-radius:10px; }
-      .form-control.w-50{ width:100%!important; }
+    .hidden { display:none !important; }
+
+    input#password-input {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.04);
+      color: #eaf6ee;
+      padding: 12px 16px;
+      border-radius:8px;
+    }
+
+    .btn-accent {
+      background: linear-gradient(90deg, var(--accent), #00b36b);
+      border: none;
+      color: #04101a;
+      font-weight:700;
+    }
+
+    .file-list a { 
+      color: #071018;
+      text-decoration:none;
+    }
+
+    .small-muted { color: rgba(230,238,243,0.6); }
+
+    .lock-timer { font-weight:700; color:#ff6b6b; }
+
+    /* subtle matrix/hack vibe */
+    .matrix {
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+      color: rgba(0,208,132,0.35);
+      letter-spacing: 0.6px;
+    }
+
+    @media (max-width:560px){
+      .card-panel{ padding:20px; }
+      input#password-input { width:100% !important; }
     }
   </style>
 </head>
-
 <body>
-  <div class="matrix" aria-hidden="true"><canvas id="matrixCanvas"></canvas></div>
+  <div class="card-panel">
+    <div id="password-section" class="text-center">
+      <h2 class="fw-bold mb-1">🔒 Akses Terhad</h2>
+      <p class="muted small-muted">Masukkan kata laluan untuk muat turun fail. (Halaman ini tidak diindeks.)</p>
 
-  <div class="container-wrap">
-    <div class="card-panel">
-      <div class="row align-items-center">
-        <div class="col-md-8">
-          <h2 class="mb-1">🔒 Akses Terhad — Muat Turun O2024</h2>
-          <p class="muted mb-0">Sila masukkan kata laluan untuk lihat pautan muat turun. Fail diehost dalam folder <code>/o2024/</code>.</p>
-          <p class="meta mt-2"><span><i class="bi bi-terminal-fill"></i> Secure Download</span><span>•</span><span>No Index / No Follow</span></p>
-        </div>
-        <div class="col-md-4 text-md-end mt-3 mt-md-0">
-          <button id="logoutBtn" class="btn btn-ghost btn-sm hidden">Log Keluar</button>
-        </div>
+      <div class="d-flex justify-content-center mt-4">
+        <input type="password" id="password-input" class="form-control w-50" placeholder="Masukkan kata laluan" autofocus>
       </div>
 
-      <hr style="border-color: rgba(255,255,255,0.03); margin:18px 0 24px;">
-
-      <!-- Password Prompt -->
-      <div id="password-section" class="text-center">
-        <div class="d-flex justify-content-center">
-          <input id="password-input" aria-label="kata laluan" class="form-control w-50" type="password" placeholder="Masukkan kata laluan" />
-        </div>
-        <div class="mt-3">
-          <button class="btn btn-green" id="enterBtn">Masuk</button>
-        </div>
-        <p id="error-msg" class="text-danger mt-3" style="opacity:0.9"></p>
+      <div class="d-flex justify-content-center gap-2 mt-3">
+        <button id="btn-enter" class="btn btn-accent">Masuk</button>
+        <button id="btn-help" class="btn btn-outline-light" onclick="openWhatsApp()">Hubungi Admin</button>
       </div>
 
-      <!-- Download Section -->
-      <div id="download-section" class="hidden">
-        <h3 class="fw-bold text-white mt-2">📂 Muat Turun Fail</h3>
-        <p class="muted">Klik setiap item untuk muat turun. Jika browser buka fail, tekan kanan → Simpan sebagai.</p>
+      <p id="error-msg" class="text-danger mt-3 mb-0"></p>
+      <p id="info-msg" class="muted mt-2"></p>
 
-        <div class="list-group mt-3 shadow-sm">
-          <a href="o2024/configuration.xml" download class="list-group-item list-group-item-action">
-            <i class="bi bi-file-earmark-code"></i> configuration.xml — XML Config (gunakan dalam CMD)
-            <div class="small text-muted mt-1">Format: XML • Size: (sila semak)</div>
-          </a>
+      <div class="mt-3 text-start matrix small-muted" id="attempt-log" style="display:none;">
+        <!-- optional debug/attempt info -->
+      </div>
+    </div>
 
-          <a href="o2024/activation-code-run-in-powershell.txt" download class="list-group-item list-group-item-action">
-            <i class="bi bi-terminal"></i> activation-code-run-in-powershell.txt — Activation PowerShell
-            <div class="small text-muted mt-1">Plain text script untuk digunakan di PowerShell.</div>
-          </a>
+    <div id="download-section" class="hidden text-center">
+      <h1 class="fw-bold accent mb-3">📂 Muat Turun Fail O2024</h1>
+      <p class="small-muted mb-3">Klik untuk muat turun terus dari laman ini.</p>
 
-          <a href="o2024/run-configuration-using-this-code-first.txt" download class="list-group-item list-group-item-action">
-            <i class="bi bi-code-slash"></i> run-configuration-using-this-code-first.txt — Arahan jalankan XML
-            <div class="small text-muted mt-1">Langkah-langkah ringkas sebelum jalankan configuration.xml</div>
-          </a>
-
-          <a href="o2024/setup.exe" download class="list-group-item list-group-item-action">
-            <i class="bi bi-file-earmark-zip"></i> setup.exe — Installer
-            <div class="small text-muted mt-1">Executable installer. Muat turun sahaja jika anda pasti.</div>
-          </a>
-        </div>
-
-        <div class="mt-4 d-flex gap-2">
-          <button class="btn btn-ghost" onclick="logout()">Log Keluar</button>
-          <a class="btn btn-green" href="#" id="download-all" onclick="downloadAll(event)">Muat turun Semua (Zip)</a>
-        </div>
+      <div class="list-group shadow-sm text-start mx-auto file-list" style="max-width:700px;">
+        <a href="o2024/configuration.xml" download class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          XML Config in cmd <span class="badge bg-secondary">XML</span>
+        </a>
+        <a href="o2024/activation-code-run-in-powershell.txt" download class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          Activation Powershell <span class="badge bg-secondary">TXT</span>
+        </a>
+        <a href="o2024/run-configuration-using-this-code-first.txt" download class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          To run XML <span class="badge bg-secondary">TXT</span>
+        </a>
+        <a href="o2024/setup.exe" download class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          setup <span class="badge bg-secondary">EXE</span>
+        </a>
       </div>
 
+      <div class="mt-4">
+        <button class="btn btn-outline-danger" onclick="logout()">Log Keluar</button>
+      </div>
     </div>
   </div>
 
-  <!-- JSZip optional -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script>
-    // MD5 hash of the password (example: MD5('bananabro123'))
-    const STORED_HASH = "71675337ca0d558c15f36c1c3d85e31d";
+<script>
+/*
+  Client-side rate-limit (Option 1)
+  - MAX_ATTEMPTS: allowed failed tries before lock
+  - LOCK_MINUTES: lock duration in minutes
+  - STORED_HASH: MD5 hash of the correct password (change as needed)
+*/
+const MAX_ATTEMPTS = 3;
+const LOCK_MINUTES = 5;
 
-    const FILES = [
-      {path: "o2024/configuration.xml", name: "configuration.xml"},
-      {path: "o2024/activation-code-run-in-powershell.txt", name: "activation-code-run-in-powershell.txt"},
-      {path: "o2024/run-configuration-using-this-code-first.txt", name: "run-configuration-using-this-code-first.txt"},
-      {path: "o2024/setup.exe", name: "setup.exe"}
-    ];
+// === Change this to MD5 of your password ===
+const STORED_HASH = "f0d6b6a66b27f3d0f7d2b6b4c3a5b2ea"; 
 
-    const passwordInput = document.getElementById("password-input");
-    const errorMsg = document.getElementById("error-msg");
-    const passwordSection = document.getElementById("password-section");
-    const downloadSection = document.getElementById("download-section");
-    const logoutBtn = document.getElementById("logoutBtn");
-    const enterBtn = document.getElementById("enterBtn");
+const LS_ATT_KEY = "o2024_attempts";
+const LS_LOCK_KEY = "o2024_lockUntil";
+const AUTH_KEY = "o2024_auth";
 
-    function showDownload(){
-      passwordSection.classList.add("hidden");
-      downloadSection.classList.remove("hidden");
-      logoutBtn.classList.remove("hidden");
-      sessionStorage.setItem("auth","true");
+const passInput = document.getElementById('password-input');
+const btnEnter = document.getElementById('btn-enter');
+const errorMsg = document.getElementById('error-msg');
+const infoMsg = document.getElementById('info-msg');
+const attemptLog = document.getElementById('attempt-log');
+
+btnEnter.addEventListener('click', checkPassword);
+
+// allow Enter key to submit
+passInput.addEventListener('keydown', function(e){
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    btnEnter.click();
+  }
+});
+
+// on load restore state
+window.addEventListener('load', function(){
+  // if already authorized in this session, show downloads
+  if (sessionStorage.getItem(AUTH_KEY) === "true") {
+    showDownloadSection();
+    return;
+  }
+
+  updateStatusMessage();
+  renderAttemptLog();
+});
+
+// MAIN check function
+function checkPassword(){
+  clearMessages();
+
+  // check lock first
+  const now = Date.now();
+  const lockUntil = parseInt(localStorage.getItem(LS_LOCK_KEY) || "0", 10);
+  if (now < lockUntil) {
+    const seconds = Math.ceil((lockUntil - now)/1000);
+    errorMsg.textContent = `🚫 Ciri dikunci. Cuba lagi selepas ${formatSeconds(seconds)}.`;
+    updateLockCountdown();
+    return;
+  }
+
+  const val = passInput.value || "";
+  if (!val.trim()) {
+    errorMsg.textContent = "Sila masukkan kata laluan.";
+    return;
+  }
+
+  // compute MD5 of input
+  const hashed = CryptoJS.MD5(val.trim()).toString();
+
+  if (hashed === STORED_HASH) {
+    // success
+    sessionStorage.setItem(AUTH_KEY, "true");
+    clearAttempts();
+    showDownloadSection();
+    return;
+  }
+
+  // fail
+  recordFailedAttempt();
+}
+
+// helpers
+function clearMessages(){
+  errorMsg.textContent = "";
+  infoMsg.textContent = "";
+}
+
+function showDownloadSection(){
+  document.getElementById('password-section').classList.add('hidden');
+  document.getElementById('download-section').classList.remove('hidden');
+}
+
+function logout(){
+  sessionStorage.removeItem(AUTH_KEY);
+  // optionally do not clear attempts so user still limited
+  location.reload();
+}
+
+function recordFailedAttempt(){
+  let attempts = parseInt(localStorage.getItem(LS_ATT_KEY) || "0", 10);
+  attempts += 1;
+  localStorage.setItem(LS_ATT_KEY, attempts.toString());
+
+  if (attempts >= MAX_ATTEMPTS) {
+    const lockUntil = Date.now() + LOCK_MINUTES * 60 * 1000;
+    localStorage.setItem(LS_LOCK_KEY, lockUntil.toString());
+    errorMsg.textContent = `❌ Terlalu banyak cubaan. Ciri dikunci selama ${LOCK_MINUTES} minit. Jika anda pelanggan sah, <a href="#" onclick="openWhatsApp();return false;">hubungi admin</a>.`;
+    updateLockCountdown();
+  } else {
+    errorMsg.innerHTML = `❌ Kata laluan salah. Percubaan ${attempts}/${MAX_ATTEMPTS}.`;
+    infoMsg.innerHTML = `<small class="muted">Jika anda pelanggan sah, cuba semak WhatsApp kami jika perlukan bantuan.</small>`;
+  }
+  renderAttemptLog();
+}
+
+function clearAttempts(){
+  localStorage.removeItem(LS_ATT_KEY);
+  localStorage.removeItem(LS_LOCK_KEY);
+  renderAttemptLog();
+}
+
+function updateStatusMessage(){
+  const now = Date.now();
+  const lockUntil = parseInt(localStorage.getItem(LS_LOCK_KEY) || "0", 10);
+  if (now < lockUntil) {
+    updateLockCountdown();
+  } else {
+    const attempts = parseInt(localStorage.getItem(LS_ATT_KEY) || "0", 10);
+    if (attempts > 0) {
+      infoMsg.textContent = `Percubaan salah: ${attempts}/${MAX_ATTEMPTS}. Selepas ${MAX_ATTEMPTS} cubaan, ciri akan dikunci ${LOCK_MINUTES} min.`;
+    } else {
+      infoMsg.textContent = "";
     }
+  }
+}
 
-    function checkPassword(){
-      const val = passwordInput.value.trim();
-      if(!val){
-        errorMsg.textContent = "Sila masukkan kata laluan.";
-        return;
-      }
-      const hash = CryptoJS.MD5(val).toString();
-      if(hash === STORED_HASH){
-        errorMsg.textContent = "";
-        showDownload();
-      } else {
-        errorMsg.textContent = "❌ Kata laluan salah. Cuba lagi.";
-      }
+// show live countdown while locked
+let lockTimerInterval = null;
+function updateLockCountdown(){
+  if (lockTimerInterval) clearInterval(lockTimerInterval);
+  lockTimerInterval = setInterval(()=> {
+    const now = Date.now();
+    const lockUntil = parseInt(localStorage.getItem(LS_LOCK_KEY) || "0", 10);
+    if (now >= lockUntil) {
+      clearInterval(lockTimerInterval);
+      localStorage.removeItem(LS_LOCK_KEY);
+      localStorage.removeItem(LS_ATT_KEY);
+      errorMsg.textContent = "";
+      infoMsg.textContent = "🔓 Kunci dibuka. Sila cuba semula.";
+      renderAttemptLog();
+      return;
     }
+    const seconds = Math.ceil((lockUntil - now)/1000);
+    errorMsg.textContent = `🚫 Dikunci — cuba lagi dalam ${formatSeconds(seconds)}.`;
+  }, 500);
+}
 
-    // Handle Enter key on input: submit when Enter pressed
-    passwordInput.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.keyCode === 13){
-        e.preventDefault(); // prevent accidental form submit / reload
-        checkPassword();
-      }
-    });
+function formatSeconds(sec){
+  if (sec <= 60) return `${sec}s`;
+  const m = Math.floor(sec/60);
+  const s = sec % 60;
+  return `${m}m ${s}s`;
+}
 
-    // Also handle Enter click on the visible button (keyboard accessibility)
-    enterBtn.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.keyCode === 13){
-        e.preventDefault();
-        checkPassword();
-      }
-    });
+// debug small log (hidden by default), helpful when testing
+function renderAttemptLog(){
+  const attempts = parseInt(localStorage.getItem(LS_ATT_KEY) || "0", 10);
+  const lockUntil = parseInt(localStorage.getItem(LS_LOCK_KEY) || "0", 10);
+  if (attempts === 0 && lockUntil === 0) {
+    attemptLog.style.display = "none";
+    attemptLog.innerText = "";
+    return;
+  }
+  attemptLog.style.display = "block";
+  attemptLog.innerHTML = `localStorage: attempts=${attempts} | lockUntil=${ lockUntil ? new Date(lockUntil).toLocaleString() : 'none' }`;
+}
 
-    // Also allow click on the button
-    enterBtn.addEventListener('click', checkPassword);
+// open whatsapp prefilled
+function openWhatsApp(){
+  const wa = "https://wa.me/601111943110?text=Hai%2C+saya+perlukan+akses+fail+O2024.+Boleh+bantu%3F";
+  window.open(wa, "_blank");
+}
+</script>
 
-    function logout(){
-      sessionStorage.removeItem("auth");
-      passwordInput.value = "";
-      downloadSection.classList.add("hidden");
-      passwordSection.classList.remove("hidden");
-      logoutBtn.classList.add("hidden");
-    }
-
-    window.addEventListener("load", ()=>{
-      if(sessionStorage.getItem("auth")==="true"){
-        showDownload();
-      }
-    });
-
-    async function downloadAll(e){
-      e.preventDefault();
-      const btn = document.getElementById("download-all");
-      btn.textContent = "Menyediakan Zip ...";
-      btn.classList.add("disabled");
-      try{
-        const zip = new JSZip();
-        for(const f of FILES){
-          const res = await fetch(f.path);
-          if(!res.ok) throw new Error("Fail tidak dijumpai: "+f.path);
-          const blob = await res.blob();
-          zip.file(f.name, blob);
-        }
-        const content = await zip.generateAsync({type:"blob"});
-        const url = URL.createObjectURL(content);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "o2024-all-files.zip";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      }catch(err){
-        alert("Gagal sediakan ZIP: " + err.message + "\n\nNota: jika server (GitHub Pages) menolak fetch cross-origin atau fail besar, gunakan klik manual 'download' tiap fail.");
-      }finally{
-        btn.textContent = "Muat turun Semua (Zip)";
-        btn.classList.remove("disabled");
-      }
-    }
-
-    /* Matrix background */
-    (function matrix(){
-      const canvas = document.getElementById("matrixCanvas");
-      const ctx = canvas.getContext("2d");
-      let w = canvas.width = innerWidth;
-      let h = canvas.height = innerHeight;
-
-      const size = 14;
-      const columns = Math.floor(w/size);
-      const drops = new Array(columns).fill(1);
-
-      function draw(){
-        ctx.fillStyle = "rgba(0, 0, 0, 0.06)";
-        ctx.fillRect(0,0,w,h);
-
-        ctx.fillStyle = "rgba(0,255,136,0.85)";
-        ctx.font = size + "px monospace";
-
-        for(let i=0;i<drops.length;i++){
-          const text = Math.random() > 0.5 ? "01" : Math.floor(Math.random()*10);
-          ctx.fillText(text, i*size, drops[i]*size);
-
-          if(drops[i]*size > h && Math.random() > 0.975) drops[i]=0;
-          drops[i]++;
-        }
-      }
-
-      let raf;
-      function loop(){
-        draw();
-        raf = requestAnimationFrame(loop);
-      }
-      loop();
-
-      addEventListener("resize", ()=>{
-        cancelAnimationFrame(raf);
-        w = canvas.width = innerWidth;
-        h = canvas.height = innerHeight;
-      });
-    })();
-  </script>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

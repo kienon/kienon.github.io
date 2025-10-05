@@ -13,102 +13,93 @@
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
-    /* === Hacking-style visual theme === */
     :root {
       --bg: #0b0f10;
       --panel: #0f1415;
       --accent: #00d07a;
       --muted: #9aa5a1;
-      --glass: rgba(255, 255, 255, 0.03);
     }
 
-    html, body { height: 100%; }
+    html,body{height:100%; margin:0;}
     body {
-      background:
-        radial-gradient(1200px 400px at 10% 10%, rgba(0, 208, 122, 0.035), transparent 5%),
-        linear-gradient(180deg, #050606 0%, #081012 100%);
+      background: linear-gradient(180deg,#050606 0%, #081012 100%);
       color: #e6f7ef;
-      font-family: "Inter", ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      -webkit-font-smoothing: antialiased;
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
       padding-top: 32px;
+      overflow-x: hidden;
+    }
+
+    /* MATRIX CANVAS sits below content */
+    #matrix-canvas {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      display: block;
     }
 
     .panel {
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
+      position: relative;
+      z-index: 3;
+      background: rgba(255,255,255,0.02);
       border: 1px solid rgba(0,208,122,0.06);
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       border-radius: 12px;
     }
 
-    .title {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace;
-      color: var(--accent);
-      letter-spacing: 1px;
-    }
-
-    .muted { color: var(--muted); }
     .hidden { display: none !important; }
 
-    /* Password input */
     .pw-input {
       background: transparent;
       border: 1px dashed rgba(0,208,122,0.12);
       color: #c9ffee;
-      border-radius: 8px;
     }
     .pw-input:focus {
       border-color: rgba(0,208,122,0.5);
-      box-shadow: 0 6px 18px rgba(0,208,122,0.06);
+      box-shadow: 0 0 15px rgba(0,208,122,0.1);
+      outline: none;
     }
 
     .download-list a { color: #e6f7ef; text-decoration: none; }
-    .download-list a:hover { color: var(--accent); }
+    .download-list a:hover { color: var(--accent); text-decoration: none; }
 
     .status-badge {
       font-family: ui-monospace, "Roboto Mono", monospace;
-      background: rgba(0,208,122,0.08);
+      background: rgba(0,208,122,0.06);
       color: var(--accent);
-      border: 1px solid rgba(0,208,122,0.08);
+      border: 1px solid rgba(0,208,122,0.06);
       padding: 6px 10px;
       border-radius: 8px;
     }
 
-    .matrix {
-      pointer-events: none;
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background-image:
-        linear-gradient(transparent 50%, rgba(0,208,122,0.02) 50%),
-        linear-gradient(90deg, transparent 50%, rgba(0,208,122,0.02) 50%);
-      background-size: 2px 40px, 40px 2px;
-      opacity: 0.08;
-    }
+    .muted { color: var(--muted); }
 
-    @media (max-width: 767px) {
-      .pw-input { width: 100% !important; }
+    /* Responsive tweaks */
+    @media (max-width:767px){
+      .pw-input { width:100% !important; }
     }
   </style>
 </head>
 
 <body>
-  <div class="matrix"></div>
+  <!-- Matrix canvas (green falling code) -->
+  <canvas id="matrix-canvas"></canvas>
 
   <div class="container py-5" style="position: relative; z-index: 2;">
     <div class="row justify-content-center">
       <div class="col-lg-8 col-md-10">
         <div class="panel p-4 p-md-5">
-
+          <!-- Header -->
           <div class="d-flex align-items-center justify-content-between mb-3">
             <div>
-              <div class="title fs-5">/secret/o2024</div>
+              <div style="font-family: ui-monospace, 'Roboto Mono', monospace; color: var(--accent);">/secret/o2024</div>
               <h3 class="fw-bold text-white">Akses Terhad — Muat Turun Fail</h3>
-              <div class="muted small">Masukkan kata laluan untuk akses.</div>
+              <div class="muted small">Masukkan kata laluan — akses akan diberikan jika sah.</div>
             </div>
             <div class="text-end">
               <div class="status-badge" id="status-badge">Status: Locked</div>
@@ -119,14 +110,14 @@
           <div id="password-section">
             <div class="mb-3">
               <label for="password-input" class="form-label muted">Kata Laluan</label>
-              <input id="password-input" class="form-control pw-input" type="password" placeholder="Masukkan kata laluan..." />
+              <input id="password-input" class="form-control pw-input" type="password" placeholder="Taip kata laluan (contoh: kienon2024)" autocomplete="off" />
             </div>
 
             <div class="d-flex gap-2 align-items-center">
               <button id="submit-btn" class="btn btn-success">Masuk</button>
               <button id="clear-btn" class="btn btn-outline-secondary">Kosong</button>
               <div class="ms-auto text-end">
-                <div class="muted small">Percubaan salah: <span id="attempts-left">—</span></div>
+                <div class="muted small">Percubaan tinggal: <span id="attempts-left">—</span></div>
                 <div id="lock-info" class="muted small"></div>
               </div>
             </div>
@@ -137,80 +128,104 @@
             </div>
           </div>
 
-          <!-- Download Section -->
+          <!-- Download Section (hidden until auth) -->
           <div id="download-section" class="hidden mt-4">
             <h5 class="fw-bold text-white">📂 Muat Turun Fail O2024</h5>
-            <p class="muted">Klik untuk muat turun terus dari folder <code>/o2024</code>.</p>
+            <p class="muted">Klik untuk muat turun terus dari sini. Fail disimpan dalam folder <code>/o2024</code>.</p>
 
             <div class="list-group download-list shadow-sm">
-              <a href="o2024/configuration.xml" download class="list-group-item bg-transparent border-0">
+              <a class="list-group-item list-group-item-action bg-transparent border-0 text-start" href="o2024/configuration.xml" download>
                 <i class="bi bi-file-earmark-code-fill text-warning me-2"></i> configuration.xml
               </a>
-              <a href="o2024/activation-code-run-in-powershell.txt" download class="list-group-item bg-transparent border-0">
+              <a class="list-group-item list-group-item-action bg-transparent border-0 text-start" href="o2024/activation-code-run-in-powershell.txt" download>
                 <i class="bi bi-terminal-fill text-info me-2"></i> activation-code-run-in-powershell.txt
               </a>
-              <a href="o2024/run-configuration-using-this-code-first.txt" download class="list-group-item bg-transparent border-0">
+              <a class="list-group-item list-group-item-action bg-transparent border-0 text-start" href="o2024/run-configuration-using-this-code-first.txt" download>
                 <i class="bi bi-file-earmark-text-fill text-success me-2"></i> run-configuration-using-this-code-first.txt
               </a>
-              <a href="o2024/setup.exe" download class="list-group-item bg-transparent border-0">
+              <a class="list-group-item list-group-item-action bg-transparent border-0 text-start" href="o2024/setup.exe" download>
                 <i class="bi bi-box-seam-fill text-danger me-2"></i> setup.exe
               </a>
             </div>
 
             <div class="mt-4 d-flex gap-2">
               <button class="btn btn-outline-danger" id="logout-btn">Log Keluar</button>
-              <button class="btn btn-outline-secondary" id="lock-now-btn">Kunci Manual</button>
+              <button class="btn btn-outline-secondary" id="lock-now-btn">Lock Now</button>
             </div>
 
             <div class="mt-3 muted small">Nota: Laman ini tidak diindeks (noindex) dan tidak dihubungkan dengan mainpage.</div>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 
-  <!-- MD5 Hash Function -->
+  <!-- Compact MD5 Hash Function (self-contained) -->
   <script>
-  function md5cycle(x, k) {
-    var a = x[0], b = x[1], c = x[2], d = x[3];
-    function cmn(q, a, b, x, s, t){a = (a + q + x + t) & 0xffffffff;return ((a << s) | (a >>> (32 - s))) + b;}
-    function ff(a, b, c, d, x, s, t){return cmn((b & c) | (~b & d), a, b, x, s, t);}
-    function gg(a, b, c, d, x, s, t){return cmn((b & d) | (c & ~d), a, b, x, s, t);}
-    function hh(a, b, c, d, x, s, t){return cmn(b ^ c ^ d, a, b, x, s, t);}
-    function ii(a, b, c, d, x, s, t){return cmn(c ^ (b | ~d), a, b, x, s, t);}
-    function md5blk(s){var md5blks=[],i;for(i=0;i<64;i+=4){md5blks[i>>2]=s.charCodeAt(i)+(s.charCodeAt(i+1)<<8)+(s.charCodeAt(i+2)<<16)+(s.charCodeAt(i+3)<<24);}return md5blks;}
-    function md51(s){var n=s.length,state=[1732584193,-271733879,-1732584194,271733878],i;for(i=64;i<=s.length;i+=64){md5cycle(state,md5blk(s.substring(i-64,i)));s=s.substring(i);}var tail=new Array(16).fill(0);for(i=0;i<s.length;i++)tail[i>>2]|=s.charCodeAt(i)<<((i%4)<<3);tail[i>>2]|=0x80<<((i%4)<<3);if(i>55){md5cycle(state,tail);tail=new Array(16).fill(0);}tail[14]=n*8;md5cycle(state,tail);return state;}
-    function rhex(n){var s='',j=0;for(;j<4;j++)s+=('0'+((n>>(j*8+4))&0x0F).toString(16)).slice(-2)+('0'+((n>>(j*8))&0x0F).toString(16)).slice(-2);return s;}
-    return function md5(s){return md51(s).map(rhex).join('');}(String.fromCharCode.apply(null, new TextEncoder().encode(x.join(''))));
-  }
+  // compact md5 implementation (single function version)
+  function md5(s){function L(k,d){return(k<<d)|(k>>>(32-d))}function K(G,k){var I,d,F,H,x;F=(G&2147483648);H=(k&2147483648);I=(G&1073741824);d=(k&1073741824);x=(G&1073741823)+(k&1073741823);if(I&d){return(x^2147483648^F^H)}if(I|d){if(x&1073741824){return(x^3221225472^F^H)}else{return(x^1073741824^F^H)}}else{return(x^F^H)}}function r(d,F,k){return(d&F)|((~d)&k)}function q(d,F,k){return(d&k)|(F&(~k))}function p(d,F,k){return(d^F^k)}function n(d,F,k){return(F^(d|(~k)))}function u(G,F,aa,Z,k,H,I){G=K(G,K(K(r(F,aa,Z),k),I));return K(L(G,H),F)}function f(G,F,aa,Z,k,H,I){G=K(G,K(K(q(F,aa,Z),k),I));return K(L(G,H),F)}function D(G,F,aa,Z,k,H,I){G=K(G,K(K(p(F,aa,Z),k),I));return K(L(G,H),F)}function t(G,F,aa,Z,k,H,I){G=K(G,K(K(n(F,aa,Z),k),I));return K(L(G,H),F)}function e(G){var Z;var F=G.length;var x=F+8;var k=(x-(x%64))/64;var I=(k+1)*16;var aa=Array(I-1);var d=0;var H=0;while(H<F){Z=(H-(H%4))/4;d=(H%4)*8;aa[Z]=(aa[Z]|(G.charCodeAt(H)<<d));H++}Z=(H-(H%4))/4;d=(H%4)*8;aa[Z]=aa[Z]|(128<<d);aa[I-2]=F<<3;aa[I-1]=F>>>29;return aa}function B(x){var k="",F="",G,d;for(d=0;d<=3;d++){G=(x>>>(d*8))&255;F="0"+G.toString(16);k=k+F.substr(F.length-2,2)}return k}function J(k){k=k.replace(/\r\n/g,"\n");var d="";for(var F=0;F<k.length;F++){var x=k.charCodeAt(F);if(x<128){d+=String.fromCharCode(x)}else{if((x>127)&&(x<2048)){d+=String.fromCharCode((x>>6)|192);d+=String.fromCharCode((x&63)|128)}else{d+=String.fromCharCode((x>>12)|224);d+=String.fromCharCode(((x>>6)&63)|128);d+=String.fromCharCode((x&63)|128)}}}return d}var C=Array();var P,h,E,v,g,Y,X,W,V,U;var S=7,Q=12,N=17,M=22;var A=5,z=9,y=14,w=20;var o=4,m=11,l=16,j=23;var T=6,R=10,O=15,nn=21;s=J(s);C=e(s);Y=1732584193;X=4023233417;W=2562383102;V=271733878;for(P=0;P<C.length;P+=16){h=Y;E=X;v=W;g=V;Y=u(Y,X,W,V,C[P+0],S,3614090360);V=u(V,Y,X,W,C[P+1],Q,3905402710);W=u(W,V,Y,X,C[P+2],N,606105819);X=u(X,W,V,Y,C[P+3],M,3250441966);Y=u(Y,X,W,V,C[P+4],S,4118548399);V=u(V,Y,X,W,C[P+5],Q,1200080426);W=u(W,V,Y,X,C[P+6],N,2821735955);X=u(X,W,V,Y,C[P+7],M,4249261313);Y=u(Y,X,W,V,C[P+8],S,1770035416);V=u(V,Y,X,W,C[P+9],Q,2336552879);W=u(W,V,Y,X,C[P+10],N,4294925233);X=u(X,W,V,Y,C[P+11],M,2304563134);Y=u(Y,X,W,V,C[P+12],S,1804603682);V=u(V,Y,X,W,C[P+13],Q,4254626195);W=u(W,V,Y,X,C[P+14],N,2792965006);X=u(X,W,V,Y,C[P+15],M,1236535329);Y=f(Y,X,W,V,C[P+1],A,4129170786);V=f(V,Y,X,W,C[P+6],z,3225465664);W=f(W,V,Y,X,C[P+11],y,643717713);X=f(X,W,V,Y,C[P+0],w,3921069994);Y=f(Y,X,W,V,C[P+5],A,3593408605);V=f(V,Y,X,W,C[P+10],z,38016083);W=f(W,V,Y,X,C[P+15],y,3634488961);X=f(X,W,V,Y,C[P+4],w,3889429448);Y=f(Y,X,W,V,C[P+9],A,568446438);V=f(V,Y,X,W,C[P+14],z,3275163606);W=f(W,V,Y,X,C[P+3],y,4107603335);X=f(X,W,V,Y,C[P+8],w,1163531501);Y=f(Y,X,W,V,C[P+13],A,2850285829);V=f(V,Y,X,W,C[P+2],z,4243563512);W=f(W,V,Y,X,C[P+7],y,1735328473);X=f(X,W,V,Y,C[P+12],w,2368359562);Y=D(Y,X,W,V,C[P+5],o,4294588738);V=D(V,Y,X,W,C[P+8],m,2272392833);W=D(W,V,Y,X,C[P+11],l,1839030562);X=D(X,W,V,Y,C[P+14],j,4259657740);Y=D(Y,X,W,V,C[P+1],o,2763975236);V=D(V,Y,X,W,C[P+4],m,1272893353);W=D(W,V,Y,X,C[P+7],l,4139469664);X=D(X,W,V,Y,C[P+10],j,3200236656);Y=D(Y,X,W,V,C[P+13],o,681279174);V=D(V,Y,X,W,C[P+0],m,3936430074);W=D(W,V,Y,X,C[P+3],l,3572445317);X=D(X,W,V,Y,C[P+6],j,76029189);Y=D(Y,X,W,V,C[P+9],o,3654602809);V=D(V,Y,X,W,C[P+12],m,3873151461);W=D(W,V,Y,X,C[P+15],l,530742520);X=D(X,W,V,Y,C[P+2],j,3299628645);Y=t(Y,X,W,V,C[P+0],T,4096336452);V=t(V,Y,X,W,C[P+7],R,1126891415);W=t(W,V,Y,X,C[P+14],O,2878612391);X=t(X,W,V,Y,C[P+5],nn,4237533241);Y=t(Y,X,W,V,C[P+12],T,1700485571);V=t(V,Y,X,W,C[P+3],R,2399980690);W=t(W,V,Y,X,C[P+10],O,4293915773);X=t(X,W,V,Y,C[P+1],nn,2240044497);Y=t(Y,X,W,V,C[P+8],T,1873313359);V=t(V,Y,X,W,C[P+15],R,4264355552);W=t(W,V,Y,X,C[P+6],O,2734768916);X=t(X,W,V,Y,C[P+13],nn,1309151649);Y=t(Y,X,W,V,C[P+4],T,4149444226);V=t(V,Y,X,W,C[P+11],R,3174756917);W=t(W,V,Y,X,C[P+2],O,718787259);X=t(X,W,V,Y,C[P+9],nn,3951481745);Y=K(Y,h);X=K(X,E);W=K(W,v);V=K(V,g)}var i=B(Y)+B(X)+B(W)+B(V);return i.toLowerCase()};
   </script>
 
+  <!-- Matrix animation script -->
   <script>
-    const CORRECT_MD5 = "71675337ca0d558c15f36c1c3d85e31d"; 
-    const MAX_ATTEMPTS = 3;
-    const LOCK_BASE_MINUTES = 1;
-    const LOCK_MAX_MINUTES = 60 * 24;
+    (function matrixAnim(){
+      const canvas = document.getElementById('matrix-canvas');
+      const ctx = canvas.getContext('2d');
+      let w = canvas.width = innerWidth;
+      let h = canvas.height = innerHeight;
+      // characters: using katakana-like + numbers for vibe
+      const chars = 'ﾊﾐﾋｰｰｳｼﾂｶﾝﾝﾄｱｵ01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      const fontSize = Math.max(12, Math.floor(w / 120));
+      const columns = Math.floor(w / fontSize);
+      const drops = Array(columns).fill(0);
+
+      function resetSize(){
+        w = canvas.width = innerWidth;
+        h = canvas.height = innerHeight;
+        // recalc
+        const cols = Math.floor(w / fontSize);
+        drops.length = cols;
+        for(let i=0;i<drops.length;i++) if(!drops[i]) drops[i] = Math.random()*h;
+      }
+      window.addEventListener('resize', resetSize);
+
+      function draw(){
+        // translucent background to create trail
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+        ctx.fillRect(0,0,w,h);
+
+        ctx.fillStyle = 'rgba(0,208,122,0.9)';
+        ctx.font = fontSize + 'px monospace';
+        for(let i=0;i<drops.length;i++){
+          const text = chars.charAt(Math.floor(Math.random()*chars.length));
+          const x = i * fontSize;
+          const y = drops[i] * fontSize;
+          // brighter head
+          ctx.fillStyle = 'rgba(180,255,200,0.98)';
+          ctx.fillText(text, x, y);
+          // step
+          drops[i] = (drops[i] * 1) + 0.7;
+          if(y > h && Math.random() > 0.975) drops[i] = 0;
+        }
+        requestAnimationFrame(draw);
+      }
+      // initialize drops
+      for(let i=0;i<drops.length;i++) drops[i] = Math.random()*h/fontSize;
+      draw();
+    })();
+  </script>
+
+  <!-- Main protection logic (MD5 compare + exponential lock + beep) -->
+  <script>
+    // ---------- CONFIG ----------
+    const CORRECT_MD5 = "71675337ca0d558c15f36c1c3d85e31d"; // MD5("kienon2024")
+    const MAX_ATTEMPTS = 3;               // allowed attempts before first lock
+    const LOCK_BASE_MINUTES = 1;          // initial lock duration in minutes
+    const LOCK_MAX_MINUTES = 60 * 24;     // cap lock duration in minutes
     const STORAGE_KEY = "o2024_protect_v1";
 
-    function beep() {
-      const ctx = new AudioContext();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "square";
-      osc.frequency.value = 440;
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
-      osc.stop(ctx.currentTime + 0.3);
-    }
-
-    function nowMillis(){ return Date.now(); }
-    function formatTime(ms){ return new Date(ms).toLocaleString(); }
-
-    function loadState(){ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"attempts":0,"lockedUntil":0,"totalLocks":0}'); }
-    function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
-
+    // UI refs
     const input = document.getElementById("password-input");
     const submitBtn = document.getElementById("submit-btn");
     const clearBtn = document.getElementById("clear-btn");
@@ -224,21 +239,45 @@
     const logoutBtn = document.getElementById("logout-btn");
     const lockNowBtn = document.getElementById("lock-now-btn");
 
-    let state = loadState();
+    // load/save state
+    function nowMillis(){ return Date.now(); }
+    function loadState(){
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        return raw ? JSON.parse(raw) : { attempts:0, lockedUntil:0, totalLocks:0 };
+      } catch(e){ return { attempts:0, lockedUntil:0, totalLocks:0 }; }
+    }
+    function saveState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+    function formatTime(ms){
+      return new Date(ms).toLocaleString();
+    }
 
     function calculateLockMinutes(totalLocks){
-      return Math.min(LOCK_BASE_MINUTES * Math.pow(2, totalLocks - 1), LOCK_MAX_MINUTES);
+      // totalLocks >= 1
+      // exponential: first lock = LOCK_BASE_MINUTES, next double, etc
+      const minutes = Math.min(LOCK_BASE_MINUTES * Math.pow(2, Math.max(0, totalLocks-1)), LOCK_MAX_MINUTES);
+      return Math.max(1, Math.round(minutes));
     }
+
+    let state = loadState();
 
     function updateUI(){
       const locked = state.lockedUntil && state.lockedUntil > nowMillis();
-      statusBadge.textContent = locked ? "Status: Locked" : (sessionStorage.getItem("o2024_auth") === "true" ? "Status: Unlocked" : "Status: Locked");
-      attemptsLeftEl.textContent = Math.max(0, MAX_ATTEMPTS - state.attempts);
-      lockInfoEl.textContent = locked ? "Boleh cuba semula pada: " + formatTime(state.lockedUntil) : "";
-      input.disabled = locked;
-      submitBtn.disabled = locked;
+      statusBadge.textContent = locked ? "Status: Locked" : (sessionStorage.getItem("o2024_auth")==="true" ? "Status: Unlocked" : "Status: Locked");
+      attemptsLeftEl.textContent = Math.max(0, MAX_ATTEMPTS - (state.attempts || 0));
+      if(locked){
+        lockInfoEl.textContent = "Boleh cuba semula pada: " + formatTime(state.lockedUntil);
+        input.disabled = true;
+        submitBtn.disabled = true;
+      } else {
+        lockInfoEl.textContent = "";
+        input.disabled = false;
+        submitBtn.disabled = false;
+      }
 
-      if(sessionStorage.getItem("o2024_auth") === "true"){
+      // show downloads if session unlocked
+      if(sessionStorage.getItem("o2024_auth")==="true"){
         passwordSection.classList.add("hidden");
         downloadSection.classList.remove("hidden");
         statusBadge.textContent = "Status: Unlocked";
@@ -248,28 +287,130 @@
       }
     }
 
+    // check for lock expiry periodically
+    setInterval(()=> {
+      if(state.lockedUntil && state.lockedUntil <= nowMillis()){
+        state.lockedUntil = 0;
+        state.attempts = 0;
+        saveState(state);
+        updateUI();
+      } else updateUI();
+    }, 1000);
+
     function lockForAttempts(){
-      state.totalLocks++;
+      state.totalLocks = (state.totalLocks || 0) + 1;
       const minutes = calculateLockMinutes(state.totalLocks);
-      state.lockedUntil = nowMillis() + minutes * 60000;
-      state.attempts = 0;
+      const until = nowMillis() + minutes * 60 * 1000;
+      state.lockedUntil = until;
+      state.attempts = 0; // reset attempts after locking
       saveState(state);
-      errorMsg.textContent = "🔒 Dikunci selama " + minutes + " minit. Cuba semula pada " + formatTime(state.lockedUntil);
-      beep();
+      errorMsg.textContent = "🔒 Telah dikunci selama " + minutes + " minit. Boleh cuba semula pada: " + formatTime(until);
+      infoMsg.textContent = "";
       updateUI();
     }
 
+    function beep() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'square';
+        o.frequency.value = 520;
+        o.connect(g);
+        g.connect(ctx.destination);
+        g.gain.setValueAtTime(0.0001, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.08, ctx.currentTime + 0.01);
+        o.start();
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.25);
+        o.stop(ctx.currentTime + 0.25);
+      } catch (e) { /* ignore if no audio */ }
+    }
+
     function checkPassword(){
-      if(state.lockedUntil > nowMillis()){
+      errorMsg.textContent = "";
+      infoMsg.textContent = "";
+
+      if(state.lockedUntil && state.lockedUntil > nowMillis()){
         errorMsg.textContent = "🔒 Masih dikunci. Cuba semula pada: " + formatTime(state.lockedUntil);
+        updateUI();
         return;
       }
 
-      const val = input.value.trim();
-      if(!val){ errorMsg.textContent = "Masukkan kata laluan."; beep(); return; }
+      const val = (input.value || "").trim();
+      if(!val){
+        errorMsg.textContent = "Sila masukkan kata laluan.";
+        return;
+      }
 
-      const inputHash = md5cycle([].slice.call(val)).toString();
+      const inputHash = md5(val);
+      if(inputHash === CORRECT_MD5){
+        // success
+        sessionStorage.setItem("o2024_auth","true");
+        state.attempts = 0;
+        state.lockedUntil = 0;
+        saveState(state);
+        infoMsg.textContent = "✅ Akses dibenarkan. Anda boleh muat turun sekarang.";
+        errorMsg.textContent = "";
+        updateUI();
+      } else {
+        // fail
+        state.attempts = (state.attempts || 0) + 1;
+        saveState(state);
+        const remaining = Math.max(0, MAX_ATTEMPTS - state.attempts);
+        if(state.attempts >= MAX_ATTEMPTS){
+          lockForAttempts();
+        } else {
+          errorMsg.textContent = "❌ Kata laluan salah. Percubaan tinggal: " + remaining;
+          // beep and little flash
+          beep();
+        }
+        updateUI();
+      }
     }
+
+    // Enter key to submit
+    input.addEventListener("keydown", function(e){
+      if(e.key === "Enter"){
+        e.preventDefault();
+        checkPassword();
+      }
+    });
+
+    submitBtn.addEventListener("click", checkPassword);
+
+    clearBtn.addEventListener("click", ()=> {
+      input.value = "";
+      errorMsg.textContent = "";
+      infoMsg.textContent = "";
+      input.focus();
+    });
+
+    logoutBtn.addEventListener("click", ()=> {
+      sessionStorage.removeItem("o2024_auth");
+      infoMsg.textContent = "Anda telah logout.";
+      updateUI();
+    });
+
+    lockNowBtn.addEventListener("click", ()=> {
+      state.totalLocks = (state.totalLocks || 0) + 1;
+      const minutes = calculateLockMinutes(state.totalLocks);
+      state.lockedUntil = nowMillis() + minutes * 60 * 1000;
+      state.attempts = 0;
+      saveState(state);
+      errorMsg.textContent = "🔒 Dikunci secara manual selama " + minutes + " minit.";
+      updateUI();
+    });
+
+    // on load
+    window.addEventListener("load", ()=> {
+      if(sessionStorage.getItem("o2024_auth")==="true"){
+        infoMsg.textContent = "Sesi sudah dibuka.";
+      }
+      updateUI();
+    });
   </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+to get configuration: https://config.office.com/deploymentsettings
+
+run this 
+
+setup \configure configuration.xml

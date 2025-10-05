@@ -105,6 +105,96 @@
       .pw-input { width:100% !important; }
     }
   </style>
+  <!-- MATRIX RAIN (Head-safe) -->
+<style>
+  /* canvas full-screen, di belakang semua elemen */
+  #matrixRain {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* pastikan elemen UI anda z-index > 0 */
+    pointer-events: none; /* click-through */
+    opacity: 0.92;
+    mix-blend-mode: screen;
+  }
+  /* pastikan container utama mempunyai z-index > 0 supaya panel anda atas canvas */
+  .container, .panel { position: relative; z-index: 2; }
+</style>
+
+<script>
+(function(){
+  // semuanya di-wrap supaya selamat di head
+  function initMatrix() {
+    // create canvas (only once)
+    if (document.getElementById('matrixRain')) return;
+    const canvas = document.createElement('canvas');
+    canvas.id = 'matrixRain';
+    document.body.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+
+    // sizing
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize, { passive: true });
+
+    const chars = "アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズヅブプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const fontSize = Math.max(12, Math.floor(Math.min(window.innerWidth, 1400) / 90)); // responsive font size
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = new Array(columns).fill(1);
+
+    function recalcColumns() {
+      columns = Math.floor(canvas.width / fontSize) || 1;
+      drops = new Array(columns).fill(1);
+    }
+    // recalculation on resize with debounce
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(recalcColumns, 120);
+    });
+
+    // draw loop
+    ctx.font = fontSize + "px monospace";
+    const fg = "#00d07a";
+    function draw() {
+      // semi-transparent bg to create tail effect
+      ctx.fillStyle = "rgba(0, 0, 0, 0.08)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = fg;
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars.charAt(Math.floor(Math.random() * chars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    // use interval for simplicity and low CPU; adjust interval for speed
+    const interval = 35;
+    const id = setInterval(draw, interval);
+
+    // expose for debugging (optional)
+    window.__matrixRain = { stop: () => clearInterval(id), start: () => setInterval(draw, interval) };
+  }
+
+  // init after DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMatrix);
+  } else {
+    initMatrix();
+  }
+})();
+</script>
+
 </head>
 <body>
   <div class="matrix"></div>

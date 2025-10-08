@@ -2,10 +2,13 @@
 <html lang="ms">
 <head>
   <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Katalog Produk PRAN — KOPUSAMAJU Sabah Berhad</title>
+  <title>Katalog Produk PRAN – KOPUSAMAJU Sabah Berhad</title>
 
+  <!-- Favicon -->
   <link rel="icon" href="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle--150x150.png" sizes="32x32">
+  <link rel="icon" href="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle-.png" sizes="192x192">
   <link rel="apple-touch-icon" href="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle-.png">
 
   <!-- Bootstrap -->
@@ -15,89 +18,109 @@
     body {
       background: #0b0f10;
       color: #e6f7ef;
-      font-family: "Inter", system-ui, sans-serif;
+      font-family: "Inter", ui-sans-serif, system-ui;
       -webkit-font-smoothing: antialiased;
-      padding: 40px 0;
-    }
-    .container {
-      max-width: 1000px;
-    }
-    .panel {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(0,208,122,0.08);
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      padding: 30px;
-    }
-    h1, h2, h3, h4 {
-      color: #00d07a;
-      font-family: "Roboto Mono", monospace;
-    }
-    .muted { color: #9aa5a1; }
-    iframe {
-      width: 100%;
-      height: 85vh;
-      border: none;
-      border-radius: 8px;
-      background: #111;
-    }
-    a.download-link {
-      display: inline-block;
-      margin-top: 10px;
-      color: #00d07a;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    a.download-link:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      margin-top: 30px;
-      color: #777;
-      font-size: 0.9rem;
     }
 
-    /* background subtle matrix lines */
+    .panel {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(0,255,150,0.08);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .accent {
+      color: #00d07a;
+    }
+
+    .pdf-viewer iframe,
+    .pdf-viewer object {
+      width: 100%;
+      height: 80vh;
+      border: none;
+      border-radius: 8px;
+      background-color: #000;
+    }
+
+    .pdf-link {
+      color: #00d07a;
+      text-decoration: none;
+    }
+    .pdf-link:hover {
+      text-decoration: underline;
+    }
+
     .matrix {
       pointer-events: none;
       position: fixed;
       inset: 0;
-      background-image:
-        linear-gradient(transparent 50%, rgba(0,208,122,0.02) 50%),
-        linear-gradient(90deg, transparent 50%, rgba(0,208,122,0.02) 50%);
-      background-size: 2px 40px, 40px 2px;
-      opacity: 0.06;
       z-index: 0;
+      background-image:
+        linear-gradient(transparent 50%, rgba(0,255,150,0.02) 50%),
+        linear-gradient(90deg, transparent 50%, rgba(0,255,150,0.02) 50%);
+      background-size: 2px 40px, 40px 2px;
+      opacity: 0.07;
+      animation: matrixMove 6s linear infinite;
+    }
+
+    @keyframes matrixMove {
+      0% { background-position: 0 0, 0 0; }
+      100% { background-position: 0 40px, 40px 0; }
+    }
+
+    footer {
+      color: #9aa5a1;
+      font-size: 0.9rem;
+      margin-top: 2rem;
     }
   </style>
 </head>
-
 <body>
   <div class="matrix"></div>
-  <div class="container position-relative" style="z-index:2;">
-    <div class="panel">
-      <div class="text-center mb-4">
-        <h1>📘 Katalog Produk PRAN</h1>
-        <h5 class="muted">Edaran Rasmi oleh KOPUSAMAJU Sabah Berhad</h5>
-        <p class="mt-2">Saya, <strong>Ahmad Amsari</strong>, adalah <span class="text-success">ejen rasmi</span> bagi produk PRAN untuk KOPUSAMAJU Sabah Berhad.</p>
-      </div>
 
-      <!-- PDF Viewer -->
-      <div class="pdf-viewer mb-3">
-        <iframe src="catalog.pdf"></iframe>
-      </div>
+  <div class="container py-5" style="position: relative; z-index: 2;">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="panel text-center">
 
-      <div class="text-center">
-        <a class="download-link" href="catalog.pdf" download>
-          ⬇️ Muat Turun Katalog PRAN (PDF)
-        </a>
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fd/Pran_logo.svg/120px-Pran_logo.svg.png" alt="PRAN Logo" class="mb-3" style="height:60px;">
+          <h1 class="fw-bold accent">Katalog Produk PRAN</h1>
+          <p class="text-muted">Edaran rasmi oleh <strong>KOPUSAMAJU Sabah Berhad</strong><br>
+          Ejen sah: <strong>Ahmad Amsari</strong></p>
+
+          <hr class="border-secondary my-4">
+
+          <div class="pdf-viewer">
+            <!-- Desktop view -->
+            <div class="d-none d-md-block ratio ratio-16x9">
+              <iframe src="catalog.pdf#toolbar=1&navpanes=0" title="Katalog PRAN"></iframe>
+            </div>
+
+            <!-- Mobile fallback -->
+            <div class="d-block d-md-none" style="height:70vh;">
+              <object data="pran/catalog.pdf" type="application/pdf" width="100%" height="100%">
+                <p class="text-light">
+                  PDF tidak dapat dipaparkan. 
+                  <a href="catalog.pdf" target="_blank" class="pdf-link">Buka atau muat turun katalog PRAN di sini.</a>
+                </p>
+              </object>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <a href="pran/catalog.pdf" class="btn btn-success" target="_blank" rel="noopener">
+              📥 Muat Turun Katalog
+            </a>
+          </div>
+
+          <footer class="mt-4">
+            <div>© 2025 KOPUSAMAJU Sabah Berhad — Ejen Rasmi Produk <span class="accent">PRAN</span></div>
+            <div><small>Laman ini tidak diindeks (noindex) dan hanya untuk tontonan pelanggan yang sah.</small></div>
+          </footer>
+        </div>
       </div>
     </div>
-
-    <footer class="mt-4">
-      © 2025 KOPUSAMAJU Sabah Berhad — Agensi Rasmi PRAN. Dibangunkan oleh Ahmad Amsari.
-    </footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

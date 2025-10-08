@@ -132,6 +132,17 @@
       }
     }
 
+    .pdf-box iframe {
+  min-height: 75vh;
+}
+
+@media (max-width:768px){
+  .pdf-box iframe {
+    min-height: 500px;
+  }
+}
+
+
     /* ===== Gallery ===== */
     .gallery-title {
       text-align: center;
@@ -215,14 +226,14 @@
 
     <!-- PDF SECTIONS -->
     <section class="py-5 border-top">
-      <div class="switch-panel">
+      <div class="switch-panel pb-5"><!-- TAMBAH PADDING BAWAH -->
         <!-- KATALOG -->
         <div id="panel-catalog" class="panel-inner show">
           <h4 class="text-center mb-3 text-danger">Katalog Produk PRAN</h4>
           <div class="pdf-box">
             <iframe src="catalog.pdf" title="Katalog PRAN"></iframe>
           </div>
-          <div class="text-center">
+          <div class="text-center mb-5">
             <a href="catalog.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
             <a id="catalog-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat di Google Viewer</a>
           </div>
@@ -234,20 +245,19 @@
           <div class="pdf-box">
             <iframe src="borang-akaun.pdf" title="Borang Akaun"></iframe>
           </div>
-          <div class="text-center">
+          <div class="text-center mb-5">
             <a href="borang-akaun.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
             <a id="form-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat di Google Viewer</a>
           </div>
         </div>
       </div>
     </section>
-  </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
-    © <span id="year"></span> Kopusamaju Sabah Berhad.
-  </footer>
+    <!-- FOOTER -->
+    <footer style="margin-top:80px;">
+      <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
+      © <span id="year"></span> Kopusamaju Sabah Berhad.
+    </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

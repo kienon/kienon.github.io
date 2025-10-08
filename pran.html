@@ -32,7 +32,25 @@
       overflow-x: hidden;
     }
 
-    /* Hero Section */
+    /* ===== SCAM AWARENESS BANNER ===== */
+    .scam-banner {
+      background: var(--pran-red);
+      color: #fff;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 15px;
+      position: sticky;
+      top: 0;
+      z-index: 2000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .scam-banner strong {
+      text-transform: uppercase;
+      color: #ffe400;
+    }
+
+    /* ===== HERO ===== */
     .hero {
       background: linear-gradient(180deg, rgba(228,31,38,0.05), rgba(255,255,255,0.6));
       text-align: center;
@@ -54,7 +72,7 @@
       color: var(--muted);
     }
 
-    /* Tabs */
+    /* ===== Tabs ===== */
     .tab-btn {
       padding: 10px 20px;
       border-radius: 10px;
@@ -74,7 +92,6 @@
     .switch-panel {
       position: relative;
       min-height: 450px;
-      margin-bottom: 80px;
     }
     .panel-inner {
       opacity: 0;
@@ -90,7 +107,7 @@
       pointer-events: all;
     }
 
-    /* PDF box */
+    /* ===== PDF box ===== */
     .pdf-box {
       border-radius: 12px;
       overflow: hidden;
@@ -107,7 +124,6 @@
       display: block;
     }
 
-    /* === RESPONSIVE FIX === */
     @media (max-width: 768px) {
       .pdf-box {
         height: auto;
@@ -116,7 +132,7 @@
       }
     }
 
-    /* Gallery */
+    /* ===== Gallery ===== */
     .gallery-title {
       text-align: center;
       margin-bottom: 25px;
@@ -134,17 +150,25 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
 
+    /* ===== Footer ===== */
     footer {
       text-align: center;
       font-size: 14px;
       color: #666;
       border-top: 1px solid rgba(0,0,0,0.05);
-      padding: 20px 0;
+      padding: 30px 0 15px;
       margin-top: 60px;
     }
   </style>
 </head>
 <body>
+
+  <!-- SCAM AWARENESS -->
+  <div class="scam-banner">
+    ⚠️ <strong>Peringatan Penting:</strong> Sebarang pembayaran selain daripada akaun rasmi berikut adalah <u>bukan tanggungjawab pihak Kopusamaju</u>.<br>
+    <span>Penama Akaun: <strong>Koperasi Pembangunan Usahasama Masyarakat Maju Sabah Berhad</strong></span> |
+    <span>Bank: <strong>Maybank (No. Akaun: 560072624185)</strong></span>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -153,69 +177,73 @@
     <p>Ejen rasmi PRAN untuk pasaran tempatan</p>
   </section>
 
-  <main class="container mt-4">
+  <main class="container">
 
-        <!-- Gallery -->
-        <div class="gallery mt-5">
-          <h4 class="gallery-title fw-bold">Galeri Produk PRAN</h4>
-          <div class="row g-3">
-            <div class="col-md-4 col-6 gallery-item">
-              <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran">
-                <img src="/pran/jus.png" alt="Jus PRAN">
-              </a>
-            </div>
-            <div class="col-md-4 col-6 gallery-item">
-              <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran">
-                <img src="/pran/minumankotak.png" alt="Kotak PRAN">
-              </a>
-            </div>
-            <div class="col-md-4 col-6 gallery-item">
-              <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran">
-                <img src="/pran/wafer.png" alt="Wafer PRAN">
-              </a>
-            </div>
+    <!-- GALLERY -->
+    <section class="gallery-section py-5">
+      <h4 class="gallery-title fw-bold">Galeri Produk PRAN</h4>
+      <div class="row g-3">
+        <div class="col-md-4 col-6 gallery-item">
+          <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran">
+            <img src="/pran/jus.png" alt="Jus PRAN">
+          </a>
+        </div>
+        <div class="col-md-4 col-6 gallery-item">
+          <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran">
+            <img src="/pran/minumankotak.png" alt="Kotak PRAN">
+          </a>
+        </div>
+        <div class="col-md-4 col-6 gallery-item">
+          <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran">
+            <img src="/pran/wafer.png" alt="Wafer PRAN">
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- TABS -->
+    <section class="py-5 border-top">
+      <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 mb-4">
+        <button class="tab-btn active" data-target="catalog">📘 Katalog</button>
+        <button class="tab-btn" data-target="form">📄 Borang Akaun</button>
+        <a id="open-new-tab" class="tab-btn" target="_blank">Buka di Tab Baru</a>
+        <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success">
+          <i class="bi bi-whatsapp me-2"></i>Hubungi Kami di WhatsApp
+        </a>
+      </div>
+    </section>
+
+    <!-- PDF SECTIONS -->
+    <section class="py-5 border-top">
+      <div class="switch-panel">
+        <!-- KATALOG -->
+        <div id="panel-catalog" class="panel-inner show">
+          <h4 class="text-center mb-3 text-danger">Katalog Produk PRAN</h4>
+          <div class="pdf-box">
+            <iframe src="catalog.pdf" title="Katalog PRAN"></iframe>
+          </div>
+          <div class="text-center">
+            <a href="catalog.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
+            <a id="catalog-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat di Google Viewer</a>
+          </div>
+        </div>
+
+        <!-- BORANG -->
+        <div id="panel-form" class="panel-inner">
+          <h4 class="text-center mb-3 text-danger">Borang Buka Akaun Kopusamaju</h4>
+          <div class="pdf-box">
+            <iframe src="borang-akaun.pdf" title="Borang Akaun"></iframe>
+          </div>
+          <div class="text-center">
+            <a href="borang-akaun.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
+            <a id="form-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat di Google Viewer</a>
           </div>
         </div>
       </div>
-
-    <!-- Tabs -->
-    <div class="d-flex justify-content-center mb-3">
-      <button class="tab-btn active" data-target="catalog">📘 Katalog</button>
-      <button class="tab-btn" data-target="form">📄 Borang Akaun</button>
-      <a id="open-new-tab" class="tab-btn" target="_blank">Buka di Tab Baru</a>
-      <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success">
-        <i class="bi bi-whatsapp me-2"></i>Hubungi Kami di WhatsApp
-      </a>
-      
-    </div>
-
-    <!-- PDF Sections -->
-    <div class="switch-panel">
-      <!-- KATALOG -->
-      <div id="panel-catalog" class="panel-inner show">
-        <h4 class="text-center mb-3 text-danger">Katalog Produk PRAN</h4>
-        <div class="pdf-box">
-          <iframe src="catalog.pdf" title="Katalog PRAN"></iframe>
-        </div>
-        <div class="text-center">
-          <a href="catalog.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
-          <a id="catalog-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat di Google Viewer</a>
-        </div>
-
-      <!-- BORANG -->
-      <div id="panel-form" class="panel-inner">
-        <h4 class="text-center mb-3 text-danger">Borang Buka Akaun Kopusamaju</h4>
-        <div class="pdf-box">
-          <iframe src="borang-akaun.pdf" title="Borang Akaun"></iframe>
-        </div>
-        <div class="text-center">
-          <a href="borang-akaun.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
-          <a id="form-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat di Google Viewer</a>
-        </div>
-      </div>
-    </div>
+    </section>
   </main>
 
+  <!-- FOOTER -->
   <footer>
     <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
     © <span id="year"></span> Kopusamaju Sabah Berhad.

@@ -142,17 +142,25 @@
       }
     }
 
-    /* ===== Gallery / Carousel ===== */
+    /* ===== Gallery Carousel ===== */
     .gallery-title {
       text-align: center;
       margin-bottom: 25px;
       color: var(--pran-red);
     }
     .carousel-item img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
+      height: 150px;
+      object-fit: contain;
       border-radius: 10px;
+    }
+    .carousel-inner {
+      display: flex;
+      align-items: center;
+    }
+    .carousel-item {
+      display: flex;
+      justify-content: center;
+      gap: 10px; /* jarak rapat antar gambar */
     }
 
     /* ===== Footer ===== */
@@ -189,40 +197,36 @@
 
   <main class="container">
 
-    <!-- GALLERY / CAROUSEL -->
-  <section class="gallery-section py-5">
-    <h4 class="gallery-title fw-bold">Galeri Produk PRAN</h4>
-    <div class="pdf-box p-2">
-      <div id="pranCarousel" class="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="4000">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran">
-              <img src="/pran/jus.png" class="img-fluid mx-auto d-block" style="max-height:100%; object-fit:contain;" alt="Jus PRAN">
-            </a>
+    <!-- GALLERY CAROUSEL -->
+    <section class="gallery-section py-5">
+      <h4 class="gallery-title fw-bold">Galeri Produk PRAN</h4>
+      <div class="pdf-box p-2">
+        <div id="pranCarousel" class="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="4000">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran">
+                <img src="/pran/jus.png" class="img-fluid" alt="Jus PRAN">
+              </a>
+              <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran">
+                <img src="/pran/minumankotak.png" class="img-fluid" alt="Kotak PRAN">
+              </a>
+              <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran">
+                <img src="/pran/wafer.png" class="img-fluid" alt="Wafer PRAN">
+              </a>
+            </div>
+            <!-- Tambah carousel-item lain jika lebih banyak gambar -->
           </div>
-          <div class="carousel-item">
-            <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran">
-              <img src="/pran/minumankotak.png" class="img-fluid mx-auto d-block" style="max-height:100%; object-fit:contain;" alt="Kotak PRAN">
-            </a>
-          </div>
-          <div class="carousel-item">
-            <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran">
-              <img src="/pran/wafer.png" class="img-fluid mx-auto d-block" style="max-height:100%; object-fit:contain;" alt="Wafer PRAN">
-            </a>
-          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#pranCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Sebelum</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#pranCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Seterusnya</span>
+          </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#pranCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Sebelum</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#pranCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Seterusnya</span>
-        </button>
       </div>
-    </div>
-  </section>
-
+    </section>
 
     <!-- TABS -->
     <section class="py-4 border-top">

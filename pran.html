@@ -2,9 +2,10 @@
 <html lang="ms">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Kopusamaju Sabah Berhad | Ejen Rasmi PRAN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRAN — Katalog & Borang Akaun | Kopusamaju</title>
+
   <link rel="icon" href="https://images.seeklogo.com/logo-png/25/1/pran-logo-png_seeklogo-258211.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -13,117 +14,262 @@
     body {
       background: linear-gradient(180deg, #7a0000 0%, #3a0000 100%);
       color: #fff;
-      font-family: "Poppins", sans-serif;
+      font-family: "Inter", sans-serif;
     }
+
     header {
-      background-color: #b40000;
-      color: white;
-      padding: 1rem 0;
       text-align: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      padding: 2.5rem 0;
     }
     header img {
-      height: 70px;
-      margin-bottom: 10px;
+      height: 85px;
+      margin-bottom: 1rem;
     }
+
+    /* Tab Navigation */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .tab-btn {
+      position: relative;
+      background: none;
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .tab-btn:hover {
+      color: #ffcc00;
+    }
+    .tab-btn.active {
+      color: #ffcc00;
+    }
+    .tab-highlight {
+      position: absolute;
+      bottom: -2px;
+      height: 3px;
+      width: 120px;
+      background-color: #ffcc00;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      cursor: pointer;
+      background-color: rgba(255,255,255,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.3s;
+    }
+    .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    .gallery-item .caption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 0.5rem;
+      text-align: center;
+      font-size: 0.95rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover .caption {
+      opacity: 1;
+    }
+
+    /* PDF Viewer */
     .pdf-viewer {
       border: 2px solid #ffcc00;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       background: #fff;
-      height: 85vh;
+      height: 80vh;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
     .pdf-viewer iframe {
       width: 100%;
       height: 100%;
       border: none;
     }
-    footer {
-      background-color: #b40000;
-      color: #fff;
-      text-align: center;
-      padding: 20px 10px;
-      font-size: 0.9rem;
-      margin-top: 40px;
-    }
+
+    /* Buttons */
     .btn-whatsapp {
       background-color: #25d366;
       border: none;
+      color: #fff;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      transition: all 0.3s;
     }
     .btn-whatsapp:hover {
-      background-color: #1da851;
+      background-color: #1ebd56;
+      transform: scale(1.03);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: #220000;
+      color: #ccc;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .tab-nav {
+        gap: 1rem;
+      }
+      .tab-btn {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
   <header>
     <img src="https://images.seeklogo.com/logo-png/25/1/pran-logo-png_seeklogo-258211.png" alt="PRAN Logo">
-    <h2 class="fw-bold mb-0">Kopusamaju Sabah Berhad</h2>
-    <p class="mb-0">Ejen Rasmi Produk PRAN</p>
+    <h1>Produk PRAN</h1>
+    <p class="text-warning">Kopusamaju Sabah Berhad | Ejen Rasmi PRAN</p>
   </header>
 
-  <main class="container py-5 text-center">
-    <h3 class="fw-bold mb-4 text-warning">📘 Katalog Produk PRAN</h3>
-    <p class="text-light mb-4">Lihat katalog penuh produk PRAN yang diedarkan oleh Kopusamaju Sabah Berhad.  
-      Muat turun atau lihat terus dari peranti anda.</p>
+  <main class="container">
+    <!-- Galeri Produk -->
+    <section id="product-gallery">
+      <h2 class="text-warning mb-4">Galeri Produk</h2>
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="produk/product1.jpg" alt="Produk 1">
+          <div class="caption">Minuman Jus PRAN</div>
+        </div>
+        <div class="gallery-item">
+          <img src="produk/product2.jpg" alt="Produk 2">
+          <div class="caption">Snek Kering PRAN</div>
+        </div>
+        <div class="gallery-item">
+          <img src="produk/product3.jpg" alt="Produk 3">
+          <div class="caption">Produk Segera PRAN</div>
+        </div>
+      </div>
+    </section>
 
-    <div id="pdf-container" class="pdf-viewer mb-4">
-      <iframe id="pdf-frame" src="catalog.pdf"></iframe>
-    </div>
+    <!-- Tab Navigation -->
+    <section class="text-center">
+      <div class="tab-nav">
+        <button class="tab-btn active" id="btn-catalog">Katalog Produk</button>
+        <button class="tab-btn" id="btn-form">Borang Akaun</button>
+        <div class="tab-highlight" id="tab-highlight"></div>
+      </div>
 
-    <div id="pdf-fallback" class="d-none">
-      <a href="catalog.pdf" target="_blank" class="btn btn-warning btn-lg mb-3">
-        <i class="bi bi-file-earmark-pdf me-2"></i>Lihat PDF
+      <!-- PDF Viewer -->
+      <div class="pdf-viewer mb-3" id="pdf-display">
+        <iframe id="pdf-frame" src="catalog.pdf"></iframe>
+      </div>
+
+      <!-- Fallback -->
+      <div id="pdf-fallback" class="d-none">
+        <a href="catalog.pdf" id="pdf-download-link" class="btn btn-warning btn-lg">
+          Lihat / Muat Turun Dokumen
+        </a>
+      </div>
+
+      <a href="https://wa.me/60128169367?text=Hi%20saya%20ingin%20order%20PRAN" target="_blank" class="btn btn-whatsapp btn-lg mt-3">
+        <i class="bi bi-whatsapp me-2"></i>Hubungi WhatsApp
       </a>
-    </div>
-
-    <hr class="border-warning my-5">
-
-    <h4 class="fw-bold text-warning">📝 Borang Pembukaan Akaun</h4>
-    <p class="text-light mb-4">Isi borang untuk mendaftar akaun bersama Kopusamaju Sabah Berhad.</p>
-
-    <div id="pdf-container-form" class="pdf-viewer mb-4">
-      <iframe id="pdf-frame-form" src="borang-akaun.pdf"></iframe>
-    </div>
-
-    <div id="pdf-fallback-form" class="d-none">
-      <a href="borang-akaun.pdf" target="_blank" class="btn btn-warning btn-lg mb-3">
-        <i class="bi bi-file-earmark-pdf me-2"></i>Lihat Borang
-      </a>
-    </div>
-
-    <a href="https://wa.me/60128169367" target="_blank" class="btn btn-whatsapp btn-lg mt-4 shadow">
-      <i class="bi bi-whatsapp me-2"></i>Hubungi Kami di WhatsApp
-    </a>
+    </section>
   </main>
 
   <footer>
     <p>© 2025 Kopusamaju Sabah Berhad | Ejen Rasmi PRAN</p>
-    <p class="mb-0 text-warning small">
-    </p>
   </footer>
 
   <script>
-    function checkPDFViewSupport(iframeId, fallbackId, url) {
-      const iframe = document.getElementById(iframeId);
-      const fallback = document.getElementById(fallbackId);
+    const catalogBtn = document.getElementById("btn-catalog");
+    const formBtn = document.getElementById("btn-form");
+    const pdfFrame = document.getElementById("pdf-frame");
+    const pdfFallback = document.getElementById("pdf-fallback");
+    const pdfDownloadLink = document.getElementById("pdf-download-link");
+    const pdfContainer = document.getElementById("pdf-display");
+    const highlight = document.getElementById("tab-highlight");
 
-      // If on mobile OR PDF viewer blocked
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      setTimeout(() => {
-        const loaded = iframe.contentDocument && iframe.contentDocument.body && iframe.contentDocument.body.children.length > 0;
-        if (isMobile || !loaded) {
-          iframe.parentElement.classList.add("d-none");
-          fallback.classList.remove("d-none");
-          fallback.querySelector("a").href = url;
-        }
-      }, 2000);
+    const catalogPDF = "catalog.pdf";
+    const formPDF = "borang-akaun.pdf";
+
+    function switchTab(target) {
+      if (target === "catalog") {
+        pdfFrame.src = catalogPDF;
+        pdfDownloadLink.href = catalogPDF;
+        catalogBtn.classList.add("active");
+        formBtn.classList.remove("active");
+        moveHighlight(catalogBtn);
+      } else {
+        pdfFrame.src = formPDF;
+        pdfDownloadLink.href = formPDF;
+        formBtn.classList.add("active");
+        catalogBtn.classList.remove("active");
+        moveHighlight(formBtn);
+      }
     }
 
-    // Apply check on both PDFs
+    function moveHighlight(activeBtn) {
+      const rect = activeBtn.getBoundingClientRect();
+      const parentRect = activeBtn.parentElement.getBoundingClientRect();
+      highlight.style.width = rect.width + "px";
+      highlight.style.left = (rect.left - parentRect.left) + "px";
+    }
+
+    catalogBtn.addEventListener("click", () => switchTab("catalog"));
+    formBtn.addEventListener("click", () => switchTab("form"));
+
+    window.addEventListener("resize", () => {
+      const active = document.querySelector(".tab-btn.active");
+      moveHighlight(active);
+    });
+
     window.onload = function() {
-      checkPDFViewSupport("pdf-frame", "pdf-fallback", "catalog.pdf");
-      checkPDFViewSupport("pdf-frame-form", "pdf-fallback-form", "borang-akaun.pdf");
+      moveHighlight(catalogBtn);
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      setTimeout(() => {
+        let supports = true;
+        try {
+          const doc = pdfFrame.contentDocument;
+          if (!doc || !doc.body) supports = false;
+        } catch (err) {
+          supports = false;
+        }
+        if (isMobile || !supports) {
+          pdfContainer.classList.add("d-none");
+          pdfFallback.classList.remove("d-none");
+        }
+      }, 1500);
     };
   </script>
 </body>

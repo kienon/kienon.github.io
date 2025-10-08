@@ -2,448 +2,233 @@
 <html lang="ms">
 <head>
   <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PRAN — Produk Import Berkualiti | Kopusamaju Sabah Berhad</title>
 
-  <!-- Favicon (PRAN logo) -->
+  <!-- Favicon -->
   <link rel="icon" href="https://images.seeklogo.com/logo-png/25/1/pran-logo-png_seeklogo-258211.png" sizes="32x32">
 
-  <!-- Bootstrap CSS (lightweight CDN) -->
+  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-
-  <!-- Font -->
+  <link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
-    :root{
+    :root {
       --pran-red: #e41f26;
-      --pran-accent: #d93a2e;
+      --pran-yellow: #f6c400;
       --muted: #6b6b6b;
-      --card-bg: #ffffff;
-    }
-    html,body{height:100%}
-    body{
-      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      margin:0;
-      background: linear-gradient(180deg, #fff 0%, #fbfbfb 100%);
-      color:#222;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
     }
 
-    /* HERO */
-    .hero{
-      text-align:center;
-      padding:48px 16px;
-      background: linear-gradient(180deg, rgba(228,31,38,0.04), rgba(0,0,0,0));
-      border-bottom: 1px solid rgba(0,0,0,0.04);
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #222;
+      overflow-x: hidden;
     }
-    .hero .logo{
-      display:inline-block;
-      background:#fff;
-      border-radius:12px;
-      padding:8px;
-      box-shadow:0 6px 22px rgba(0,0,0,0.06);
-      margin-bottom:12px;
-    }
-    .hero h1{
-      color:var(--pran-red);
-      margin:0;
-      font-weight:700;
-      font-size: clamp(20px, 3vw, 30px);
-      letter-spacing: .2px;
-    }
-    .hero p{ color:var(--muted); margin: 6px 0 0; }
 
-    .container-main { max-width: 980px; margin: 36px auto; padding: 0 16px; }
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(180deg, rgba(228,31,38,0.05), rgba(255,255,255,0.6));
+      text-align: center;
+      padding: 60px 0 40px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .hero img {
+      max-height: 100px;
+      margin-bottom: 15px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.1);
+    }
+    .hero h1 {
+      font-weight: 700;
+      color: var(--pran-red);
+    }
+    .hero p {
+      color: var(--muted);
+    }
 
     /* Tabs */
-    .tabs-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-bottom:18px; }
     .tab-btn {
-      padding:10px 18px;
-      border-radius:10px;
-      border:1px solid rgba(0,0,0,0.06);
-      background:#fff;
-      cursor:pointer;
-      font-weight:600;
-      transition:all .25s ease;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      color:#222;
+      padding: 10px 20px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: #fff;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all .3s ease;
+      margin: 0 5px;
     }
-    .tab-btn.active{
-      background: linear-gradient(180deg, var(--pran-red), var(--pran-accent));
-      color:#fff;
-      box-shadow:0 8px 24px rgba(217,58,46,0.16);
-      border-color: rgba(0,0,0,0.04);
+    .tab-btn.active {
+      background: linear-gradient(180deg, var(--pran-red), #c51919);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(228,31,38,0.3);
     }
 
-    /* product thumbs row */
-    .prod-gallery { display:flex; justify-content:center; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
-    .prod-gallery img { width:96px; height:96px; object-fit:cover; border-radius:8px; border:1px solid rgba(0,0,0,0.06); background:#fff; padding:6px; }
-
-    /* Switch panel (animated) */
-    .switch-panel { position:relative; min-height:420px; }
-    .panel-inner{
-      position:absolute; inset:0;
-      opacity:0; transform: translateY(12px);
-      transition: all .42s cubic-bezier(.2,.9,.2,1);
-      pointer-events:none;
+    .switch-panel {
+      position: relative;
+      min-height: 450px;
+      margin-bottom: 70px;
     }
-    .panel-inner.show{
-      opacity:1; transform:none; pointer-events:auto;
+    .panel-inner {
+      opacity: 0;
+      transform: translateY(20px);
+      position: absolute;
+      inset: 0;
+      transition: all .4s ease;
+      pointer-events: none;
+    }
+    .panel-inner.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: all;
     }
 
-    /* PDF viewer box */
+    /* PDF box */
     .pdf-box {
-      background: var(--card-bg);
-      border-radius:12px;
-      overflow:hidden;
-      border:1px solid rgba(0,0,0,0.06);
-      height:65vh;
-      min-height:360px;
-      box-shadow:0 10px 30px rgba(0,0,0,0.04);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #fff;
+      height: 70vh;
+      min-height: 400px;
     }
-    .pdf-box iframe, .pdf-box object {
-      width:100%; height:100%; border:0;
-      display:block;
-    }
-
-    /* action buttons */
-    .action-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; justify-content:center; }
-
-    /* Gallery grid */
-    .gallery-grid {
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap:14px;
-      margin-top:28px;
-    }
-    .gallery-card {
-      background:var(--card-bg);
-      border-radius:12px;
-      overflow:hidden;
-      border:1px solid rgba(0,0,0,0.06);
-      box-shadow:0 6px 20px rgba(0,0,0,0.04);
-      cursor:pointer;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-    .gallery-card:hover { transform: translateY(-6px); box-shadow:0 14px 34px rgba(0,0,0,0.08); }
-    .thumb {
-      width:100%; height:140px; object-fit:cover; display:block;
-      background:#f3f3f3;
-    }
-    .gallery-meta { padding:10px 12px; }
-    .gallery-meta h6 { margin:0; font-size:15px; font-weight:700; color:#222; }
-    .gallery-meta p { margin:6px 0 0; color:var(--muted); font-size:13px; }
-
-    /* filter pills */
-    .filter-row { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:18px; }
-    .filter-pill { padding:8px 12px; border-radius:999px; background:#fff; border:1px solid rgba(0,0,0,0.06); cursor:pointer; font-weight:600; }
-    .filter-pill.active { background:var(--pran-red); color:#fff; box-shadow: 0 8px 20px rgba(228,31,38,0.12); }
-
-    /* footer */
-    footer.site-foot {
-      margin-top:44px; padding:24px 16px; text-align:center; color: #666; border-top:1px solid rgba(0,0,0,0.04);
+    iframe, object {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
-    /* small screens */
-    @media (max-width:540px){
-      .pdf-box { height:62vh; min-height:300px; }
-      .thumb { height:120px; }
+    /* Gallery */
+    .gallery-title {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.04);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
 
+    footer {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      padding: 20px 0;
+      margin-top: 60px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- HERO -->
+  <!-- Hero -->
   <section class="hero">
-    <div class="logo"><img src="https://images.seeklogo.com/logo-png/25/1/pran-logo-png_seeklogo-258211.png" alt="PRAN" style="height:70px; display:block;"></div>
+    <img src="https://images.seeklogo.com/logo-png/25/1/pran-logo-png_seeklogo-258211.png" alt="PRAN Logo">
     <h1>Produk Import Berkualiti — Diedarkan oleh Kopusamaju Sabah Berhad</h1>
-    <p>Ejen rasmi PRAN untuk pasaran tempatan</p>
+    <p>Ejen Rasmi PRAN Malaysia</p>
   </section>
 
-  <main class="container-main">
-
+  <main class="container py-5">
     <!-- Tabs -->
-    <div class="tabs-row" role="tablist" aria-label="Toggles">
-      <button class="tab-btn active" data-target="catalog" aria-pressed="true">📘 Katalog</button>
-      <button class="tab-btn" data-target="form" aria-pressed="false">📄 Borang Akaun</button>
+    <div class="d-flex justify-content-center mb-4">
+      <button class="tab-btn active" data-target="catalog">📘 Katalog</button>
+      <button class="tab-btn" data-target="form">📄 Borang Akaun</button>
     </div>
 
-    <!-- product thumbs -->
-    <div class="prod-gallery" aria-hidden="false">
-      <img src="/pran/jus.png" alt="Jus PRAN">
-      <img src="/pran/minumankotak.png" alt="Minuman Kotak PRAN">
-      <img src="/pran/wafer.png" alt="Wafer PRAN">
-    </div>
-
-    <!-- contact action -->
-    <div class="text-center mb-3">
-      <a href="https://wa.me/60128169367" target="_blank" rel="noopener" class="btn btn-success">
-        <i class="bi bi-whatsapp me-2"></i>Hubungi (WhatsApp)
-      </a>
-      <a id="open-new-tab" class="btn btn-outline-secondary ms-2" target="_blank" rel="noopener">Buka di Tab Baru</a>
-    </div>
-
-    <!-- switch panel -->
+    <!-- PDF Switcher -->
     <div class="switch-panel">
-
-      <!-- KATALOG panel -->
-      <div id="panel-catalog" class="panel-inner show" role="region" aria-label="Katalog">
-        <h4>Katalog Produk PRAN</h4>
-        <div class="pdf-box mt-3">
-          <!-- first try to load via iframe (works on most desktop & many mobile browsers) -->
-          <iframe id="catalog-iframe" src="catalog.pdf" title="Katalog PRAN"></iframe>
-          <!-- fallback object (some browsers prefer object) -->
-          <object id="catalog-object" data="catalog.pdf" type="application/pdf" style="display:none;">
-            <p style="padding:12px;">Paparan PDF tidak menyokong pelayar ini. <a href="catalog.pdf" target="_blank" rel="noopener">Klik untuk buka katalog</a>.</p>
-          </object>
+      <!-- Catalog Panel -->
+      <div id="panel-catalog" class="panel-inner show">
+        <h4 class="text-center fw-bold mb-3 text-danger">Katalog Produk PRAN</h4>
+        <div class="pdf-box">
+          <iframe src="catalog.pdf" title="Katalog PRAN"></iframe>
         </div>
-
-        <div class="action-row">
-          <a href="catalog.pdf" class="btn btn-primary" download>📥 Muat Turun Katalog</a>
-          <a id="catalog-google" class="btn btn-outline-primary" target="_blank" rel="noopener">👁️ Lihat di Google Viewer</a>
+        <div class="text-center mt-3">
+          <a href="catalog.pdf" class="btn btn-danger me-2" download><i class="bi bi-download me-1"></i>Muat Turun</a>
+          <a href="https://docs.google.com/gview?url=https://kienon.github.io/catalog.pdf&embedded=true" target="_blank" class="btn btn-outline-danger">👁️ Lihat di Google Viewer</a>
         </div>
       </div>
 
-      <!-- BORANG panel -->
-      <div id="panel-form" class="panel-inner" role="region" aria-label="Borang Akaun">
-        <h4>Borang Buka Akaun Kopusamaju</h4>
-        <div class="pdf-box mt-3">
-          <iframe id="form-iframe" src="borang-akaun.pdf" title="Borang Akaun"></iframe>
-          <object id="form-object" data="borang-akaun.pdf" type="application/pdf" style="display:none;">
-            <p style="padding:12px;">Paparan PDF tidak menyokong pelayar ini. <a href="borang-akaun.pdf" target="_blank" rel="noopener">Klik untuk buka borang</a>.</p>
-          </object>
+      <!-- Account Form Panel -->
+      <div id="panel-form" class="panel-inner">
+        <h4 class="text-center fw-bold mb-3 text-danger">Borang Buka Akaun Kopusamaju</h4>
+        <div class="pdf-box">
+          <iframe src="borang-akaun.pdf" title="Borang Akaun"></iframe>
         </div>
-
-        <div class="action-row">
-          <a href="borang-akaun.pdf" class="btn btn-primary" download>📥 Muat Turun Borang</a>
-          <a id="form-google" class="btn btn-outline-primary" target="_blank" rel="noopener">👁️ Lihat di Google Viewer</a>
+        <div class="text-center mt-3">
+          <a href="borang-akaun.pdf" class="btn btn-danger me-2" download><i class="bi bi-download me-1"></i>Muat Turun</a>
+          <a href="https://docs.google.com/gview?url=https://kienon.github.io/borang-akaun.pdf&embedded=true" target="_blank" class="btn btn-outline-danger">👁️ Lihat di Google Viewer</a>
         </div>
-      </div>
-
-    </div>
-
-    <!-- GALLERY FILTERS -->
-    <div class="filter-row" aria-hidden="false">
-      <div class="filter-pill active" data-filter="all">Semua</div>
-      <div class="filter-pill" data-filter="jus">Jus</div>
-      <div class="filter-pill" data-filter="minuman">Minuman Kotak</div>
-      <div class="filter-pill" data-filter="wafer">Wafer</div>
-    </div>
-
-    <!-- GALLERY GRID (single place only) -->
-    <div class="gallery-grid" id="galleryGrid" aria-live="polite">
-      <!-- Example items (use your uploads) -->
-      <div class="gallery-card" data-category="jus">
-        <img class="thumb" src="/pran/jus.png" alt="Jus PRAN - 1">
-        <div class="gallery-meta">
-          <h6>Jus PRAN</h6>
-          <p>Rasa asli - botol</p>
-        </div>
-      </div>
-
-      <div class="gallery-card" data-category="minuman">
-        <img class="thumb" src="/pran/minumankotak.png" alt="Minuman Kotak PRAN">
-        <div class="gallery-meta">
-          <h6>Minuman Kotak PRAN</h6>
-          <p>Praktikal & mudah</p>
-        </div>
-      </div>
-
-      <div class="gallery-card" data-category="wafer">
-        <img class="thumb" src="/pran/wafer.png" alt="Wafer PRAN">
-        <div class="gallery-meta">
-          <h6>Wafer PRAN</h6>
-          <p>Renyah & sedap</p>
-        </div>
-      </div>
-
-      <!-- duplicated / alternate thumbs for visual gallery -->
-      <div class="gallery-card" data-category="jus">
-        <img class="thumb" src="/pran/jus.png" alt="Jus PRAN - 2">
-        <div class="gallery-meta"><h6>Jus PRAN</h6><p>Varian buah-buahan</p></div>
-      </div>
-
-      <div class="gallery-card" data-category="minuman">
-        <img class="thumb" src="/pran/minumankotak.png" alt="Minuman Kotak PRAN - 2">
-        <div class="gallery-meta"><h6>Minuman Kotak</h6><p>Saiz mudah bawa</p></div>
-      </div>
-
-      <div class="gallery-card" data-category="wafer">
-        <img class="thumb" src="/pran/wafer.png" alt="Wafer PRAN - 2">
-        <div class="gallery-meta"><h6>Wafer PRAN</h6><p>Pack family</p></div>
       </div>
     </div>
 
+    <!-- WhatsApp -->
+    <div class="text-center mt-4">
+      <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success btn-lg">
+        <i class="bi bi-whatsapp me-2"></i>Hubungi Kami di WhatsApp
+      </a>
+    </div>
+
+    <!-- Gallery -->
+    <section class="mt-5">
+      <h3 class="gallery-title fw-bold text-danger">Galeri Produk PRAN</h3>
+      <div class="row g-4">
+        <div class="col-md-4 gallery-item">
+          <a href="/pran/jus.png" class="glightbox" data-gallery="pran-gallery">
+            <img src="/pran/jus.png" alt="Jus PRAN">
+          </a>
+        </div>
+        <div class="col-md-4 gallery-item">
+          <a href="/pran/minumankotak.png" class="glightbox" data-gallery="pran-gallery">
+            <img src="/pran/minumankotak.png" alt="Minuman Kotak PRAN">
+          </a>
+        </div>
+        <div class="col-md-4 gallery-item">
+          <a href="/pran/wafer.png" class="glightbox" data-gallery="pran-gallery">
+            <img src="/pran/wafer.png" alt="Wafer PRAN">
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-foot">
+  <footer>
     <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
-    © <span id="year"></span> Kopusamaju Sabah Berhad.
+    © <span id="year"></span> Kopusamaju Sabah Berhad. Semua Hak Cipta Terpelihara.
   </footer>
 
-  <!-- Image Modal (Bootstrap) -->
-  <div class="modal fade" id="imgModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content" style="background:transparent; border:none; box-shadow:none;">
-        <div class="modal-body p-0 position-relative">
-          <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-          <img id="modalImg" src="" alt="" style="width:100%; height:70vh; object-fit:contain; background:#111; display:block;">
-          <div id="modalCaption" style="padding:12px; background:#fff; border-radius:0 0 8px 8px; margin-top:6px; color:#222;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap JS bundle -->
+  <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
   <script>
-    // set current year
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // panel switching logic (with nice fade/slide)
-    const tabBtns = document.querySelectorAll(".tab-btn");
+    // Tab switching
+    const tabs = document.querySelectorAll(".tab-btn");
     const panels = {
       catalog: document.getElementById("panel-catalog"),
       form: document.getElementById("panel-form")
     };
-    const openNewTabBtn = document.getElementById("open-new-tab");
-
-    const catalogUrl = "catalog.pdf";
-    const formUrl = "borang-akaun.pdf";
-
-    // link to Google viewer (use location.origin + filename)
-    document.getElementById("catalog-google").href =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
-    document.getElementById("form-google").href =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
 
     function switchTo(target) {
-      tabBtns.forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.target === target);
-        btn.setAttribute("aria-pressed", btn.dataset.target === target ? "true" : "false");
-      });
-      Object.keys(panels).forEach(key => {
-        panels[key].classList.toggle("show", key === target);
-      });
-      openNewTabBtn.href = target === "catalog" ? catalogUrl : formUrl;
+      tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.target === target));
+      Object.keys(panels).forEach(k => panels[k].classList.toggle("show", k === target));
     }
+    tabs.forEach(btn => btn.addEventListener("click", () => switchTo(btn.dataset.target)));
 
-    tabBtns.forEach(btn => btn.addEventListener("click", () => switchTo(btn.dataset.target)));
-    openNewTabBtn.href = catalogUrl; // default
-
-    // --- Gallery filtering (lightweight, no libs) ---
-    const filterPills = document.querySelectorAll(".filter-pill");
-    const galleryGrid = document.getElementById("galleryGrid");
-    const cards = Array.from(galleryGrid.querySelectorAll(".gallery-card"));
-
-    function applyFilter(filter) {
-      filterPills.forEach(p => p.classList.toggle("active", p.dataset.filter === filter));
-      // show/hide cards with small animation
-      cards.forEach(card => {
-        const cat = card.dataset.category || "all";
-        if (filter === "all" || cat === filter) {
-          card.style.display = ""; // reset -> shown
-          // animate in
-          requestAnimationFrame(() => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(10px)';
-            card.style.transition = 'opacity .28s ease, transform .28s ease';
-            requestAnimationFrame(() => {
-              card.style.opacity = 1;
-              card.style.transform = 'translateY(0)';
-            });
-          });
-        } else {
-          // fade out then hide
-          card.style.transition = 'opacity .2s ease, transform .2s ease';
-          card.style.opacity = 0;
-          card.style.transform = 'translateY(8px)';
-          setTimeout(() => { card.style.display = 'none'; }, 220);
-        }
-      });
-    }
-
-    filterPills.forEach(p => p.addEventListener("click", () => applyFilter(p.dataset.filter)));
-
-    // start with "all"
-    applyFilter("all");
-
-    // --- Modal image viewer ---
-    const imgModal = new bootstrap.Modal(document.getElementById('imgModal'));
-    const modalImg = document.getElementById('modalImg');
-    const modalCaption = document.getElementById('modalCaption');
-
-    galleryGrid.addEventListener('click', (e) => {
-      let card = e.target.closest('.gallery-card');
-      if (!card) return;
-      const img = card.querySelector('img.thumb');
-      modalImg.src = img.src;
-      modalImg.alt = img.alt || '';
-      modalCaption.textContent = card.querySelector('.gallery-meta h6')?.textContent || '';
-      imgModal.show();
-    });
-
-    // --- Ensure iframe fallback approach for mobile browsers ---
-    // Some mobile browsers force download for local PDF; we provide fallback link visible in object tag.
-    // We also try to detect if embedding works; if not, show the object fallback (some browsers hide iframe).
-    function testPDFEmbed(iframeEl, objectEl) {
-      // simple heuristic: after load try to read-ready; if iframe contentWindow undefined or has no document, show fallback
-      setTimeout(() => {
-        try {
-          const cw = iframeEl.contentWindow;
-          // if same-origin and document exists, embedding likely worked
-          if (!cw || !cw.document) {
-            iframeEl.style.display = "none";
-            objectEl.style.display = "block";
-          } else {
-            // keep iframe visible
-            iframeEl.style.display = "block";
-            objectEl.style.display = "none";
-          }
-        } catch (e) {
-          // cross-origin or blocked -> fallback
-          iframeEl.style.display = "none";
-          objectEl.style.display = "block";
-        }
-      }, 800);
-    }
-
-    // call tests for both catalog and form
-    testPDFEmbed(document.getElementById('catalog-iframe'), document.getElementById('catalog-object'));
-    testPDFEmbed(document.getElementById('form-iframe'), document.getElementById('form-object'));
-
-    // small improvement: if user rotates or resizes, re-test once
-    let resizeTimeout;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        testPDFEmbed(document.getElementById('catalog-iframe'), document.getElementById('catalog-object'));
-        testPDFEmbed(document.getElementById('form-iframe'), document.getElementById('form-object'));
-      }, 600);
-    });
-
-    // Accessibility: keyboard toggle for tabs with arrow keys (left/right)
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-          const idx = Array.from(tabBtns).indexOf(document.activeElement);
-          const dir = e.key === 'ArrowLeft' ? -1 : 1;
-          let next = (idx + dir + tabBtns.length) % tabBtns.length;
-          tabBtns[next].focus();
-          switchTo(tabBtns[next].dataset.target);
-        }
-      });
-    });
-
+    // Init gallery lightbox
+    const lightbox = GLightbox({ selector: '.glightbox' });
   </script>
 </body>
 </html>

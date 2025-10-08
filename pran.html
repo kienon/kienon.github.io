@@ -1,4 +1,5 @@
 <!doctype html>
+<html lang="ms">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -80,7 +81,7 @@
       cursor: pointer;
       font-weight: 600;
       transition: all .3s ease;
-      margin: 0 5px 10px 5px;
+      margin: 0 5px 5px 5px;
     }
     .tab-btn.active {
       background: linear-gradient(180deg, var(--pran-red), #c51919);
@@ -115,7 +116,7 @@
       background: #fff;
       height: 70vh;
       min-height: 400px;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     iframe, object {
       width: 100%;
@@ -130,14 +131,7 @@
         min-height: 400px;
         aspect-ratio: 3 / 4;
       }
-    }
-
-    .pdf-box iframe {
-      min-height: 75vh;
-    }
-
-    @media (max-width:768px){
-      .pdf-box iframe {
+      iframe {
         min-height: 500px;
       }
     }
@@ -167,7 +161,7 @@
       color: #666;
       border-top: 1px solid rgba(0,0,0,0.05);
       padding: 30px 0 15px;
-      margin-top: 60px;
+      margin-top: 20px;
     }
 
     /* ===== Buttons spacing ===== */
@@ -229,7 +223,7 @@
 
     <!-- PDF SECTIONS -->
     <section class="py-3 border-top">
-      <div class="switch-panel pb-5">
+      <div class="switch-panel pb-3">
 
         <!-- KATALOG -->
         <div id="panel-catalog" class="panel-inner show">
@@ -261,11 +255,10 @@
     &nbsp;&nbsp; <!-- jarak sebelum footer -->
 
     <!-- FOOTER -->
-  <footer style="margin-top:80px;">
-    <strong>Kopusamaju Sabah Berhad</strong> | Pengedar Rasmi PRAN | Ejen Rasmi: Ahmad Amsari<br>
-    © <span id="year"></span> Kopusamaju Sabah Berhad.
-  </footer>
-
+    <footer>
+      <strong>Kopusamaju Sabah Berhad</strong> | Pengedar Rasmi PRAN | Ejen Rasmi: Ahmad Amsari<br>
+      © <span id="year"></span> Kopusamaju Sabah Berhad.
+    </footer>
 
   </main>
 
@@ -287,16 +280,17 @@
     const catalogUrl = "catalog.pdf";
     const formUrl = "borang-akaun.pdf";
 
-    // Set iframe src untuk Google Docs Viewer
-    document.getElementById("catalog-google").href =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
-    catalogIframe.src =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
+    // Set Google Docs Viewer src selepas DOM loaded supaya first load desktop tak miss
+    window.addEventListener("DOMContentLoaded", () => {
+      const catalogViewerUrl = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
+      const formViewerUrl = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
 
-    document.getElementById("form-google").href =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
-    formIframe.src =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
+      catalogIframe.src = catalogViewerUrl;
+      document.getElementById("catalog-google").href = catalogViewerUrl;
+
+      formIframe.src = formViewerUrl;
+      document.getElementById("form-google").href = formViewerUrl;
+    });
 
     function switchTo(target) {
       tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.target === target));

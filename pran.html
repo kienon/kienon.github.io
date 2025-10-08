@@ -142,25 +142,39 @@
       }
     }
 
-    /* ===== Gallery Carousel ===== */
+    /* ===== Gallery Auto-scroll Carousel ===== */
     .gallery-title {
       text-align: center;
       margin-bottom: 25px;
       color: var(--pran-red);
     }
-    .carousel-item img {
+    .auto-carousel-wrapper {
+      overflow: hidden;
+      width: 100%;
+    }
+    .auto-carousel {
+      display: flex;
+      gap: 15px;
+      animation: scroll 30s linear infinite;
+    }
+    .auto-carousel a {
+      flex: 0 0 auto;
+    }
+    .auto-carousel img {
       height: 150px;
       object-fit: contain;
       border-radius: 10px;
+      transition: transform .3s ease;
     }
-    .carousel-inner {
-      display: flex;
-      align-items: center;
+    .auto-carousel img:hover {
+      transform: scale(1.05);
     }
-    .carousel-item {
-      display: flex;
-      justify-content: center;
-      gap: 10px; /* jarak rapat antar gambar */
+    .auto-carousel-wrapper:hover .auto-carousel {
+      animation-play-state: paused;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* ===== Footer ===== */
@@ -197,33 +211,20 @@
 
   <main class="container">
 
-    <!-- GALLERY CAROUSEL -->
+    <!-- GALLERY CAROUSEL AUTO-SCROLL -->
     <section class="gallery-section py-5">
       <h4 class="gallery-title fw-bold">Galeri Produk PRAN</h4>
       <div class="pdf-box p-2">
-        <div id="pranCarousel" class="carousel slide h-100" data-bs-ride="carousel" data-bs-interval="4000">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran">
-                <img src="/pran/jus.png" class="img-fluid" alt="Jus PRAN">
-              </a>
-              <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran">
-                <img src="/pran/minumankotak.png" class="img-fluid" alt="Kotak PRAN">
-              </a>
-              <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran">
-                <img src="/pran/wafer.png" class="img-fluid" alt="Wafer PRAN">
-              </a>
-            </div>
-            <!-- Tambah carousel-item lain jika lebih banyak gambar -->
+        <div class="auto-carousel-wrapper">
+          <div class="auto-carousel" id="autoCarousel">
+            <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran"><img src="/pran/jus.png" alt="Jus PRAN"></a>
+            <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran"><img src="/pran/minumankotak.png" alt="Kotak PRAN"></a>
+            <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran"><img src="/pran/wafer.png" alt="Wafer PRAN"></a>
+            <!-- Duplicate untuk loop smooth -->
+            <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran"><img src="/pran/jus.png" alt="Jus PRAN"></a>
+            <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran"><img src="/pran/minumankotak.png" alt="Kotak PRAN"></a>
+            <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran"><img src="/pran/wafer.png" alt="Wafer PRAN"></a>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#pranCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Sebelum</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#pranCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Seterusnya</span>
-          </button>
         </div>
       </div>
     </section>

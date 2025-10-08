@@ -1,5 +1,4 @@
 <!doctype html>
-<html lang="ms">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -81,7 +80,7 @@
       cursor: pointer;
       font-weight: 600;
       transition: all .3s ease;
-      margin: 0 5px 5px 5px;
+      margin: 0 5px 10px 5px;
     }
     .tab-btn.active {
       background: linear-gradient(180deg, var(--pran-red), #c51919);
@@ -116,7 +115,7 @@
       background: #fff;
       height: 70vh;
       min-height: 400px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
     iframe, object {
       width: 100%;
@@ -131,27 +130,29 @@
         min-height: 400px;
         aspect-ratio: 3 / 4;
       }
-      iframe {
+    }
+
+    .pdf-box iframe {
+      min-height: 75vh;
+    }
+
+    @media (max-width:768px){
+      .pdf-box iframe {
         min-height: 500px;
       }
     }
 
-    /* ===== Gallery ===== */
+    /* ===== Gallery / Carousel ===== */
     .gallery-title {
       text-align: center;
       margin-bottom: 25px;
       color: var(--pran-red);
     }
-    .gallery-item img {
+    .carousel-item img {
       width: 100%;
-      height: 240px;
+      height: 300px;
       object-fit: cover;
       border-radius: 10px;
-      transition: transform .3s ease, box-shadow .3s ease;
-    }
-    .gallery-item:hover img {
-      transform: scale(1.04);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
 
     /* ===== Footer ===== */
@@ -161,7 +162,7 @@
       color: #666;
       border-top: 1px solid rgba(0,0,0,0.05);
       padding: 30px 0 15px;
-      margin-top: 20px;
+      margin-top: 60px;
     }
 
     /* ===== Buttons spacing ===== */
@@ -188,25 +189,35 @@
 
   <main class="container">
 
-    <!-- GALLERY -->
+    <!-- GALLERY / CAROUSEL -->
     <section class="gallery-section py-5">
       <h4 class="gallery-title fw-bold">Galeri Produk PRAN</h4>
-      <div class="row g-3">
-        <div class="col-md-4 col-6 gallery-item">
-          <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran">
-            <img src="/pran/jus.png" alt="Jus PRAN">
-          </a>
+      <div id="pranCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3500">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <a href="/pran/jus.png" class="glightbox" data-gallery="gallery-pran">
+              <img src="/pran/jus.png" class="d-block w-100" alt="Jus PRAN">
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran">
+              <img src="/pran/minumankotak.png" class="d-block w-100" alt="Kotak PRAN">
+            </a>
+          </div>
+          <div class="carousel-item">
+            <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran">
+              <img src="/pran/wafer.png" class="d-block w-100" alt="Wafer PRAN">
+            </a>
+          </div>
         </div>
-        <div class="col-md-4 col-6 gallery-item">
-          <a href="/pran/minumankotak.png" class="glightbox" data-gallery="gallery-pran">
-            <img src="/pran/minumankotak.png" alt="Kotak PRAN">
-          </a>
-        </div>
-        <div class="col-md-4 col-6 gallery-item">
-          <a href="/pran/wafer.png" class="glightbox" data-gallery="gallery-pran">
-            <img src="/pran/wafer.png" alt="Wafer PRAN">
-          </a>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#pranCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Sebelum</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#pranCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Seterusnya</span>
+        </button>
       </div>
     </section>
 
@@ -223,7 +234,7 @@
 
     <!-- PDF SECTIONS -->
     <section class="py-3 border-top">
-      <div class="switch-panel pb-3">
+      <div class="switch-panel pb-5">
 
         <!-- KATALOG -->
         <div id="panel-catalog" class="panel-inner show">
@@ -255,7 +266,7 @@
     &nbsp;&nbsp; <!-- jarak sebelum footer -->
 
     <!-- FOOTER -->
-    <footer>
+    <footer style="margin-top:80px;">
       <strong>Kopusamaju Sabah Berhad</strong> | Pengedar Rasmi PRAN | Ejen Rasmi: Ahmad Amsari<br>
       © <span id="year"></span> Kopusamaju Sabah Berhad.
     </footer>
@@ -280,17 +291,16 @@
     const catalogUrl = "catalog.pdf";
     const formUrl = "borang-akaun.pdf";
 
-    // Set Google Docs Viewer src selepas DOM loaded supaya first load desktop tak miss
-    window.addEventListener("DOMContentLoaded", () => {
-      const catalogViewerUrl = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
-      const formViewerUrl = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
+    // Set iframe src untuk Google Docs Viewer
+    document.getElementById("catalog-google").href =
+      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
+    catalogIframe.src =
+      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
 
-      catalogIframe.src = catalogViewerUrl;
-      document.getElementById("catalog-google").href = catalogViewerUrl;
-
-      formIframe.src = formViewerUrl;
-      document.getElementById("form-google").href = formViewerUrl;
-    });
+    document.getElementById("form-google").href =
+      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
+    formIframe.src =
+      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
 
     function switchTo(target) {
       tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.target === target));

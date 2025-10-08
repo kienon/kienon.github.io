@@ -91,21 +91,20 @@
 
     .switch-panel {
       position: relative;
-      width: 100%;
+      min-height: 450px;
     }
     .panel-inner {
       opacity: 0;
       transform: translateY(20px);
+      position: absolute;
+      inset: 0;
       transition: all .4s ease;
       pointer-events: none;
-      height: 0;
-      overflow: hidden;
     }
     .panel-inner.show {
       opacity: 1;
       transform: translateY(0);
       pointer-events: all;
-      height: auto;
     }
 
     /* ===== PDF box ===== */
@@ -116,13 +115,22 @@
       background: #fff;
       height: 70vh;
       min-height: 400px;
-      margin-bottom: 20px;
+      margin-bottom: 20px; /* reduce bottom margin */
     }
     iframe, object {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
+    }
+
+    /* Buttons wrapper spacing */
+    .pdf-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px; /* jarak cantik */
+      margin-bottom: 40px; /* jarak ke footer */
     }
 
     @media (max-width: 768px) {
@@ -167,14 +175,13 @@
       font-size: 14px;
       color: #666;
       border-top: 1px solid rgba(0,0,0,0.05);
-      padding: 30px 0 15px;
-      margin-top: 60px;
+      padding: 30px 0 30px; /* spacing fixed */
+      margin-top: 40px;
+      position: relative;
+      z-index: 1;
+      background: #fff;
     }
 
-    /* ===== Buttons spacing ===== */
-    .pdf-buttons a {
-      margin: 0 5px 5px 5px;
-    }
   </style>
 </head>
 <body>
@@ -222,7 +229,8 @@
       <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 mb-4">
         <button class="tab-btn active" data-target="catalog">📘 Katalog</button>
         <button class="tab-btn" data-target="form">📄 Borang Akaun</button>
-        <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success ms-2">
+        <a id="open-new-tab" class="tab-btn" target="_blank">Buka di Tab Baru</a>
+        <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success">
           <i class="bi bi-whatsapp me-2"></i>Hubungi Kami di WhatsApp
         </a>
       </div>
@@ -230,43 +238,42 @@
 
     <!-- PDF SECTIONS -->
     <section class="py-5 border-top">
-      <div class="switch-panel pb-5">
-
+      <div class="switch-panel"><!-- TAMBAH PADDING BAWAH -->
         <!-- KATALOG -->
         <div id="panel-catalog" class="panel-inner show">
           <h4 class="text-center mb-3 text-danger">Katalog Produk PRAN</h4>
-          <div class="pdf-buttons text-center mb-3">
-            <a href="catalog.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
-            <a id="catalog-google" class="btn btn-outline-danger" target="_blank">👁️ Lihat dengan Google Docs Viewer</a>
-          </div>
           <div class="pdf-box">
-            <iframe src="" id="catalog-iframe" title="Katalog PRAN"></iframe>
+            <iframe id="catalog-viewer" src="https://docs.google.com/gview?url=https://example.com/catalog.pdf&embedded=true" title="Katalog PRAN"></iframe>
+          </div>
+          <div class="pdf-buttons">
+            <a href="catalog.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
+            <a id="catalog-google" class="btn btn-outline-danger" target="_blank">👁️ View dengan Google Doc Viewer</a>
           </div>
         </div>
 
         <!-- BORANG -->
         <div id="panel-form" class="panel-inner">
           <h4 class="text-center mb-3 text-danger">Borang Buka Akaun Kopusamaju</h4>
-          <div class="pdf-buttons text-center mb-3">
-            <a href="borang-akaun.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
-            <a id="form-google" class="btn btn-outline-danger" target="_blank">👁️ Lihat dengan Google Docs Viewer</a>
-          </div>
           <div class="pdf-box">
-            <iframe src="" id="form-iframe" title="Borang Akaun"></iframe>
+            <iframe id="form-viewer" src="https://docs.google.com/gview?url=https://example.com/borang-akaun.pdf&embedded=true" title="Borang Akaun"></iframe>
+          </div>
+          <div class="pdf-buttons">
+            <a href="borang-akaun.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
+            <a id="form-google" class="btn btn-outline-danger" target="_blank">👁️ View dengan Google Doc Viewer</a>
           </div>
         </div>
-
       </div>
     </section>
- <!-- jarak sebelum footer -->
 
-    <!-- FOOTER -->
-    <footer>
-      <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
-      © <span id="year"></span> Kopusamaju Sabah Berhad.
-    </footer>
+    &nbsp;&nbsp;&nbsp;
 
   </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
+    © <span id="year"></span> Kopusamaju Sabah Berhad.
+  </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -279,30 +286,32 @@
       catalog: document.getElementById("panel-catalog"),
       form: document.getElementById("panel-form"),
     };
-
-    const catalogIframe = document.getElementById("catalog-iframe");
-    const formIframe = document.getElementById("form-iframe");
+    const openNewTabBtn = document.getElementById("open-new-tab");
 
     const catalogUrl = "catalog.pdf";
     const formUrl = "borang-akaun.pdf";
 
-    // Set iframe src untuk Google Docs Viewer
+    // Google Doc Viewer links
     document.getElementById("catalog-google").href =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
-    catalogIframe.src =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + catalogUrl) + "&embedded=true";
-
+      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/catalog.pdf") + "&embedded=true";
     document.getElementById("form-google").href =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
-    formIframe.src =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/" + formUrl) + "&embedded=true";
+      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/borang-akaun.pdf") + "&embedded=true";
 
     function switchTo(target) {
       tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.target === target));
       Object.keys(panels).forEach(key => panels[key].classList.toggle("show", key === target));
+      openNewTabBtn.href = target === "catalog" ? catalogUrl : formUrl;
+
+      // Switch iframe src to Google Doc Viewer dynamically
+      if (target === "catalog") {
+        document.getElementById("catalog-viewer").src = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/catalog.pdf") + "&embedded=true";
+      } else if (target === "form") {
+        document.getElementById("form-viewer").src = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/borang-akaun.pdf") + "&embedded=true";
+      }
     }
 
     tabs.forEach(btn => btn.addEventListener("click", () => switchTo(btn.dataset.target)));
+    openNewTabBtn.href = catalogUrl;
 
     // Lightbox init
     const lightbox = GLightbox({ selector: '.glightbox' });

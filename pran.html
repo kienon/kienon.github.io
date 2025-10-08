@@ -21,6 +21,7 @@
   <style>
     :root {
       --pran-red: #e41f26;
+      --pran-yellow: #f6c400;
       --muted: #6b6b6b;
     }
 
@@ -66,7 +67,6 @@
     .hero h1 {
       font-weight: 700;
       color: var(--pran-red);
-      font-size: 1.6rem;
     }
     .hero p {
       color: var(--muted);
@@ -92,6 +92,7 @@
     .switch-panel {
       position: relative;
       min-height: 450px;
+      padding-bottom: 100px; /* ruang bawah untuk footer */
     }
     .panel-inner {
       opacity: 0;
@@ -107,7 +108,7 @@
       pointer-events: all;
     }
 
-    /* ===== PDF box ===== */
+    /* ===== PDF box / Google Doc Viewer ===== */
     .pdf-box {
       border-radius: 12px;
       overflow: hidden;
@@ -115,38 +116,32 @@
       background: #fff;
       height: 70vh;
       min-height: 400px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
-    iframe {
+    iframe, object {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
     }
 
-    /* Button group above viewer */
-    .pdf-box-buttons {
+    @media (max-width:768px){
+      .pdf-box {
+        height: auto;
+        min-height: 500px; /* cukup ruang untuk mobile */
+      }
+      .switch-panel {
+        padding-bottom: 150px; /* tambah ruang bawah di mobile */
+      }
+    }
+
+    /* ===== Buttons spacing ===== */
+    .btn-actions {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
-    .pdf-box-buttons a {
-      flex: 1 1 auto;
-      min-width: 140px;
-      text-align: center;
-    }
-
-    @media (max-width:768px){
-      .pdf-box iframe {
-        min-height: 500px;
-      }
-      .tab-btn {
-        flex: 1 1 45%;
-        text-align: center;
-        margin-bottom: 5px;
-      }
+      gap: 10px;
+      margin-bottom: 20px;
     }
 
     /* ===== Gallery ===== */
@@ -223,49 +218,56 @@
       <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 mb-4">
         <button class="tab-btn active" data-target="catalog">📘 Katalog</button>
         <button class="tab-btn" data-target="form">📄 Borang Akaun</button>
+        <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success">
+          <i class="bi bi-whatsapp me-2"></i>Hubungi Kami di WhatsApp
+        </a>
       </div>
     </section>
 
-    <!-- PDF SECTIONS -->
-    <section class="py-3 border-top">
+    <!-- PDF SECTIONS / GOOGLE DOC VIEWER -->
+    <section class="py-5 border-top">
       <div class="switch-panel pb-5">
 
         <!-- KATALOG -->
         <div id="panel-catalog" class="panel-inner show">
-          <div class="pdf-box-buttons">
-            <a href="catalog.pdf" class="btn btn-danger" download>📥 Muat Turun Katalog</a>
-            <a id="catalog-google" class="btn btn-outline-danger" target="_blank">👁️ View dengan Google Doc</a>
-            <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success"><i class="bi bi-whatsapp me-1"></i>WhatsApp Kami</a>
+          <h4 class="text-center mb-3 text-danger">Katalog Produk PRAN</h4>
+
+          <div class="btn-actions">
+            <a href="catalog.pdf" download class="btn btn-danger">📥 Muat Turun</a>
+            <a id="catalog-google" target="_blank" class="btn btn-outline-danger">👁️ Lihat dengan Google Doc Viewer</a>
           </div>
+
           <div class="pdf-box">
-            <iframe src="https://docs.google.com/gview?url=https://example.com/catalog.pdf&embedded=true" title="Katalog PRAN"></iframe>
+            <iframe id="iframe-catalog" src="" title="Katalog PRAN"></iframe>
           </div>
         </div>
 
         <!-- BORANG -->
         <div id="panel-form" class="panel-inner">
-          <div class="pdf-box-buttons">
-            <a href="borang-akaun.pdf" class="btn btn-danger" download>📥 Muat Turun Borang</a>
-            <a id="form-google" class="btn btn-outline-danger" target="_blank">👁️ View dengan Google Doc</a>
-            <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success"><i class="bi bi-whatsapp me-1"></i>WhatsApp Kami</a>
+          <h4 class="text-center mb-3 text-danger">Borang Buka Akaun Kopusamaju</h4>
+
+          <div class="btn-actions">
+            <a href="borang-akaun.pdf" download class="btn btn-danger">📥 Muat Turun</a>
+            <a id="form-google" target="_blank" class="btn btn-outline-danger">👁️ Lihat dengan Google Doc Viewer</a>
           </div>
+
           <div class="pdf-box">
-            <iframe src="https://docs.google.com/gview?url=https://example.com/borang-akaun.pdf&embedded=true" title="Borang Akaun"></iframe>
+            <iframe id="iframe-form" src="" title="Borang Akaun"></iframe>
           </div>
         </div>
 
       </div>
     </section>
 
-    &nbsp;&nbsp; <!-- spacing sebelum footer -->
+    &nbsp;&nbsp; <!-- Jarak sebelum footer -->
+
+    <!-- FOOTER -->
+    <footer>
+      <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
+      © <span id="year"></span> Kopusamaju Sabah Berhad.
+    </footer>
 
   </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
-    © <span id="year"></span> Kopusamaju Sabah Berhad.
-  </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -279,23 +281,28 @@
       form: document.getElementById("panel-form"),
     };
 
-    const catalogGoogle = document.getElementById("catalog-google");
-    const formGoogle = document.getElementById("form-google");
-
-    // Set Google Doc view URL dynamically
     const catalogUrl = location.origin + "/catalog.pdf";
     const formUrl = location.origin + "/borang-akaun.pdf";
-    catalogGoogle.href = "https://docs.google.com/gview?url=" + encodeURIComponent(catalogUrl) + "&embedded=true";
-    formGoogle.href = "https://docs.google.com/gview?url=" + encodeURIComponent(formUrl) + "&embedded=true";
+
+    // Google Doc Viewer
+    document.getElementById("catalog-google").href =
+      "https://docs.google.com/gview?url=" + encodeURIComponent(catalogUrl) + "&embedded=true";
+    document.getElementById("form-google").href =
+      "https://docs.google.com/gview?url=" + encodeURIComponent(formUrl) + "&embedded=true";
+
+    // Set iframe src default
+    document.getElementById("iframe-catalog").src = document.getElementById("catalog-google").href;
+    document.getElementById("iframe-form").src = document.getElementById("form-google").href;
 
     function switchTo(target) {
       tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.target === target));
       Object.keys(panels).forEach(key => panels[key].classList.toggle("show", key === target));
-      // Change iframe src to Google Doc viewer
-      if (target === "catalog") {
-        panels.catalog.querySelector("iframe").src = "https://docs.google.com/gview?url=" + encodeURIComponent(catalogUrl) + "&embedded=true";
+
+      // Update iframe src dynamically
+      if(target === "catalog"){
+        document.getElementById("iframe-catalog").src = document.getElementById("catalog-google").href;
       } else {
-        panels.form.querySelector("iframe").src = "https://docs.google.com/gview?url=" + encodeURIComponent(formUrl) + "&embedded=true";
+        document.getElementById("iframe-form").src = document.getElementById("form-google").href;
       }
     }
 

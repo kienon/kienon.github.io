@@ -107,7 +107,7 @@
       pointer-events: all;
     }
 
-    /* ===== PDF box ===== */
+    /* ===== PDF / Google Docs Viewer ===== */
     .pdf-box {
       border-radius: 12px;
       overflow: hidden;
@@ -115,61 +115,22 @@
       background: #fff;
       height: 70vh;
       min-height: 400px;
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
-    iframe, object {
+    iframe {
       width: 100%;
       height: 100%;
       border: none;
       display: block;
     }
 
-    /* ===== PDF buttons ===== */
+    /* ===== Buttons atas viewer ===== */
     .pdf-box-buttons {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
       margin-bottom: 15px;
-      flex-wrap: wrap;
-    }
-    .pdf-box-buttons a.btn-view {
-      background: linear-gradient(45deg, #ff6b6b, #e41f26);
-      color: #fff;
-      border: none;
-      transition: all 0.3s ease;
-    }
-    .pdf-box-buttons a.btn-view:hover {
-      background: linear-gradient(45deg, #e41f26, #ff6b6b);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    }
-    .pdf-box-buttons a.btn-download {
-      background: #e41f26;
-      color: #fff;
-      border: none;
-    }
-    .pdf-box-buttons a.btn-download:hover {
-      background: #c51919;
-      transform: translateY(-1px);
-      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-    }
-
-    @media (max-width: 768px){
-      .pdf-box-buttons {
-        flex-direction: column;
-      }
-      .pdf-box-buttons a {
-        width: 90%;
-      }
-    }
-
-    .pdf-box iframe {
-      min-height: 75vh;
-    }
-    @media (max-width:768px){
-      .pdf-box iframe {
-        min-height: 500px;
-      }
     }
 
     /* ===== Gallery ===== */
@@ -197,8 +158,16 @@
       color: #666;
       border-top: 1px solid rgba(0,0,0,0.05);
       padding: 30px 0 15px;
-      margin-top: 60px;
     }
+
+    @media (max-width:768px){
+      .pdf-box {
+        height: auto;
+        min-height: 500px;
+        aspect-ratio: 3 / 4;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -249,42 +218,44 @@
       </div>
     </section>
 
-    <!-- PDF SECTIONS -->
+    <!-- PDF / Google Docs Viewer SECTIONS -->
     <section class="py-5 border-top">
       <div class="switch-panel pb-5">
         <!-- KATALOG -->
         <div id="panel-catalog" class="panel-inner show">
           <h4 class="text-center mb-3 text-danger">Katalog Produk PRAN</h4>
-          <div class="text-center mb-3 pdf-box-buttons">
-            <a href="catalog.pdf" class="btn btn-download me-2" download>📥 Muat Turun Katalog</a>
-            <a id="catalog-google" class="btn btn-view" target="_blank">📄 Lihat Katalog dengan Google Doc Viewer</a>
+          <div class="pdf-box-buttons">
+            <a href="catalog.pdf" class="btn btn-danger">📥 Muat Turun</a>
+            <a id="catalog-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat Katalog di Google Docs</a>
           </div>
-          <div class="pdf-box">
-            <iframe src="catalog.pdf" title="Katalog PRAN"></iframe>
+          <div class="pdf-box d-none d-md-block">
+            <iframe src="" id="catalog-iframe" title="Katalog PRAN"></iframe>
           </div>
         </div>
 
         <!-- BORANG -->
         <div id="panel-form" class="panel-inner">
           <h4 class="text-center mb-3 text-danger">Borang Buka Akaun Kopusamaju</h4>
-          <div class="text-center mb-3 pdf-box-buttons">
-            <a href="borang-akaun.pdf" class="btn btn-download me-2" download>📥 Muat Turun Borang</a>
-            <a id="form-google" class="btn btn-view" target="_blank">📝 Lihat Borang Akaun dengan Google Doc Viewer</a>
+          <div class="pdf-box-buttons">
+            <a href="borang-akaun.pdf" class="btn btn-danger">📥 Muat Turun</a>
+            <a id="form-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat Borang di Google Docs</a>
           </div>
-          <div class="pdf-box">
-            <iframe src="borang-akaun.pdf" title="Borang Akaun"></iframe>
+          <div class="pdf-box d-none d-md-block">
+            <iframe src="" id="form-iframe" title="Borang Akaun"></iframe>
           </div>
         </div>
       </div>
     </section>
 
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;
 
     <!-- FOOTER -->
     <footer>
       <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
       © <span id="year"></span> Kopusamaju Sabah Berhad.
     </footer>
+
+  </main>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -301,12 +272,19 @@
     const catalogUrl = "catalog.pdf";
     const formUrl = "borang-akaun.pdf";
 
-    document.getElementById("catalog-google").href =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/catalog.pdf") + "&embedded=true";
-    document.getElementById("form-google").href =
-      "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/borang-akaun.pdf") + "&embedded=true";
+    const catalogGoogle = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/catalog.pdf") + "&embedded=true";
+    const formGoogle = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/borang-akaun.pdf") + "&embedded=true";
 
-    function switchTo(target) {
+    document.getElementById("catalog-google").href = catalogGoogle;
+    document.getElementById("form-google").href = formGoogle;
+
+    // Load Google Docs viewer iframe for desktop only
+    if(window.innerWidth > 768){
+      document.getElementById("catalog-iframe").src = catalogGoogle;
+      document.getElementById("form-iframe").src = formGoogle;
+    }
+
+    function switchTo(target){
       tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.target === target));
       Object.keys(panels).forEach(key => panels[key].classList.toggle("show", key === target));
     }
@@ -316,5 +294,6 @@
     // Lightbox init
     const lightbox = GLightbox({ selector: '.glightbox' });
   </script>
+
 </body>
 </html>

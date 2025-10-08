@@ -21,7 +21,6 @@
   <style>
     :root {
       --pran-red: #e41f26;
-      --pran-yellow: #f6c400;
       --muted: #6b6b6b;
     }
 
@@ -67,6 +66,7 @@
     .hero h1 {
       font-weight: 700;
       color: var(--pran-red);
+      font-size: 1.6rem;
     }
     .hero p {
       color: var(--muted);
@@ -107,7 +107,7 @@
       pointer-events: all;
     }
 
-    /* ===== PDF / Google Docs Viewer ===== */
+    /* ===== PDF box ===== */
     .pdf-box {
       border-radius: 12px;
       overflow: hidden;
@@ -115,7 +115,7 @@
       background: #fff;
       height: 70vh;
       min-height: 400px;
-      margin-bottom: 10px;
+      margin-bottom: 30px;
     }
     iframe {
       width: 100%;
@@ -124,13 +124,29 @@
       display: block;
     }
 
-    /* ===== Buttons atas viewer ===== */
+    /* Button group above viewer */
     .pdf-box-buttons {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 15px;
+    }
+    .pdf-box-buttons a {
+      flex: 1 1 auto;
+      min-width: 140px;
+      text-align: center;
+    }
+
+    @media (max-width:768px){
+      .pdf-box iframe {
+        min-height: 500px;
+      }
+      .tab-btn {
+        flex: 1 1 45%;
+        text-align: center;
+        margin-bottom: 5px;
+      }
     }
 
     /* ===== Gallery ===== */
@@ -158,16 +174,8 @@
       color: #666;
       border-top: 1px solid rgba(0,0,0,0.05);
       padding: 30px 0 15px;
+      margin-top: 60px;
     }
-
-    @media (max-width:768px){
-      .pdf-box {
-        height: auto;
-        min-height: 500px;
-        aspect-ratio: 3 / 4;
-      }
-    }
-
   </style>
 </head>
 <body>
@@ -218,44 +226,46 @@
       </div>
     </section>
 
-    <!-- PDF / Google Docs Viewer SECTIONS -->
-    <section class="py-5 border-top">
+    <!-- PDF SECTIONS -->
+    <section class="py-3 border-top">
       <div class="switch-panel pb-5">
+
         <!-- KATALOG -->
         <div id="panel-catalog" class="panel-inner show">
-          <h4 class="text-center mb-3 text-danger">Katalog Produk PRAN</h4>
           <div class="pdf-box-buttons">
-            <a href="catalog.pdf" class="btn btn-danger">📥 Muat Turun</a>
-            <a id="catalog-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat Katalog di Google Docs</a>
+            <a href="catalog.pdf" class="btn btn-danger" download>📥 Muat Turun Katalog</a>
+            <a id="catalog-google" class="btn btn-outline-danger" target="_blank">👁️ View dengan Google Doc</a>
+            <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success"><i class="bi bi-whatsapp me-1"></i>WhatsApp Kami</a>
           </div>
-          <div class="pdf-box d-none d-md-block">
-            <iframe src="" id="catalog-iframe" title="Katalog PRAN"></iframe>
+          <div class="pdf-box">
+            <iframe src="https://docs.google.com/gview?url=https://example.com/catalog.pdf&embedded=true" title="Katalog PRAN"></iframe>
           </div>
         </div>
 
         <!-- BORANG -->
         <div id="panel-form" class="panel-inner">
-          <h4 class="text-center mb-3 text-danger">Borang Buka Akaun Kopusamaju</h4>
           <div class="pdf-box-buttons">
-            <a href="borang-akaun.pdf" class="btn btn-danger">📥 Muat Turun</a>
-            <a id="form-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat Borang di Google Docs</a>
+            <a href="borang-akaun.pdf" class="btn btn-danger" download>📥 Muat Turun Borang</a>
+            <a id="form-google" class="btn btn-outline-danger" target="_blank">👁️ View dengan Google Doc</a>
+            <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success"><i class="bi bi-whatsapp me-1"></i>WhatsApp Kami</a>
           </div>
-          <div class="pdf-box d-none d-md-block">
-            <iframe src="" id="form-iframe" title="Borang Akaun"></iframe>
+          <div class="pdf-box">
+            <iframe src="https://docs.google.com/gview?url=https://example.com/borang-akaun.pdf&embedded=true" title="Borang Akaun"></iframe>
           </div>
         </div>
+
       </div>
     </section>
 
-    &nbsp;&nbsp;
-
-    <!-- FOOTER -->
-    <footer>
-      <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
-      © <span id="year"></span> Kopusamaju Sabah Berhad.
-    </footer>
+    &nbsp;&nbsp; <!-- spacing sebelum footer -->
 
   </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
+    © <span id="year"></span> Kopusamaju Sabah Berhad.
+  </footer>
 
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -269,24 +279,24 @@
       form: document.getElementById("panel-form"),
     };
 
-    const catalogUrl = "catalog.pdf";
-    const formUrl = "borang-akaun.pdf";
+    const catalogGoogle = document.getElementById("catalog-google");
+    const formGoogle = document.getElementById("form-google");
 
-    const catalogGoogle = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/catalog.pdf") + "&embedded=true";
-    const formGoogle = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/borang-akaun.pdf") + "&embedded=true";
+    // Set Google Doc view URL dynamically
+    const catalogUrl = location.origin + "/catalog.pdf";
+    const formUrl = location.origin + "/borang-akaun.pdf";
+    catalogGoogle.href = "https://docs.google.com/gview?url=" + encodeURIComponent(catalogUrl) + "&embedded=true";
+    formGoogle.href = "https://docs.google.com/gview?url=" + encodeURIComponent(formUrl) + "&embedded=true";
 
-    document.getElementById("catalog-google").href = catalogGoogle;
-    document.getElementById("form-google").href = formGoogle;
-
-    // Load Google Docs viewer iframe for desktop only
-    if(window.innerWidth > 768){
-      document.getElementById("catalog-iframe").src = catalogGoogle;
-      document.getElementById("form-iframe").src = formGoogle;
-    }
-
-    function switchTo(target){
+    function switchTo(target) {
       tabs.forEach(btn => btn.classList.toggle("active", btn.dataset.target === target));
       Object.keys(panels).forEach(key => panels[key].classList.toggle("show", key === target));
+      // Change iframe src to Google Doc viewer
+      if (target === "catalog") {
+        panels.catalog.querySelector("iframe").src = "https://docs.google.com/gview?url=" + encodeURIComponent(catalogUrl) + "&embedded=true";
+      } else {
+        panels.form.querySelector("iframe").src = "https://docs.google.com/gview?url=" + encodeURIComponent(formUrl) + "&embedded=true";
+      }
     }
 
     tabs.forEach(btn => btn.addEventListener("click", () => switchTo(btn.dataset.target)));
@@ -294,6 +304,5 @@
     // Lightbox init
     const lightbox = GLightbox({ selector: '.glightbox' });
   </script>
-
 </body>
 </html>

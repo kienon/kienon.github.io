@@ -1,4 +1,5 @@
 <!doctype html>
+<html lang="ms">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +45,10 @@
       z-index: 2000;
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
-    .scam-banner strong { text-transform: uppercase; color: #ffe400; }
+    .scam-banner strong {
+      text-transform: uppercase;
+      color: #ffe400;
+    }
 
     /* ===== HERO ===== */
     .hero {
@@ -60,18 +64,16 @@
       border-radius: 12px;
       box-shadow: 0 4px 18px rgba(0,0,0,0.1);
     }
-    .hero h1 { font-weight: 700; color: var(--pran-red); }
-    .hero p { color: var(--muted); }
+    .hero h1 {
+      font-weight: 700;
+      color: var(--pran-red);
+    }
+    .hero p {
+      color: var(--muted);
+    }
 
     /* ===== Tabs ===== */
-    .tabs-container {
-      overflow-x: auto;
-      white-space: nowrap;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 10px;
-    }
     .tab-btn {
-      display: inline-block;
       padding: 10px 20px;
       border-radius: 10px;
       border: 1px solid rgba(0,0,0,0.1);
@@ -79,8 +81,7 @@
       cursor: pointer;
       font-weight: 600;
       transition: all .3s ease;
-      margin: 0 5px 5px 0;
-      white-space: nowrap;
+      margin: 0 5px;
     }
     .tab-btn.active {
       background: linear-gradient(180deg, var(--pran-red), #c51919);
@@ -124,12 +125,33 @@
     }
 
     @media (max-width: 768px) {
-      .pdf-box { height: auto; min-height: 400px; aspect-ratio: 3 / 4; }
-      .pdf-box iframe { min-height: 500px; }
+      .pdf-box {
+        height: auto;
+        min-height: 400px;
+        aspect-ratio: 3 / 4;
+      }
+      .tab-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+    }
+
+    .pdf-box iframe {
+      min-height: 75vh;
+    }
+
+    @media (max-width:768px){
+      .pdf-box iframe {
+        min-height: 500px;
+      }
     }
 
     /* ===== Gallery ===== */
-    .gallery-title { text-align: center; margin-bottom: 25px; color: var(--pran-red); }
+    .gallery-title {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--pran-red);
+    }
     .gallery-item img {
       width: 100%;
       height: 240px;
@@ -195,40 +217,48 @@
 
     <!-- TABS -->
     <section class="py-5 border-top">
-      <div class="tabs-container d-flex flex-wrap justify-content-start align-items-center gap-2 mb-4">
+      <div class="d-flex flex-wrap justify-content-center align-items-center gap-2 mb-4">
         <button class="tab-btn active" data-target="catalog">📘 Katalog</button>
         <button class="tab-btn" data-target="form">📄 Borang Akaun</button>
         <a id="open-new-tab" class="tab-btn" target="_blank">Buka di Tab Baru</a>
-        <a id="catalog-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat Katalog</a>
-        <a id="form-google" class="btn btn-outline-danger ms-2" target="_blank">👁️ Lihat Borang</a>
-        <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success ms-2">
+        <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success">
           <i class="bi bi-whatsapp me-2"></i>Hubungi Kami di WhatsApp
         </a>
       </div>
+    </section>
 
-      <!-- PDF PANELS -->
+    <!-- PDF SECTIONS -->
+    <section class="py-5 border-top">
       <div class="switch-panel pb-5">
+
         <!-- KATALOG -->
         <div id="panel-catalog" class="panel-inner show">
           <h4 class="text-center mb-3 text-danger">Katalog Produk PRAN</h4>
+
+          <div class="text-center mb-3">
+            <a href="catalog.pdf" class="btn btn-danger me-2" download>📥 Muat Turun Katalog</a>
+            <a id="catalog-google" class="btn btn-outline-danger" target="_blank">📄 Lihat Katalog dengan Google Doc Viewer</a>
+          </div>
+
           <div class="pdf-box">
             <iframe src="catalog.pdf" title="Katalog PRAN"></iframe>
-          </div>
-          <div class="text-center mb-5">
-            <a href="catalog.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
           </div>
         </div>
 
         <!-- BORANG -->
         <div id="panel-form" class="panel-inner">
           <h4 class="text-center mb-3 text-danger">Borang Buka Akaun Kopusamaju</h4>
+
+          <div class="text-center mb-3">
+            <a href="borang-akaun.pdf" class="btn btn-danger me-2" download>📥 Muat Turun Borang</a>
+            <a id="form-google" class="btn btn-outline-danger" target="_blank">📝 Lihat Borang Akaun dengan Google Doc Viewer</a>
+          </div>
+
           <div class="pdf-box">
             <iframe src="borang-akaun.pdf" title="Borang Akaun"></iframe>
           </div>
-          <div class="text-center mb-5">
-            <a href="borang-akaun.pdf" class="btn btn-danger" download>📥 Muat Turun</a>
-          </div>
         </div>
+
       </div>
     </section>
 
@@ -267,7 +297,7 @@
       openNewTabBtn.href = target === "catalog" ? catalogUrl : formUrl;
     }
 
-    tabs.forEach(btn => { if(btn.dataset.target) btn.addEventListener("click", () => switchTo(btn.dataset.target)); });
+    tabs.forEach(btn => btn.addEventListener("click", () => switchTo(btn.dataset.target)));
     openNewTabBtn.href = catalogUrl;
 
     // Lightbox init

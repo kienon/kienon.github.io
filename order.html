@@ -5,183 +5,422 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PRAN — Order Ringkas | Kopusamaju</title>
 
-  <!-- Bootstrap & Icon -->
+  <!-- Bootstrap & Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: 'Inter', sans-serif; background:#fff; padding-bottom:60px; }
-    .prod-card { border-radius:12px; transition:transform .15s; }
-    .prod-card:hover { transform:translateY(-4px); box-shadow:0 10px 25px rgba(0,0,0,0.05); }
-    .qr-box { border:1px solid #eee; border-radius:12px; padding:16px; background:#fff; }
-    .disabled-link { opacity:0.6; pointer-events:none; }
-    .required { color:#c00; }
-    footer { text-align:center; color:#777; padding-top:1rem; border-top:1px solid #eee; margin-top:3rem; }
+    :root {
+      --pran-red: #e41f26;
+      --pran-yellow: #f6c400;
+      --muted: #6b6b6b;
+    }
+    body { font-family: 'Inter', sans-serif; background:#fff; color:#222; padding-bottom:60px; }
+    .hero { text-align:center; padding:36px 0; border-bottom:1px solid rgba(0,0,0,0.05); }
+    .hero img { max-height:90px; border-radius:10px; background:#fff; padding:6px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+    .prod-card { border-radius:12px; transition:transform .15s; background:#fff; border:1px solid rgba(0,0,0,0.03); padding:12px; }
+    .prod-card:hover { transform:translateY(-4px); box-shadow:0 10px 30px rgba(0,0,0,0.06); }
+    .cart-summary { position:sticky; top:16px; }
+    .pdf-box, .qr-box { border-radius:12px; padding:16px; background:#fff; border:1px solid rgba(0,0,0,0.06); }
+    .small-muted { color:var(--muted); font-size:0.9rem; }
+    footer { text-align:center; color:#666; margin-top:30px; padding-top:18px; border-top:1px solid rgba(0,0,0,0.05); }
+    .btn-tab { border-radius:8px; }
+    .required { color: #c00; }
+    .qty-display { min-width:28px; text-align:center; }
+    .status-ok { color: green; }
+    .status-err { color: red; }
+    .product-img { width:88px; height:88px; object-fit:cover; border-radius:8px; border:1px solid rgba(0,0,0,0.04); background:#fff; }
   </style>
 </head>
 <body>
 
-  <div class="container py-4">
-    <h3 class="mb-4 text-danger fw-bold text-center">Tempahan Produk PRAN — Kopusamaju Sabah Berhad</h3>
+  <section class="hero">
+    <img src="https://images.seeklogo.com/logo-png/25/1/pran-logo-png_seeklogo-258211.png" alt="PRAN">
+    <h1 style="color:var(--pran-red); margin-top:10px;">Produk Import Berkualiti — Diedarkan oleh Kopusamaju Sabah Berhad</h1>
+    <p class="small-muted">Ejen rasmi PRAN — pilih produk & buat pesanan mudah</p>
+  </section>
 
+  <main class="container py-4">
     <div class="row g-4">
-      <!-- Produk -->
+      <!-- Products / Catalog -->
       <div class="col-lg-8">
-        <div id="products-grid" class="row g-3"></div>
+        <div class="d-flex align-items-center mb-3 gap-2 flex-wrap">
+          <button class="btn btn-outline-secondary btn-sm btn-tab active" id="catalog-tab">Katalog</button>
+          <button class="btn btn-outline-secondary btn-sm btn-tab" id="form-tab">Borang Akaun</button>
+          <a class="btn btn-success btn-sm ms-auto" href="https://wa.me/60128169367" target="_blank">
+            <i class="bi bi-whatsapp me-1"></i> Hubungi (WhatsApp)
+          </a>
+        </div>
 
-        <!-- Borang -->
-        <div class="mt-4 qr-box">
-          <h5 class="mb-3">Langkah Pembayaran</h5>
-          <p>Sila scan QR DuitNow atau pindahkan ke akaun:</p>
-          <p><strong>Maybank: 560072624185</strong><br>Koperasi Pembangunan Usahasama Masyarakat Maju Sabah Berhad</p>
-          <img id="qr-img" src="https://via.placeholder.com/260x260.png?text=QR+DuitNow" class="mb-3" width="200" alt="QR DuitNow">
+        <!-- PRODUCTS GRID -->
+        <div id="products-grid" class="row g-3">
+          <!-- product cards inserted by JS -->
+        </div>
 
-          <div><strong>Jumlah perlu dibayar:</strong> <span id="checkout-total" class="text-danger fw-bold">RM0.00</span></div>
-
-          <div class="mt-3">
-            <label class="form-label">Nama <span class="required">*</span></label>
-            <input id="cust-name" class="form-control" placeholder="Nama penuh">
-          </div>
-          <div class="mt-2">
-            <label class="form-label">No. Telefon <span class="required">*</span></label>
-            <input id="cust-phone" class="form-control" placeholder="6012xxxxxxx">
-          </div>
-          <div class="mt-2">
-            <label class="form-label">Muat Naik Resit (gambar) <span class="required">*</span></label>
-            <input id="receipt-file" type="file" accept="image/*" class="form-control">
-          </div>
-
-          <div class="mt-4 d-flex gap-2 flex-wrap">
-            <button id="submit-order" class="btn btn-success">
-              <i class="bi bi-check-circle me-1"></i> Submit Order
-            </button>
-            <button id="whatsapp-order" class="btn btn-outline-success disabled-link" disabled>
-              <i class="bi bi-whatsapp me-1"></i> Hantar ke WhatsApp
-            </button>
-            <span id="submit-status" class="ms-2 small text-muted align-self-center"></span>
+        <!-- Gallery images -->
+        <div class="mt-4">
+          <h5 class="mb-2">Contoh Produk</h5>
+          <div class="d-flex gap-2">
+            <img src="/pran/jus.png" alt="Jus" style="height:80px; border-radius:8px; object-fit:cover;">
+            <img src="/pran/minumankotak.png" alt="Minuman Kotak" style="height:80px; border-radius:8px; object-fit:cover;">
+            <img src="/pran/wafer.png" alt="Wafer" style="height:80px; border-radius:8px; object-fit:cover;">
           </div>
         </div>
+
+        <!-- Payment + Upload + Submit area -->
+        <div id="checkout-area" class="mt-4">
+          <div class="qr-box mb-3">
+            <h6>Langkah Pembayaran</h6>
+            <p class="small-muted">Sila scan QR DuitNow di bawah atau pindahkan ke akaun Maybank sebagaimana dinyatakan.</p>
+            <div class="row">
+              <div class="col-md-4 text-center">
+                <!-- QR image - ganti URL jika ada QR sebenar -->
+                <img id="qr-img" src="" alt="QR DuitNow" style="max-width:220px; width:100%; border-radius:10px;">
+                <div class="small-muted mt-2">Maybank: 560072624185 (Koperasi Pembangunan Usahasama Masyarakat Maju Sabah Berhad)</div>
+              </div>
+              <div class="col-md-8">
+                <div class="mb-2"><strong>Jumlah perlu dibayar:</strong> <span id="checkout-total" style="font-size:1.25rem; color:var(--pran-red)">RM0.00</span></div>
+                <div class="small-muted mb-2">Sila buat bayaran, kemudian muat naik resit (gambar). Admin akan semak transaksi secara manual sebelum proses dihantar.</div>
+
+                <div class="mb-2">
+                  <label class="form-label">Nama <span class="required">*</span></label>
+                  <input id="cust-name" class="form-control" placeholder="Nama penuh">
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">No. Telefon <span class="required">*</span></label>
+                  <input id="cust-phone" class="form-control" placeholder="Contoh: 6012xxxxxxx">
+                </div>
+
+                <div class="mb-2">
+                  <label class="form-label">Muat Naik Resit Bayaran (gambar)</label>
+                  <input id="receipt-file" type="file" accept="image/*" class="form-control">
+                  <div class="small-muted mt-1">Max ukuran: 5MB. Hanya imej diterima.</div>
+                </div>
+
+                <div class="mt-3 d-flex align-items-center gap-2">
+                  <button id="submit-order" class="btn btn-primary">Submit & Simpan</button>
+                  <button id="whatsapp-after" class="btn btn-success" disabled>
+                    <i class="bi bi-whatsapp me-1"></i> Hantar ke WhatsApp (Selepas Submit)
+                  </button>
+                  <span id="submit-status" class="ms-3 small-muted"></span>
+                </div>
+                <div class="mt-2">
+                  <small class="small-muted">Selepas submit berjaya: sistem akan simpan ke Google Sheet & Drive. Kemudian boleh tekan butang WhatsApp untuk hantarkan ringkasan pesanan kepada admin.</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Troli -->
+      <!-- Cart summary -->
       <div class="col-lg-4">
-        <div class="p-3 border rounded-3 bg-white shadow-sm">
+        <div class="cart-summary p-3 pdf-box">
           <h5>Troli Anda</h5>
-          <div id="cart-items" class="small text-muted mb-2">Tiada item dipilih.</div>
-          <div class="d-flex justify-content-between">
+          <div id="cart-items" class="mb-2 small-muted">Tiada item dipilih.</div>
+          <div class="d-flex justify-content-between align-items-center mb-2">
             <strong>Total:</strong>
             <strong id="cart-total">RM0.00</strong>
           </div>
-          <button id="clear-cart" class="btn btn-sm btn-outline-secondary w-100 mt-3">Kosongkan</button>
+
+          <div class="d-grid gap-2">
+            <button id="quick-whatsapp" class="btn btn-outline-success" disabled>
+              <i class="bi bi-whatsapp me-1"></i> Hantar Ringkasan (Selepas Submit)
+            </button>
+            <button id="clear-cart" class="btn btn-outline-secondary">Kosongkan</button>
+          </div>
+
+          <hr>
+          <div>
+            <strong>Maklumat Pembayaran</strong>
+            <p class="small-muted mb-0">Nama: Koperasi Pembangunan Usahasama Masyarakat Maju Sabah Berhad</p>
+            <p class="small-muted">Maybank: <strong>560072624185</strong></p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </main>
 
-  <footer>© <span id="year"></span> Kopusamaju Sabah Berhad</footer>
+  <footer>
+    <div><strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN</div>
+    <div>© <span id="year"></span> Kopusamaju Sabah Berhad.</div>
+  </footer>
+
+  <!-- CONFIG - TUKAR INI DENGAN NILAI ANDA -->
+  <script>
+    const APPS_SCRIPT_WEBHOOK_URL = "https://pran-proxy.onrender.com/submit"; // <-- contoh; tukar kepada webhook anda / pran-proxy / apps script endpoint
+    const SECRET_TOKEN = "PRAN-SECURE-9b8e47a2e37b4fd1b32b93dfc5eaa9b7";  // mesti sama dengan script server
+    const OWNER_WHATSAPP = "60128169367"; // no tanpa +
+    const QR_IMAGE_URL = "https://via.placeholder.com/260x260.png?text=QR+DuitNow"; // ganti dengan URL QR sebenar anda
+  </script>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    const APPS_PROXY_SUBMIT = "https://pran-proxy.onrender.com/submit";
-    const SECRET_TOKEN = "PRAN-SECURE-9b8e47a2e37b4fd1b32b93dfc5eaa9b7";
-    const OWNER_WHATSAPP = "60128169367";
-
+    // ---------- PRODUCTS ----------
     const PRODUCTS = [
-      { id:"jus", name:"Jus Mangga", price:5.00 },
-      { id:"wafer", name:"Wafer Coklat", price:3.00 },
-      { id:"minuman", name:"Minuman Kotak", price:4.00 },
+      { id: "jus", name: "Jus Mangga", price: 5.00, img: "/pran/jus.png" },
+      { id: "wafer", name: "Wafer Coklat", price: 3.00, img: "/pran/wafer.png" },
+      { id: "minuman", name: "Minuman Kotak", price: 4.00, img: "/pran/minumankotak.png" },
     ];
 
-    const cart = {};
-    function formatRM(v){return "RM"+v.toFixed(2);}
-    function updateCartUI(){
-      let html="",total=0;
-      PRODUCTS.forEach(p=>{
-        const q=cart[p.id]||0;
-        if(q>0){html+=`<div>${p.name} x ${q} — ${formatRM(p.price*q)}</div>`;total+=p.price*q;}
-      });
-      document.getElementById("cart-items").innerHTML=html||"Tiada item dipilih.";
-      document.getElementById("cart-total").textContent=formatRM(total);
-      document.getElementById("checkout-total").textContent=formatRM(total);
-    }
+    // simple cart (in-memory) with persistence
+    const STORAGE_KEY = "pran_order_v1";
+    let state = {
+      cart: {},        // id -> qty
+      customer: { name: "", phone: "" },
+      lastSubmission: null // store response {ref,fileUrl,...}
+    };
 
-    const grid=document.getElementById("products-grid");
-    PRODUCTS.forEach(p=>{
-      const col=document.createElement("div");
-      col.className="col-md-6";
-      col.innerHTML=`<div class="p-3 prod-card border">
-        <div class="fw-bold">${p.name}</div>
-        <div class="text-muted small mb-2">${formatRM(p.price)}</div>
-        <div class="d-flex align-items-center gap-2">
-          <button class="btn btn-sm btn-outline-secondary minus" data-id="${p.id}">-</button>
-          <span id="qty-${p.id}" class="mx-2">0</span>
-          <button class="btn btn-sm btn-outline-secondary plus" data-id="${p.id}">+</button>
-        </div>
-      </div>`;
-      grid.appendChild(col);
-    });
-
-    document.addEventListener("click",(e)=>{
-      if(e.target.classList.contains("plus")){
-        const id=e.target.dataset.id;cart[id]=(cart[id]||0)+1;document.getElementById(`qty-${id}`).textContent=cart[id];updateCartUI();
-      }else if(e.target.classList.contains("minus")){
-        const id=e.target.dataset.id;cart[id]=Math.max(0,(cart[id]||0)-1);document.getElementById(`qty-${id}`).textContent=cart[id];updateCartUI();
-      }
-    });
-
-    document.getElementById("clear-cart").onclick=()=>{PRODUCTS.forEach(p=>cart[p.id]=0);updateCartUI();};
-    updateCartUI();
-
-    const submitBtn=document.getElementById("submit-order");
-    const whatsappBtn=document.getElementById("whatsapp-order");
-    const statusEl=document.getElementById("submit-status");
-
-    function disableWhatsApp(disabled){
-      whatsappBtn.disabled=disabled;
-      whatsappBtn.classList.toggle("disabled-link",disabled);
-    }
-
-    disableWhatsApp(true);
-    let lastSubmittedData=null;
-
-    submitBtn.onclick=async ()=>{
-      const name=document.getElementById("cust-name").value.trim();
-      const phone=document.getElementById("cust-phone").value.trim();
-      const file=document.getElementById("receipt-file").files[0];
-      const selected=PRODUCTS.map(p=>({p,qty:cart[p.id]||0})).filter(x=>x.qty>0);
-      if(selected.length===0) return alert("Sila pilih produk dahulu.");
-      if(!name||!phone||!file) return alert("Sila isi semua maklumat wajib.");
-      const base64=await fileToBase64(file);
-
-      const items=selected.map(x=>({id:x.p.id,name:x.p.name,qty:x.qty,price:x.p.price,subtotal:x.p.price*x.qty}));
-      const total=items.reduce((a,b)=>a+b.subtotal,0);
-      const payload={secret:SECRET_TOKEN,timestamp:new Date().toISOString(),customer:{name,phone},items,total,receiptName:file.name,receiptBase64:base64};
-
-      statusEl.textContent="Menghantar...";
+    // init state from localStorage
+    function loadState(){
       try{
-        const res=await fetch(APPS_PROXY_SUBMIT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-        const data=await res.json();
-        if(data.status==="success"){
-          statusEl.textContent="✅ Berjaya hantar ("+(data.ref||"Ref")+")";
-          disableWhatsApp(false);
-          lastSubmittedData={items,total,name,phone,ref:data.ref};
-        }else throw new Error(data.message||"Server error");
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(raw) state = Object.assign(state, JSON.parse(raw));
+      }catch(e){ console.warn("loadState err", e); }
+      // ensure cart keys exist
+      PRODUCTS.forEach(p => { if(typeof state.cart[p.id] === "undefined") state.cart[p.id] = 0; });
+    }
+    function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+    function formatRM(n){ return "RM" + n.toFixed(2); }
+
+    // render products
+    const grid = document.getElementById("products-grid");
+    function renderProducts(){
+      grid.innerHTML = "";
+      PRODUCTS.forEach(p=>{
+        const col = document.createElement("div");
+        col.className = "col-md-6 col-lg-6";
+        col.innerHTML = `
+          <div class="prod-card">
+            <div class="d-flex align-items-start gap-3">
+              <div style="width:88px;min-width:88px;">
+                <img src="${p.img}" alt="${p.name}" class="product-img" onerror="this.style.opacity=.5;this.title='Image not found'">
+              </div>
+              <div class="flex-grow-1">
+                <h6 class="mb-1">${p.name}</h6>
+                <div class="small-muted mb-2">${formatRM(p.price)}</div>
+                <div class="d-flex align-items-center gap-2">
+                  <button class="btn btn-sm btn-outline-secondary btn-decrease" data-id="${p.id}">-</button>
+                  <div class="mx-2 qty-display" data-id="${p.id}">${state.cart[p.id]||0}</div>
+                  <button class="btn btn-sm btn-outline-secondary btn-increase" data-id="${p.id}">+</button>
+                  <button class="btn btn-sm btn-link text-danger ms-auto btn-add" data-id="${p.id}">Tambah</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(col);
+      });
+    }
+
+    // update cart UI
+    function updateCartUI(){
+      const itemsEl = document.getElementById("cart-items");
+      let lines = [];
+      let total = 0;
+      PRODUCTS.forEach(p=>{
+        const q = state.cart[p.id] || 0;
+        if(q>0){
+          lines.push({ text: `${p.name} x ${q} — ${formatRM(p.price * q)}`, subtotal: p.price * q });
+          total += p.price * q;
+        }
+      });
+      itemsEl.innerHTML = lines.length ? ("<ul class='mb-2 ms-3'>" + lines.map(l=>`<li>${l.text}</li>`).join("") + "</ul>") : "Tiada item dipilih.";
+      document.getElementById("cart-total").textContent = formatRM(total);
+      document.getElementById("checkout-total").textContent = formatRM(total);
+
+      // update qty displays
+      PRODUCTS.forEach(p=>{
+        const el = document.querySelector(`.qty-display[data-id="${p.id}"]`);
+        if(el) el.textContent = state.cart[p.id] || 0;
+      });
+      saveState();
+    }
+
+    // event delegation for buttons
+    document.addEventListener("click", (e)=>{
+      const inc = e.target.closest(".btn-increase");
+      const dec = e.target.closest(".btn-decrease");
+      const add = e.target.closest(".btn-add");
+      if(inc){ const id = inc.dataset.id; state.cart[id] = (state.cart[id]||0) + 1; updateCartUI(); }
+      if(dec){ const id = dec.dataset.id; state.cart[id] = Math.max(0, (state.cart[id]||0) - 1); updateCartUI(); }
+      if(add){ const id = add.dataset.id; state.cart[id] = (state.cart[id]||0) + 1; updateCartUI(); }
+    });
+
+    // clear cart
+    document.getElementById("clear-cart").addEventListener("click", ()=>{
+      PRODUCTS.forEach(p => state.cart[p.id] = 0);
+      updateCartUI();
+    });
+
+    // quick helpers
+    function getCartItemsArray(){
+      return PRODUCTS.map(p=>({ id: p.id, name: p.name, qty: state.cart[p.id]||0, price: p.price }))
+                     .filter(i=>i.qty>0)
+                     .map(i=>({ ...i, subtotal: +(i.qty * i.price).toFixed(2) }));
+    }
+
+    // file to base64
+    function fileToBase64(file){
+      return new Promise((res, rej)=>{
+        const r = new FileReader();
+        r.onload = ()=> res(r.result);
+        r.onerror = ()=> rej("Fail read error");
+        r.readAsDataURL(file);
+      });
+    }
+
+    // UI refs
+    const submitBtn = document.getElementById("submit-order");
+    const waAfterBtn = document.getElementById("whatsapp-after");
+    const quickWaBtn = document.getElementById("quick-whatsapp");
+    const statusEl = document.getElementById("submit-status");
+    const nameInput = document.getElementById("cust-name");
+    const phoneInput = document.getElementById("cust-phone");
+    const receiptInput = document.getElementById("receipt-file");
+
+    // load saved form into inputs
+    function loadForm(){
+      nameInput.value = state.customer.name || "";
+      phoneInput.value = state.customer.phone || "";
+    }
+    function saveForm(){
+      state.customer.name = nameInput.value || "";
+      state.customer.phone = phoneInput.value || "";
+      saveState();
+    }
+    nameInput.addEventListener("input", saveForm);
+    phoneInput.addEventListener("input", saveForm);
+
+    // submit-order handler
+    submitBtn.addEventListener("click", async ()=>{
+      saveForm();
+      const items = getCartItemsArray();
+      if(items.length === 0){ alert("Sila pilih sekurang-kurangnya 1 item."); return; }
+      const name = (nameInput.value||"").trim();
+      const phone = (phoneInput.value||"").trim();
+      if(!name || !phone){ alert("Sila isi nama & nombor telefon."); return; }
+
+      // check file
+      const file = receiptInput.files[0] || null;
+      if(!file){
+        if(!confirm("Anda belum muat naik resit. Teruskan tanpa resit? (Admin mesti periksa bayaran manual)")) {
+          return;
+        }
+      } else {
+        // only images, <=5MB
+        if(!file.type.startsWith("image/")){ alert("Hanya fail imej diterima untuk resit."); return; }
+        if(file.size > 5 * 1024 * 1024){ alert("Saiz resit terlalu besar (max 5MB)."); return; }
+      }
+
+      // prepare payload
+      const total = items.reduce((s,i)=>s+i.subtotal,0);
+      let receiptBase64 = "";
+      let receiptName = "";
+      if(file){
+        try{
+          receiptBase64 = await fileToBase64(file);
+          receiptName = file.name;
+        }catch(err){
+          alert("Gagal baca fail resit: " + err);
+          return;
+        }
+      }
+
+      // final payload
+      const payload = {
+        secret: SECRET_TOKEN,
+        timestamp: new Date().toISOString(),
+        customer: { name, phone },
+        items,
+        total,
+        receiptName,
+        receiptBase64
+      };
+
+      // send
+      statusEl.textContent = "Menghantar...";
+      submitBtn.disabled = true;
+      try{
+        const res = await fetch(APPS_SCRIPT_WEBHOOK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          credentials: "omit"
+        });
+        if(!res.ok){
+          const txt = await res.text().catch(()=>"");
+          throw new Error("HTTP " + res.status + " " + txt);
+        }
+        const data = await res.json();
+        if(data && data.status === "success"){
+          // store lastSubmission
+          state.lastSubmission = {
+            ref: data.ref || "",
+            fileUrl: data.fileUrl || "",
+            timestamp: payload.timestamp,
+            total: payload.total,
+            customer: payload.customer,
+            items: payload.items
+          };
+          saveState();
+          statusEl.innerHTML = `<span class="status-ok">Berjaya dihantar. Ref: ${state.lastSubmission.ref || "—"}</span>`;
+          // enable WhatsApp button(s)
+          waAfterBtn.disabled = false;
+          quickWaBtn.disabled = false;
+          submitBtn.disabled = false;
+          // do not clear cart automatically — user wanted to keep to review before WhatsApp
+        } else {
+          throw new Error((data && data.message) ? data.message : "Server error");
+        }
       }catch(err){
         console.error(err);
-        alert("❌ Gagal menghantar ke server: "+err.message);
-        statusEl.textContent="";
+        statusEl.innerHTML = `<span class="status-err">Gagal menghantar: ${String(err)}</span>`;
+        submitBtn.disabled = false;
       }
-    };
+    });
 
-    whatsappBtn.onclick=()=>{
-      if(!lastSubmittedData) return alert("Tiada data order untuk dihantar.");
-      const d=lastSubmittedData;
-      const msg=`Pesanan Baru (Ref: ${d.ref||""})\n`+
-        d.items.map(i=>`${i.name} x${i.qty} = RM${i.subtotal.toFixed(2)}`).join("\n")+
-        `\nTotal: RM${d.total.toFixed(2)}\nNama: ${d.name}\nTel: ${d.phone}`;
-      window.open(`https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank");
-    };
+    // WhatsApp after-submit: prefill message with last submission
+    function buildWhatsAppMessageFromSubmission(sub){
+      if(!sub) return "Pesanan baru";
+      const lines = [];
+      lines.push("Pesanan baru:");
+      sub.items.forEach(i => lines.push(`- ${i.name} x${i.qty} = RM${i.subtotal.toFixed(2)}`));
+      lines.push(`Total: RM${sub.total.toFixed(2)}`);
+      lines.push("");
+      lines.push(`Pelanggan: ${sub.customer.name}`);
+      lines.push(`Phone: ${sub.customer.phone}`);
+      if(sub.ref) lines.push(`Ref: ${sub.ref}`);
+      if(sub.fileUrl) lines.push(`Resit: ${sub.fileUrl}`);
+      return lines.join("\n");
+    }
 
-    function fileToBase64(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f);});}
-    document.getElementById("year").textContent=new Date().getFullYear();
+    waAfterBtn.addEventListener("click", ()=>{
+      if(!state.lastSubmission){
+        alert("Tiada submission ditemui. Sila tekan Submit dahulu.");
+        return;
+      }
+      const text = buildWhatsAppMessageFromSubmission(state.lastSubmission);
+      const url = `https://wa.me/${OWNER_WHATSAPP}?text=${encodeURIComponent(text)}`;
+      window.open(url, "_blank");
+    });
+    quickWaBtn.addEventListener("click", ()=> waAfterBtn.click());
+
+    // init
+    loadState();
+    renderProducts();
+    updateCartUI();
+    loadForm();
+    document.getElementById("year").textContent = new Date().getFullYear();
+    if(QR_IMAGE_URL) document.getElementById("qr-img").src = QR_IMAGE_URL;
+
+    // small UX: keep inputs & cart in localStorage on unload
+    window.addEventListener("beforeunload", saveState);
   </script>
 </body>
 </html>

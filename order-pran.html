@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PRAN — Produk Import Berkualiti | Kopusamaju Sabah Berhad</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/25/1/pran-logo-png_seeklogo-258211.png">
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- GLightbox for gallery preview -->
+  <link href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" rel="stylesheet">
+
+  <meta name="theme-color" content="#e41f26" />
+  <meta name="robots" content="noindex,nofollow" />
+
+  <style>
+    :root{
+      --pran-red:#e41f26;
+      --pran-accent:#d93a2e;
+      --pran-yellow:#f6c400;
+      --muted:#6b6b6b;
+    }
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:#fff; color:#222; overflow-x:hidden;}
+    .hero{padding:48px 0;background:linear-gradient(180deg, rgba(228,31,38,0.04), rgba(255,255,255,0.6)); border-bottom:1px solid rgba(0,0,0,0.04); text-align:center;}
+    .hero img{max-height:100px;border-radius:12px;background:#fff;padding:6px;box-shadow:0 6px 20px rgba(0,0,0,0.06); display:inline-block;}
+    .hero h1{color:var(--pran-red);font-weight:700;margin:10px 0;}
+    .hero p{color:var(--muted); margin:0 0 10px;}
+
+    /* Tabs */
+    .tabs-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;margin:20px 0;}
+    .tab-btn{padding:10px 18px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);background:#fff;font-weight:600;cursor:pointer;transition:.2s;}
+    .tab-btn.active{background:linear-gradient(180deg,var(--pran-red),var(--pran-accent));color:#fff;box-shadow:0 8px 30px rgba(217,58,46,0.18);}
+
+    /* gallery: equal boxes */
+    .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+    .gallery-item{overflow:hidden;border-radius:10px; background:#fff;border:1px solid rgba(0,0,0,0.04);}
+    .gallery-item img{width:100%;height:220px;object-fit:cover;display:block;transition:transform .25s ease, box-shadow .25s ease;}
+    .gallery-item:hover img{transform:scale(1.03);box-shadow:0 10px 30px rgba(0,0,0,0.12);}
+
+    /* Responsive gallery */
+    @media (max-width: 992px){ .gallery-grid{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width: 576px){ .gallery-grid{grid-template-columns:repeat(1,1fr);} .gallery-item img{height:200px;} }
+
+    /* PDF box */
+    .pdf-box{border-radius:12px;border:1px solid rgba(0,0,0,0.06);overflow:hidden;background:#fff; min-height:360px;height:65vh;}
+    .pdf-box iframe{width:100%;height:100%;border:none;display:block;}
+
+    /* Cart */
+    .cart-badge{position:relative;}
+    .cart-count{position:absolute;top:-8px;right:-8px;background:var(--pran-yellow);color:#000;border-radius:50%;padding:2px 6px;font-weight:700;font-size:12px;border:2px solid #fff;}
+
+    /* footer spacing */
+    footer{padding:24px 12px;border-top:1px solid rgba(0,0,0,0.04);text-align:center;color:#666;margin-top:30px;}
+
+    /* small helpers */
+    .muted{color:var(--muted);}
+    .qr-img{max-width:220px;border-radius:8px;border:1px solid rgba(0,0,0,0.05);background:#fff;padding:8px;}
+    .form-file-preview{max-width:120px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);overflow:hidden}
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="https://images.seeklogo.com/logo-png/25/1/pran-logo-png_seeklogo-258211.png" alt="PRAN Logo" />
+    <h1>Produk Import Berkualiti — Diedarkan oleh Kopusamaju Sabah Berhad</h1>
+    <p>Ejen rasmi PRAN untuk pasaran tempatan</p>
+  </section>
+
+  <main class="container py-4">
+
+    <!-- Gallery Section -->
+    <section aria-labelledby="gal-title" class="mb-4">
+      <h4 id="gal-title" class="fw-bold text-center" style="color:var(--pran-red)">Galeri Produk</h4>
+      <p class="text-center muted">Klik imej untuk pratonton. Tekan ikon + untuk tambah ke troli.</p>
+
+      <div class="gallery-grid" id="product-grid" style="margin-top:12px;">
+        <!-- items inserted by JS -->
+      </div>
+    </section>
+
+    <!-- Controls: tabs + cart -->
+    <section class="mb-4">
+      <div class="tabs-row">
+        <div>
+          <button class="tab-btn active" data-target="catalog">📘 Katalog</button>
+          <button class="tab-btn" data-target="form">📄 Borang Akaun</button>
+        </div>
+
+        <div class="ms-3 d-flex align-items-center">
+          <button id="cart-btn" class="btn btn-outline-dark me-2">
+            <i class="bi bi-cart-fill"></i> Troli
+            <span class="cart-count" id="cart-count" style="display:none">0</span>
+          </button>
+
+          <a id="checkout-btn" class="btn btn-danger me-2">Proceed & Bayar</a>
+          <a href="https://wa.me/60128169367" target="_blank" class="btn btn-success">
+            <i class="bi bi-whatsapp me-1"></i>Hubungi (WhatsApp)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panels -->
+    <section class="switch-panel position-relative mb-5" style="min-height:420px;">
+
+      <!-- Catalog panel -->
+      <div id="panel-catalog" class="panel-inner show">
+        <h5 class="text-center text-danger mb-3">Katalog Produk PRAN</h5>
+        <div class="pdf-box mx-auto" style="max-width:1100px">
+          <!-- Try iframe then object fallback -->
+          <iframe id="catalog-iframe" src="catalog.pdf" title="Katalog PRAN"></iframe>
+          <object data="catalog.pdf" type="application/pdf" style="display:none;">
+            <p class="p-3">Tidak dapat paparkan PDF pada peranti ini. <a href="catalog.pdf" target="_blank">Klik di sini untuk buka katalog</a>.</p>
+          </object>
+        </div>
+        <div class="text-center mt-3">
+          <a href="catalog.pdf" class="btn btn-outline-danger me-2" download>📥 Muat Turun Katalog</a>
+          <a id="catalog-google" class="btn btn-outline-primary" target="_blank">👁️ Lihat di Google Viewer</a>
+        </div>
+      </div>
+
+      <!-- Form panel -->
+      <div id="panel-form" class="panel-inner" style="display:none">
+        <h5 class="text-center text-danger mb-3">Borang Buka Akaun Kopusamaju</h5>
+        <div class="pdf-box mx-auto" style="max-width:1100px">
+          <iframe id="form-iframe" src="borang-akaun.pdf" title="Borang Akaun"></iframe>
+        </div>
+        <div class="text-center mt-3">
+          <a href="borang-akaun.pdf" class="btn btn-outline-danger me-2" download>📥 Muat Turun Borang</a>
+          <a id="form-google" class="btn btn-outline-primary" target="_blank">👁️ Lihat di Google Viewer</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Checkout modal-like area (hidden until proceed) -->
+    <section id="checkout-area" style="display:none">
+      <div class="card p-3 mb-4" style="max-width:900px;margin:auto">
+        <h5 class="fw-bold">Checkout — Sila semak dan buat bayaran</h5>
+        <div id="checkout-items" class="mb-3"></div>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Nama Penuh</label>
+            <input id="cust-name" class="form-control" placeholder="Nama anda" />
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">No. Telefon</label>
+            <input id="cust-tel" class="form-control" placeholder="6012xxxxxxx" />
+          </div>
+          <div class="col-12">
+            <label class="form-label">Alamat Penghantaran</label>
+            <textarea id="cust-address" class="form-control" rows="2" placeholder="Alamat lengkap"></textarea>
+          </div>
+
+          <div class="col-12">
+            <label class="form-label">Arahan Pembayaran (DuitNow QR)</label>
+            <div class="d-flex gap-3 align-items-center flex-wrap">
+              <img src="/pran/duitnow.png" alt="DuitNow QR" class="qr-img" onerror="this.style.display='none'"/>
+              <div>
+                <p class="mb-1"><strong>Scan & bayar ke akaun rasmi</strong></p>
+                <p class="mb-0 muted" style="font-size:0.95rem">
+                  Penama: <strong>Koperasi Pembangunan Usahasama Masyarakat Maju Sabah Berhad</strong><br>
+                  Maybank: <strong>560072624185</strong>
+                </p>
+                <small class="text-muted d-block mt-2">Sila simpan resit/ss selepas pembayaran — muat naik di bawah.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label">Muat Naik Resit Pembayaran (gambar)</label>
+            <input id="receipt-file" type="file" accept="image/*,application/pdf" class="form-control" />
+            <div id="receipt-preview" class="form-file-preview mt-2" style="display:none"></div>
+          </div>
+
+          <div class="col-md-6 d-flex align-items-end">
+            <button id="submit-order" class="btn btn-primary me-2">✅ Hantar Pesanan & Resit</button>
+            <button id="save-local" class="btn btn-outline-secondary">Simpan Tempatan</button>
+            <div class="ms-auto muted" style="font-size:0.9rem">Anda akan dibawa ke WhatsApp selepas hantar.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <strong>Kopusamaju Sabah Berhad</strong> | Ejen Rasmi PRAN<br>
+    © <span id="year"></span> Kopusamaju Sabah Berhad.
+  </footer>
+
+  <!-- Scripts: Bootstrap, GLightbox -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+  <script>
+  /**************************************************************************
+   * CONFIG - Edit these values where instructed
+   **************************************************************************/
+  const WHATSAPP_NUMBER = "60128169367"; // owner/admin whatsapp number (no plus)
+  const GOOGLE_SHEETS_WEBHOOK = ""; // <-- OPTIONAL: Replace with your Google Apps Script Web App URL (POST JSON)
+  // Example expected payload (JSON):
+  // { name, tel, address, items: [{id, title, qty, price}], total, receiptBase64, receiptName, timestamp }
+  /**************************************************************************/
+
+  // Sample product list (id, title, price, img)
+  const PRODUCTS = [
+    { id: "PRN-JUS-001", title: "Jus Mangga PRAN 1L", price: 6.50, img: "/pran/jus.png" },
+    { id: "PRN-BOX-002", title: "Minuman Kotak PRAN 250ml (pack)", price: 3.20, img: "/pran/minumankotak.png" },
+    { id: "PRN-WAF-003", title: "Wafer Coklat PRAN", price: 2.80, img: "/pran/wafer.png" }
+  ];
+
+  // Util
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  function formatMoney(n){ return "RM" + Number(n).toFixed(2); }
+  function nowISO(){ return (new Date()).toISOString(); }
+
+  // Init gallery & cart
+  const productGrid = $("#product-grid");
+  const cartBtn = $("#cart-btn");
+  const cartCountEl = $("#cart-count");
+  const checkoutBtn = $("#checkout-btn");
+  const cartKey = "pran_cart_v1";
+  let cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+
+  // Render products
+  function renderProducts(){
+    productGrid.innerHTML = "";
+    PRODUCTS.forEach(p=>{
+      const div = document.createElement("div");
+      div.className = "gallery-item";
+      div.innerHTML = `
+        <a href="${p.img}" class="glightbox" data-gallery="pran" data-title="${p.title} — ${formatMoney(p.price)}">
+          <img src="${p.img}" alt="${p.title}" loading="lazy">
+        </a>
+        <div class="p-2 d-flex justify-content-between align-items-center">
+          <div>
+            <div style="font-weight:700;font-size:0.95rem">${p.title}</div>
+            <div class="muted" style="font-size:0.9rem">${formatMoney(p.price)}</div>
+          </div>
+          <div>
+            <button class="btn btn-sm btn-outline-primary add-cart" data-id="${p.id}" title="Tambah ke troli">
+              <i class="bi bi-plus-lg"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      productGrid.appendChild(div);
+    });
+
+    // re-init lightbox
+    if(window._pranGLight) window._pranGLight.destroy();
+    window._pranGLight = GLightbox({ selector: '.glightbox', touchNavigation: true, loop: false });
+    attachAddButtons();
+  }
+
+  function attachAddButtons(){
+    $$(".add-cart").forEach(btn=>{
+      btn.removeEventListener("click", addToCartHandler);
+      btn.addEventListener("click", addToCartHandler);
+    });
+  }
+
+  function addToCartHandler(e){
+    const id = e.currentTarget.dataset.id;
+    addToCart(id, 1);
+  }
+
+  function addToCart(id, qty=1){
+    const prod = PRODUCTS.find(p=>p.id===id);
+    if(!prod) return;
+    const idx = cart.findIndex(it=>it.id===id);
+    if(idx >= 0) cart[idx].qty += qty;
+    else cart.push({ id: prod.id, title: prod.title, price: prod.price, qty: qty });
+    saveCart();
+    flashCart();
+  }
+
+  function saveCart(){
+    localStorage.setItem(cartKey, JSON.stringify(cart));
+    updateCartBadge();
+  }
+
+  function updateCartBadge(){
+    const totalQty = cart.reduce((s,i)=>s+i.qty,0);
+    if(totalQty>0){ cartCountEl.style.display="inline-block"; cartCountEl.textContent = totalQty; }
+    else cartCountEl.style.display="none";
+  }
+
+  function flashCart(){
+    cartBtn.classList.add("btn-success");
+    setTimeout(()=>cartBtn.classList.remove("btn-success"), 400);
+  }
+
+  // Cart UI modal (simple)
+  cartBtn.addEventListener("click", ()=>{
+    const modal = new bootstrap.Modal(createCartModal(), { backdrop: true });
+    modal.show();
+    // attach events inside modal dynamically
+  });
+
+  function createCartModal(){
+    const modalRoot = document.createElement("div");
+    modalRoot.innerHTML = `
+      <div class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title">Troli Anda</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+           </div>
+           <div class="modal-body">
+             ${cart.length ? cart.map((it,idx)=>`
+               <div class="d-flex justify-content-between align-items-center mb-2">
+                 <div>
+                   <div style="font-weight:700">${it.title}</div>
+                   <div class="muted small">${formatMoney(it.price)} x ${it.qty}</div>
+                 </div>
+                 <div class="d-flex gap-1">
+                   <button class="btn btn-sm btn-outline-secondary dec" data-idx="${idx}">-</button>
+                   <button class="btn btn-sm btn-outline-secondary inc" data-idx="${idx}">+</button>
+                   <button class="btn btn-sm btn-danger del" data-idx="${idx}"><i class="bi bi-trash"></i></button>
+                 </div>
+               </div>
+             `).join('') : '<p class="muted">Troli kosong.</p>'}
+           </div>
+           <div class="modal-footer">
+             <div class="me-auto">
+               <strong>Jumlah:</strong> ${formatMoney(cart.reduce((s,i)=>s+i.qty*i.price,0))}
+             </div>
+             <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+             <button class="btn btn-danger proceed-btn" ${cart.length? '':'disabled'}>Proceed</button>
+           </div>
+         </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(modalRoot);
+    const modalEl = modalRoot.querySelector('.modal');
+    // events after appended
+    modalEl.querySelectorAll('.inc').forEach(b=>{
+      b.addEventListener('click', e=>{
+        const i=+e.currentTarget.dataset.idx; cart[i].qty++; saveCart(); refreshModalBody(modalEl); updateCartBadge();
+      });
+    });
+    modalEl.querySelectorAll('.dec').forEach(b=>{
+      b.addEventListener('click', e=>{
+        const i=+e.currentTarget.dataset.idx; cart[i].qty = Math.max(0, cart[i].qty-1);
+        if(cart[i].qty===0) cart.splice(i,1);
+        saveCart(); refreshModalBody(modalEl); updateCartBadge();
+      });
+    });
+    modalEl.querySelectorAll('.del').forEach(b=>{
+      b.addEventListener('click', e=>{
+        const i=+e.currentTarget.dataset.idx; cart.splice(i,1); saveCart(); refreshModalBody(modalEl); updateCartBadge();
+      });
+    });
+    modalEl.querySelector('.proceed-btn').addEventListener('click', ()=>{
+      modalEl.querySelector('.btn-close').click();
+      openCheckout();
+    });
+
+    modalEl.addEventListener('hidden.bs.modal', ()=>{ modalRoot.remove(); });
+    return modalEl;
+  }
+  function refreshModalBody(modalEl){
+    const body = modalEl.querySelector('.modal-body');
+    body.innerHTML = cart.length ? cart.map((it,idx)=>`
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <div style="font-weight:700">${it.title}</div>
+          <div class="muted small">${formatMoney(it.price)} x ${it.qty}</div>
+        </div>
+        <div class="d-flex gap-1">
+          <button class="btn btn-sm btn-outline-secondary dec" data-idx="${idx}">-</button>
+          <button class="btn btn-sm btn-outline-secondary inc" data-idx="${idx}">+</button>
+          <button class="btn btn-sm btn-danger del" data-idx="${idx}"><i class="bi bi-trash"></i></button>
+        </div>
+      </div>
+    `: '<p class="muted">Troli kosong.</p>';
+    // reattach events
+    modalEl.querySelectorAll('.inc').forEach(b=>{
+      b.addEventListener('click', e=>{
+        const i=+e.currentTarget.dataset.idx; cart[i].qty++; saveCart(); refreshModalBody(modalEl); updateCartBadge();
+      });
+    });
+    modalEl.querySelectorAll('.dec').forEach(b=>{
+      b.addEventListener('click', e=>{
+        const i=+e.currentTarget.dataset.idx; cart[i].qty = Math.max(0, cart[i].qty-1);
+        if(cart[i].qty===0) cart.splice(i,1);
+        saveCart(); refreshModalBody(modalEl); updateCartBadge();
+      });
+    });
+    modalEl.querySelectorAll('.del').forEach(b=>{
+      b.addEventListener('click', e=>{
+        const i=+e.currentTarget.dataset.idx; cart.splice(i,1); saveCart(); refreshModalBody(modalEl); updateCartBadge();
+      });
+    });
+    modalEl.querySelector('.proceed-btn').disabled = !cart.length;
+  }
+
+  // Open checkout panel
+  function openCheckout(){
+    if(!cart.length){ alert("Troli kosong — sila tambah produk dahulu."); return; }
+    $("#checkout-area").style.display = "block";
+    // populate items
+    const itemsDiv = $("#checkout-items");
+    itemsDiv.innerHTML = cart.map(it=>`<div class="d-flex justify-content-between"><div>${it.title} x ${it.qty}</div><div>${formatMoney(it.qty*it.price)}</div></div>`).join("") +
+                         `<hr><div class="d-flex justify-content-between"><strong>Jumlah</strong><strong>${formatMoney(cart.reduce((s,i)=>s+i.qty*i.price,0))}</strong></div>`;
+    // scroll to checkout
+    setTimeout(()=>{ window.scrollTo({top: document.querySelector('#checkout-area').offsetTop - 20, behavior:'smooth'}); }, 100);
+  }
+
+  // Tab switching (catalog / form)
+  $$(".tab-btn").forEach(b=>{
+    b.addEventListener("click", ()=>{
+      $$(".tab-btn").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active");
+      const target = b.dataset.target;
+      $("#panel-catalog").style.display = target === "catalog" ? "" : "none";
+      $("#panel-form").style.display = target === "form" ? "" : "none";
+      // update openNewTab link (not present; keep google viewer links)
+    });
+  });
+
+  // Google viewer links
+  $("#catalog-google").href = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/catalog.pdf") + "&embedded=true";
+  $("#form-google").href = "https://docs.google.com/gview?url=" + encodeURIComponent(location.origin + "/borang-akaun.pdf") + "&embedded=true";
+
+  // Checkout file preview
+  $("#receipt-file").addEventListener("change", async (e)=>{
+    const file = e.target.files[0];
+    const preview = $("#receipt-preview");
+    if(!file){ preview.style.display='none'; preview.innerHTML=''; return; }
+    if(file.type.startsWith("image/")){
+      const url = URL.createObjectURL(file);
+      preview.innerHTML = `<img src="${url}" style="max-width:120px;display:block">`;
+      preview.style.display='block';
+    } else {
+      preview.innerHTML = `<div class="p-2 small muted">File: ${file.name}</div>`;
+      preview.style.display='block';
+    }
+  });
+
+  // Submit order
+  $("#submit-order").addEventListener("click", async ()=>{
+    const name = $("#cust-name").value.trim();
+    const tel = $("#cust-tel").value.trim();
+    const address = $("#cust-address").value.trim();
+    if(!name || !tel || !address){ alert("Sila isi nama, nombor telefon dan alamat."); return; }
+    if(!cart.length){ alert("Troli kosong."); return; }
+
+    // disable while processing
+    const btn = $("#submit-order"); btn.disabled = true; btn.textContent = "Menghantar...";
+
+    // read receipt file (optional) -> base64
+    const fileInput = $("#receipt-file");
+    let receiptBase64 = "";
+    let receiptName = "";
+    if(fileInput.files && fileInput.files[0]){
+      const f = fileInput.files[0];
+      receiptName = f.name;
+      receiptBase64 = await readFileAsBase64(f);
+    }
+
+    const payload = {
+      name, tel, address,
+      items: cart,
+      total: cart.reduce((s,i)=>s+i.qty*i.price,0),
+      receiptBase64, receiptName,
+      timestamp: new Date().toISOString()
+    };
+
+    // Try store to Google Sheets webhook if configured
+    let sheetResult = null;
+    if(GOOGLE_SHEETS_WEBHOOK){
+      try{
+        const r = await fetch(GOOGLE_SHEETS_WEBHOOK, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        sheetResult = await r.json().catch(()=>null);
+      }catch(err){
+        console.warn("Google webhook failed:", err);
+        sheetResult = null;
+      }
+    }
+
+    // Prepare WhatsApp message
+    const lines = [];
+    lines.push("Pesanan PRAN — Kopusamaju");
+    lines.push(`Nama: ${name}`);
+    lines.push(`Tel: ${tel}`);
+    lines.push(`Alamat: ${address}`);
+    lines.push("");
+    lines.push("Item:");
+    cart.forEach(i=> lines.push(`- ${i.title} x${i.qty} = ${formatMoney(i.price*i.qty)}`));
+    lines.push("");
+    lines.push("Jumlah: " + formatMoney(payload.total));
+    if(receiptName) lines.push(`Resit: ${receiptName} (dimuat naik)`);
+    lines.push("");
+    lines.push("Sila semak dan sahkan. Terima kasih.");
+
+    const waText = encodeURIComponent(lines.join("\n"));
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`;
+
+    // Optionally if sheetResult contains url to receipt you could append; but general case open wa anyway
+    // Open WhatsApp in new tab
+    window.open(waUrl, "_blank");
+
+    // Save history locally
+    const historyKey = "pran_orders_history_v1";
+    const history = JSON.parse(localStorage.getItem(historyKey) || "[]");
+    history.unshift({ payload, sheetResult, createdAt: new Date().toISOString() });
+    localStorage.setItem(historyKey, JSON.stringify(history.slice(0,200)));
+
+    // clear cart and UI
+    cart = []; saveCart();
+    $("#cust-name").value = ""; $("#cust-tel").value = ""; $("#cust-address").value = ""; $("#receipt-file").value = "";
+    $("#receipt-preview").style.display = "none";
+    $("#checkout-area").style.display = "none";
+
+    btn.disabled = false; btn.textContent = "✅ Hantar Pesanan & Resit";
+
+    alert("Pesanan dihantar. Sila semak WhatsApp untuk mengesahkan mesej telah dihantar. Admin akan menyemak resit.");
+  });
+
+  // Save local (just store form + cart)
+  $("#save-local").addEventListener("click", ()=>{
+    const name = $("#cust-name").value.trim();
+    const tel = $("#cust-tel").value.trim();
+    const address = $("#cust-address").value.trim();
+    const data = { name, tel, address, items: cart, total: cart.reduce((s,i)=>s+i.qty*i.price,0), timestamp: nowISO() };
+    localStorage.setItem("pran_checkout_draft", JSON.stringify(data));
+    alert("Data disimpan secara tempatan.");
+  });
+
+  // proceed button behaviour
+  checkoutBtn.addEventListener("click", ()=> openCheckout());
+
+  // helper to read file as base64
+  function readFileAsBase64(file){
+    return new Promise((resolve, reject)=>{
+      const reader = new FileReader();
+      reader.onload = ()=> resolve(reader.result.split(",")[1]); // strip data:*/*;base64,
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // initial load
+  (function init(){
+    renderProducts();
+    updateCartBadge();
+    // load draft
+    const draft = JSON.parse(localStorage.getItem("pran_checkout_draft") || "null");
+    if(draft){
+      $("#cust-name").value = draft.name || "";
+      $("#cust-tel").value = draft.tel || "";
+      $("#cust-address").value = draft.address || "";
+    }
+    document.getElementById("year").textContent = new Date().getFullYear();
+  })();
+
+  </script>
+
+  <!-- Simple PWA manifest + service worker registration -->
+  <link rel="manifest" href="/pran/manifest.json" />
+  <script>
+    // Register SW if available - minimal offline caching
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/pran/sw.js').catch(()=>{/* ignore errors */});
+    }
+  </script>
+
+  <!-- OPTIONAL: small inline note for admin to configure webhook (not shown to customers) -->
+  <!--
+    To store orders to Google Sheets:
+    1) Create a Google Apps Script Web App that accepts POST JSON (see Apps Script docs).
+    2) Deploy as "Anyone, even anonymous".
+    3) Set the URL to GOOGLE_SHEETS_WEBHOOK variable at top of this file.
+    Expected payload: { name, tel, address, items: [{id,title,qty,price}], total, receiptBase64, receiptName, timestamp }
+  -->
+
+</body>
+</html>

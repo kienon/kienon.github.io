@@ -8,259 +8,600 @@
   <meta name="author" content="Ahmad Amsari" />
   <link rel="icon" href="https://raw.githubusercontent.com/kienon/kienon.github.io/main/assets/img/favicon.png" />
 
-  <!-- Fonts & Bootstrap -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" id="kadence-fonts-css" href="https://fonts.googleapis.com/css?family=IBM%20Plex%20Sans:regular,700%7CKrona%20One:regular&display=swap">
+
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Kadence & Kadence-like CSS (only core external files referenced) -->
+  <link rel="stylesheet" id="kadence-global-css" href="https://kienon.github.io/wp-content/themes/kadence/assets/css/global.min.css?ver=1.2.16" media="all">
+  <link rel="stylesheet" id="kadence-header-css" href="https://kienon.github.io/wp-content/themes/kadence/assets/css/header.min.css?ver=1.2.16" media="all">
+  <link rel="stylesheet" id="kadence-content-css" href="https://kienon.github.io/wp-content/themes/kadence/assets/css/content.min.css?ver=1.2.16" media="all">
+  <link rel="stylesheet" id="kadence-footer-css" href="https://kienon.github.io/wp-content/themes/kadence/assets/css/footer.min.css?ver=1.2.16" media="all">
+
+  <!-- AOS (Animate on scroll) -->
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
-    :root {
-      --primary: #2B6CB0;
-      --accent: #2B6CB0;
-      --muted: #6b6b6b;
-      --bg: #ffffff;
-      --footer-bg: #1a1a1a;
-      --footer-text: #e0e0e0;
+    /* Keep the newindex layout & Kadence color palette */
+    :root{
+      --accent:#e41f26;           /* Kienon accent */
+      --muted:#6b6b6b;
+      --bg:#ffffff;
+      --card:#ffffff;
+
+      /* Kadence palette fallback */
+      --kd-primary:#2B6CB0;
+      --kd-dark:#222222;
+      --kd-light:#F7F7F7;
     }
 
-    body {
-      font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: var(--bg);
-      color: #222;
-      -webkit-font-smoothing: antialiased;
+    html,body{height:100%}
+    body{
+      font-family: 'Inter', 'IBM Plex Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg);
+      color:var(--kd-dark);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
     }
 
-    /* NAVBAR */
-    .navbar {
-      background: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    /* Top navbar (Kadence-like) */
+    .site-header {
+      background: var(--kd-primary);
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1030;
     }
-    .navbar-brand img {
-      height: 42px;
-      width: 42px;
-      border-radius: 50%;
-      margin-right: 8px;
-    }
-    .nav-link {
-      color: #333 !important;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-link:hover {
-      color: var(--primary) !important;
-    }
-    .btn-outline-primary {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-    .btn-outline-primary:hover {
-      background: var(--primary);
-      color: #fff;
-    }
+    .site-header .container { display:flex; align-items:center; gap:1rem; padding:0.6rem 1rem; }
+    .brand img { height:42px; width:42px; object-fit:cover; border-radius:8px; margin-right:8px; }
+    .brand-title { font-family: 'Krona One', sans-serif; font-size:22px; font-weight:700; color:white; text-decoration:none; }
+    .nav-links .nav-link { color: rgba(255,255,255,0.95); margin-right:0.6rem; font-weight:600; }
+    .nav-links .nav-link:hover { color: #fff; opacity:0.9; text-decoration:underline; }
 
-    /* HERO */
-    .hero {
-      background: linear-gradient(180deg, rgba(43,108,176,0.05), rgba(0,0,0,0));
-      padding: 90px 0 60px;
-    }
-    .hero .lead { color: var(--muted); }
+    /* language dropdown */
+    .lang-btn { background:transparent; border:1px solid rgba(255,255,255,0.12); color:white; padding:6px 10px; border-radius:8px; }
+    .lang-flag { margin-right:6px; }
 
-    /* PROJECTS */
-    .project-card {
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.05);
-      background: #fff;
-      overflow: hidden;
-      transition: all 0.25s ease;
+    /* Hero */
+    .hero{
+      padding:80px 0 56px;
+      background: linear-gradient(180deg, rgba(43,108,176,0.06), rgba(0,0,0,0));
     }
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-    .project-thumb {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      background: #f3f3f3;
-    }
+    .hero .lead{color:var(--muted); font-size:1.05rem;}
 
-    /* ABOUT */
-    .about-card {
-      border-radius: 12px;
-      padding: 24px;
-      background: #fff;
-      border: 1px solid rgba(0,0,0,0.05);
-    }
+    /* Projects */
+    .project-card{border-radius:12px; overflow:hidden; transition:transform .18s ease, box-shadow .18s ease; border:1px solid rgba(0,0,0,0.04); background:var(--card);}
+    .project-card:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,0.06);}
+    .project-thumb{width:100%; height:160px; object-fit:cover; display:block; background:#f4f4f4;}
+    .tag{font-size:.78rem; padding:.18rem .6rem; border-radius:999px; background:rgba(0,0,0,0.06); color:#333; display:inline-block;}
 
-    /* FOOTER */
-    footer {
-      background: var(--footer-bg);
-      color: var(--footer-text);
-      padding: 40px 0 30px;
-    }
-    footer a {
-      color: var(--footer-text);
-      text-decoration: none;
-    }
-    footer a:hover {
-      color: var(--accent);
-      text-decoration: underline;
-    }
+    /* About */
+    .about-card{border-radius:12px; padding:24px; border:1px solid rgba(0,0,0,0.05); background:#fff;}
 
-    .footer-links a {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.9rem;
-    }
+    /* Footer */
+    footer{padding:28px 0; color:#777; border-top:1px solid rgba(0,0,0,0.04); background:var(--kd-dark); color:var(--kd-light); }
+    footer a { color: var(--kd-primary); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
 
-    @media(max-width:576px){
-      .hero{padding:70px 0 50px;}
+    /* small screens */
+    @media (max-width:576px){
+      .hero{padding:56px 0 36px;}
       .project-thumb{height:140px;}
+      .brand-title{font-size:18px;}
     }
+
+    /* small helpers */
+    .kbd-badge { font-size:.78rem; padding:.18rem .5rem; border-radius:6px; background:rgba(0,0,0,0.06); }
+    .muted { color:var(--muted); }
   </style>
 </head>
-
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg sticky-top">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="https://raw.githubusercontent.com/kienon/kienon.github.io/main/assets/img/logo.png" alt="Kienon Logo">
-      <strong>Kienon</strong><span class="text-muted">.io</span>
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <!-- HEADER / NAV -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a class="brand d-flex align-items-center" href="https://kienon.github.io/" title="Kienon">
+        <img src="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle-.png" alt="Kienon logo" />
+        <span class="brand-title">Kienon</span>
+      </a>
 
-    <div class="collapse navbar-collapse" id="mainNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center">
-        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        <li class="nav-item ms-2"><a class="btn btn-outline-primary btn-sm" href="https://github.com/kienon" target="_blank">GitHub</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+      <nav class="ms-auto d-none d-md-flex nav-links align-items-center" aria-label="Primary">
+        <a class="nav-link" href="#projects" data-i18n="nav.projects">Projects</a>
+        <a class="nav-link" href="#about" data-i18n="nav.about">About</a>
+        <a class="nav-link" href="https://kienon.github.io/hubungi/" target="_blank" rel="noopener" data-i18n="nav.contact">Contact</a>
+        <a class="btn btn-outline-light btn-sm ms-2" href="https://github.com/kienon" target="_blank" rel="noopener">GitHub</a>
 
-<!-- HERO -->
-<header class="hero text-center text-lg-start">
-  <div class="container">
-    <div class="row align-items-center gy-4">
-      <div class="col-lg-7" data-aos="fade-up">
-        <h1 class="display-5 fw-bold text-primary">Ahmad Amsari — Web & Product Builder</h1>
-        <p class="lead mt-3">I build practical, lightweight web apps and sites — from static marketing pages to PWA & integrations (Google Sheets, WhatsApp, proxy services).</p>
-        <div class="mt-4">
-          <a href="#projects" class="btn btn-primary btn-lg me-2">View Projects</a>
-          <a href="https://github.com/kienon/kienon.github.io" class="btn btn-outline-primary btn-lg" target="_blank">Repo (this site)</a>
+        <!-- language dropdown -->
+        <div class="ms-3 dropdown">
+          <button class="lang-btn dropdown-toggle" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="lang-flag" id="langFlag">🇬🇧</span><span id="langLabel">EN</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+            <li><button class="dropdown-item lang-select" data-lang="en">🇬🇧 English</button></li>
+            <li><button class="dropdown-item lang-select" data-lang="bm">🇲🇾 Melayu</button></li>
+            <li><button class="dropdown-item lang-select" data-lang="zh">🇨🇳 中文</button></li>
+          </ul>
         </div>
-      </div>
-      <div class="col-lg-5 text-center" data-aos="zoom-in">
-        <img src="https://raw.githubusercontent.com/kienon/kienon.github.io/main/assets/img/devphoto.png" class="img-fluid rounded shadow-sm" alt="Developer Photo">
+      </nav>
+
+      <!-- mobile toggle -->
+      <div class="d-flex d-md-none ms-auto align-items-center">
+        <div class="dropdown me-2">
+          <button class="lang-btn dropdown-toggle" id="langDropdownMob" data-bs-toggle="dropdown" aria-expanded="false">
+            <span id="langFlagMob">🇬🇧</span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdownMob">
+            <li><button class="dropdown-item lang-select" data-lang="en">🇬🇧 English</button></li>
+            <li><button class="dropdown-item lang-select" data-lang="bm">🇲🇾 Melayu</button></li>
+            <li><button class="dropdown-item lang-select" data-lang="zh">🇨🇳 中文</button></li>
+          </ul>
+        </div>
+
+        <button class="btn btn-light btn-sm" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav" aria-controls="mobileNav">Menu</button>
       </div>
     </div>
-  </div>
-</header>
 
-<!-- PROJECTS -->
-<main class="py-5" id="projects">
-  <div class="container">
-    <h2 class="h3 mb-4 text-primary">Selected Projects</h2>
-    <div class="row g-4">
-      <!-- repeat cards (same as original structure) -->
-      <div class="col-md-6 col-lg-4" data-aos="fade-up">
-        <div class="project-card h-100">
-          <a href="https://syarikatwirajaya.github.io" target="_blank">
-            <img src="https://via.placeholder.com/800x450.png?text=Wirajaya+Site" class="project-thumb" alt="Wirajaya">
-          </a>
-          <div class="p-3">
-            <h5 class="mb-1">Syarikat Wirajaya</h5>
-            <p class="small text-muted">Supply & logistics landing + product pages.</p>
+    <!-- mobile offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileNav" aria-labelledby="mobileNavLabel">
+      <div class="offcanvas-header">
+        <h5 id="mobileNavLabel">Kienon</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <ul class="list-unstyled">
+          <li><a class="d-block py-2" href="#projects" data-bs-dismiss="offcanvas" data-i18n="nav.projects">Projects</a></li>
+          <li><a class="d-block py-2" href="#about" data-bs-dismiss="offcanvas" data-i18n="nav.about">About</a></li>
+          <li><a class="d-block py-2" href="https://kienon.github.io/hubungi/" target="_blank" rel="noopener" data-i18n="nav.contact">Contact</a></li>
+          <li><a class="d-block py-2" href="https://github.com/kienon" target="_blank" rel="noopener">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center gy-4">
+        <div class="col-lg-7" data-aos="fade-up">
+          <h1 class="display-5 fw-bold" id="heroTitle" data-i18n="hero.title">Ahmad Amsari — Web & Product Builder</h1>
+          <p class="lead mt-3" id="heroLead" data-i18n="hero.lead">I build practical, lightweight web apps and sites — from static marketing pages to PWA & integrations (Google Sheets, WhatsApp, proxy services).</p>
+
+          <div class="mt-4">
+            <a href="#projects" id="btnProjects" class="btn btn-primary btn-lg me-2" data-i18n="hero.viewProjects">View Projects</a>
+            <a href="https://github.com/kienon/kienon.github.io" class="btn btn-outline-primary btn-lg" target="_blank" rel="noopener">Repo (this site)</a>
+          </div>
+
+          <div class="mt-4 d-flex gap-3 small text-muted">
+            <div><strong data-i18n="hero.locationLabel">Location</strong><div id="heroLocation">Sabah, Malaysia</div></div>
+            <div><strong data-i18n="hero.contactLabel">Contact</strong><div><a href="mailto:ahmad.amsari@example.com" id="heroEmail">ahmad.amsari@example.com</a></div></div>
+          </div>
+        </div>
+
+        <div class="col-lg-5" data-aos="zoom-out">
+          <div class="card p-3 about-card shadow-sm">
+            <div class="mb-3">
+              <strong data-i18n="hero.quickStats">Quick stats</strong>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <div class="h5 mb-0">5+</div>
+                <small class="text-muted" data-i18n="hero.webProjects">Web projects</small>
+              </div>
+              <div>
+                <div class="h5 mb-0">—</div>
+                <small class="text-muted" data-i18n="hero.activeTools">Active tools: Bootstrap, FastAPI, Apps Script</small>
+              </div>
+            </div>
+            <hr>
+            <p class="mb-2 small text-muted" id="heroPitch" data-i18n="hero.pitch">If you want a fast, pragmatic site (no heavy frameworks) — I can deliver MVP quickly: catalog + order form + Google Sheets backend + WhatsApp integration.</p>
+            <a href="https://kienon.github.io/hubungi/" class="btn btn-sm btn-success" target="_blank" data-i18n="hero.workWithMe">Work with me</a>
           </div>
         </div>
       </div>
+    </div>
+  </header>
 
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="60">
-        <div class="project-card h-100">
-          <a href="https://chrishaircutteam.github.io" target="_blank">
-            <img src="https://via.placeholder.com/800x450.png?text=Chris+Haircut" class="project-thumb" alt="Chris Haircut">
-          </a>
-          <div class="p-3">
-            <h5 class="mb-1">Chris Haircut Team</h5>
-            <p class="small text-muted">Salon gallery site with image filters.</p>
-          </div>
+  <!-- PROJECTS -->
+  <main class="py-5">
+    <div class="container" id="projects">
+      <div class="d-flex align-items-end justify-content-between mb-4">
+        <div>
+          <h2 class="h3 mb-0" data-aos="fade-right" data-i18n="projects.title">Selected Projects</h2>
+          <p class="small text-muted mb-0" data-aos="fade-right" data-aos-delay="60" data-i18n="projects.subtitle">Live sites, demos and integrations I've built & managed.</p>
+        </div>
+        <div class="d-flex gap-2 align-items-center">
+          <span class="tag">Bootstrap</span>
+          <span class="tag">PWA</span>
+          <span class="tag">Apps Script</span>
         </div>
       </div>
 
-      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="120">
-        <div class="project-card h-100">
-          <a href="https://fedborong.github.io" target="_blank">
-            <img src="https://via.placeholder.com/800x450.png?text=FedBorong" class="project-thumb" alt="FedBorong">
-          </a>
-          <div class="p-3">
-            <h5 class="mb-1">FedBorong</h5>
-            <p class="small text-muted">Corporate site for cooperative federation.</p>
+      <div class="row g-4">
+        <!-- 1 Syarikat Wirajaya -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up">
+          <div class="project-card h-100">
+            <a href="https://syarikatwirajaya.github.io" target="_blank" rel="noopener">
+              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=Wirajaya+Site" alt="Syarikat Wirajaya">
+            </a>
+            <div class="p-3">
+              <h5 class="mb-1" data-i18n="projects.wirajaya.title">Syarikat Wirajaya</h5>
+              <p class="small text-muted mb-2" data-i18n="projects.wirajaya.desc">Supply & logistics landing + product pages.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <a class="btn btn-sm btn-outline-primary" href="https://syarikatwirajaya.github.io" target="_blank" rel="noopener" data-i18n="projects.live">Live</a>
+                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/kienon/syarikatwirajaya.github.io" target="_blank" rel="noopener" data-i18n="projects.repo">Repo</a>
+                </div>
+                <small class="text-muted">Bootstrap</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2 Chris Haircut Team -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="60">
+          <div class="project-card h-100">
+            <a href="https://chrishaircutteam.github.io" target="_blank" rel="noopener">
+              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=Chris+Haircut" alt="Chris Haircut Team">
+            </a>
+            <div class="p-3">
+              <h5 class="mb-1" data-i18n="projects.chris.title">Chris Haircut Team</h5>
+              <p class="small text-muted mb-2" data-i18n="projects.chris.desc">Salon / gallery site with image filters & gallery features.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <a class="btn btn-sm btn-outline-primary" href="https://chrishaircutteam.github.io" target="_blank" rel="noopener" data-i18n="projects.live">Live</a>
+                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/kienon/chrishaircutteam.github.io" target="_blank" rel="noopener" data-i18n="projects.repo">Repo</a>
+                </div>
+                <small class="text-muted">Isotope, GLightbox</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 FedBorong -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="120">
+          <div class="project-card h-100">
+            <a href="https://fedborong.github.io" target="_blank" rel="noopener">
+              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=FedBorong" alt="FedBorong">
+            </a>
+            <div class="p-3">
+              <h5 class="mb-1" data-i18n="projects.fedborong.title">FedBorong (Federation)</h5>
+              <p class="small text-muted mb-2" data-i18n="projects.fedborong.desc">Corporate site — galleries, programs, resources for coop federation.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <a class="btn btn-sm btn-outline-primary" href="https://fedborong.github.io" target="_blank" rel="noopener" data-i18n="projects.live">Live</a>
+                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/fedborong/fedborong.github.io" target="_blank" rel="noopener" data-i18n="projects.repo">Repo</a>
+                </div>
+                <small class="text-muted">Isotope, Glightbox</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4 Brene Spa Studio -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up">
+          <div class="project-card h-100">
+            <a href="https://kienon.github.io/brenespastudio/" target="_blank" rel="noopener">
+              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=Brene+Spa+Studio" alt="Brene Spa Studio">
+            </a>
+            <div class="p-3">
+              <h5 class="mb-1" data-i18n="projects.brene.title">Brene Spa Studio</h5>
+              <p class="small text-muted mb-2" data-i18n="projects.brene.desc">Small business landing + booking links (lightweight).</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <a class="btn btn-sm btn-outline-primary" href="https://kienon.github.io/brenespastudio/" target="_blank" rel="noopener" data-i18n="projects.live">Live</a>
+                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/kienon/brenespastudio" target="_blank" rel="noopener" data-i18n="projects.repo">Repo</a>
+                </div>
+                <small class="text-muted">Bootstrap</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Kraft Tangan -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="60">
+          <div class="project-card h-100">
+            <a href="https://kienon.github.io/krafttangan" target="_blank" rel="noopener">
+              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=Kraft+Tangan" alt="Kraft Tangan">
+            </a>
+            <div class="p-3">
+              <h5 class="mb-1" data-i18n="projects.kraft.title">Kedai Kraft Tangan</h5>
+              <p class="small text-muted mb-2" data-i18n="projects.kraft.desc">Catalog + contact + WhatsApp quick-order integration.</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <a class="btn btn-sm btn-outline-primary" href="https://kienon.github.io/krafttangan" target="_blank" rel="noopener" data-i18n="projects.live">Live</a>
+                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/kienon/krafttangan" target="_blank" rel="noopener" data-i18n="projects.repo">Repo</a>
+                </div>
+                <small class="text-muted">Frontend MVP</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 Coming Soon -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="120">
+          <div class="project-card h-100 d-flex flex-column justify-content-between p-3">
+            <div>
+              <div class="h5" data-i18n="projects.comingSoonTitle">Coming Soon</div>
+              <p class="small text-muted" data-i18n="projects.comingSoonDesc">AI crypto prediction dashboard (MVP), realtime charts & account system (planned).</p>
+            </div>
+            <div class="mt-3 text-end">
+              <span class="tag" data-i18n="projects.planningTag">Planning</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- About -->
+    <section id="about" class="py-5">
+      <div class="container">
+        <div class="row gy-4 align-items-center">
+          <div class="col-lg-7" data-aos="fade-right">
+            <h3 data-i18n="about.title">About — Ahmad (Kienon)</h3>
+            <p class="text-muted" id="aboutDesc" data-i18n="about.desc">I focus on pragmatic web solutions for SMEs and cooperatives: fast, maintainable, and cheap to run. I like using serverless pieces (GitHub Pages, Apps Script) and tiny proxies when needed.</p>
+
+            <ul class="list-unstyled small text-muted">
+              <li><strong data-i18n="about.stackLabel">Stack:</strong> <span id="aboutStack" data-i18n="about.stack">Bootstrap, FastAPI, Node (small proxies), Google Apps Script, SQLite / Postgres for heavier projects.</span></li>
+              <li><strong data-i18n="about.servicesLabel">Services:</strong> <span id="aboutServices" data-i18n="about.services">Site builds, order-systems (WhatsApp + Google Sheets), simple dashboards, PWA setup.</span></li>
+            </ul>
+            <a href="https://kienon.github.io/hubungi/" class="btn btn-outline-primary" target="_blank" data-i18n="about.hire">Hire / Talk</a>
+          </div>
+
+          <div class="col-lg-5" data-aos="fade-left">
+            <div class="about-card text-center">
+              <img src="https://via.placeholder.com/800x600.png?text=Developer+Photo" class="img-fluid rounded mb-3" alt="Developer">
+              <p class="small text-muted mb-0" data-i18n="about.availability">Available for freelance & short projects. Prefer quick MVPs with clear scope.</p>
+            </div>
           </div>
         </div>
       </div>
+    </section>
+
+  </main>
+
+  <footer class="text-center">
+    <div class="container">
+      <p class="mb-1" id="footerCredit">© <span id="year"></span> Ahmad Amsari — Kienon. Built with Bootstrap.</p>
+      <p class="small text-muted mb-0"><span data-i18n="footer.source">Portfolio source:</span> <a href="https://github.com/kienon/kienon.github.io" target="_blank" rel="noopener">github.com/kienon/kienon.github.io</a></p>
     </div>
-  </div>
-</main>
+  </footer>
 
-<!-- ABOUT -->
-<section id="about" class="py-5 bg-light">
-  <div class="container" data-aos="fade-right">
-    <h3>About — Ahmad (Kienon)</h3>
-    <p class="text-muted">I focus on pragmatic web solutions for SMEs and cooperatives: fast, maintainable, and cheap to run.</p>
-  </div>
-</section>
+  <!-- scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
-<!-- CONTACT -->
-<section id="contact" class="py-5">
-  <div class="container" data-aos="fade-up">
-    <h4>Contact</h4>
-    <p class="small text-muted">Email, WhatsApp or open an issue on the repo.</p>
-    <p><a href="mailto:ahmad.amsari@example.com">ahmad.amsari@example.com</a></p>
-    <p><a href="https://wa.me/60128169367" target="_blank">WhatsApp: +60 12-816 9367</a></p>
-  </div>
-</section>
+  <script>
+    // Init AOS
+    AOS.init({ duration: 650, once: true });
 
-<!-- FOOTER -->
-<footer>
-  <div class="container text-center text-md-start">
-    <div class="row">
-      <div class="col-md-4 mb-3">
-        <h5>Kienon</h5>
-        <p>Bina Website Profesional & Tingkatkan SEO Anda.</p>
-      </div>
-      <div class="col-md-2 footer-links">
-        <h6>Perkhidmatan</h6>
-        <a href="#">Pembangunan Web</a>
-        <a href="#">Integrasi WhatsApp</a>
-        <a href="#">Google Sheets Backend</a>
-      </div>
-      <div class="col-md-2 footer-links">
-        <h6>Maklumat</h6>
-        <a href="#about">Tentang</a>
-        <a href="#contact">Hubungi Kami</a>
-        <a href="#">FAQ</a>
-      </div>
-      <div class="col-md-4 text-md-end mt-3 mt-md-0">
-        <p class="small mb-1">© <span id="year"></span> Ahmad Amsari — Kienon</p>
-        <p class="small mb-0"><a href="https://github.com/kienon/kienon.github.io" target="_blank">Repo source</a></p>
-      </div>
-    </div>
-  </div>
-</footer>
+    // Current year
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-<!-- SCRIPTS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-<script>
-AOS.init({ duration: 650, once: true });
-document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+    // --- Translation data (EN / BM / ZH) ---
+    const TRANSLATIONS = {
+      en: {
+        "nav.projects":"Projects",
+        "nav.about":"About",
+        "nav.contact":"Contact",
+        "hero.title":"Ahmad Amsari — Web & Product Builder",
+        "hero.lead":"I build practical, lightweight web apps and sites — from static marketing pages to PWA & integrations (Google Sheets, WhatsApp, proxy services).",
+        "hero.viewProjects":"View Projects",
+        "hero.locationLabel":"Location",
+        "hero.contactLabel":"Contact",
+        "hero.quickStats":"Quick stats",
+        "hero.webProjects":"Web projects",
+        "hero.activeTools":"Active tools: Bootstrap, FastAPI, Apps Script",
+        "hero.pitch":"If you want a fast, pragmatic site (no heavy frameworks) — I can deliver MVP quickly: catalog + order form + Google Sheets backend + WhatsApp integration.",
+        "hero.workWithMe":"Work with me",
 
+        "projects.title":"Selected Projects",
+        "projects.subtitle":"Live sites, demos and integrations I've built & managed.",
+        "projects.wirajaya.title":"Syarikat Wirajaya",
+        "projects.wirajaya.desc":"Supply & logistics landing + product pages.",
+        "projects.chris.title":"Chris Haircut Team",
+        "projects.chris.desc":"Salon / gallery site with image filters & gallery features.",
+        "projects.fedborong.title":"FedBorong (Federation)",
+        "projects.fedborong.desc":"Corporate site — galleries, programs, resources for coop federation.",
+        "projects.brene.title":"Brene Spa Studio",
+        "projects.brene.desc":"Small business landing + booking links (lightweight).",
+        "projects.kraft.title":"Kedai Kraft Tangan",
+        "projects.kraft.desc":"Catalog + contact + WhatsApp quick-order integration.",
+        "projects.live":"Live",
+        "projects.repo":"Repo",
+        "projects.comingSoonTitle":"Coming Soon",
+        "projects.comingSoonDesc":"AI crypto prediction dashboard (MVP), realtime charts & account system (planned).",
+        "projects.planningTag":"Planning",
+
+        "about.title":"About — Ahmad (Kienon)",
+        "about.desc":"I focus on pragmatic web solutions for SMEs and cooperatives: fast, maintainable, and cheap to run. I like using serverless pieces (GitHub Pages, Apps Script) and tiny proxies when needed.",
+        "about.stack":"Bootstrap, FastAPI, Node (small proxies), Google Apps Script, SQLite / Postgres for heavier projects.",
+        "about.services":"Site builds, order-systems (WhatsApp + Google Sheets), simple dashboards, PWA setup.",
+        "about.hire":"Hire / Talk",
+        "about.availability":"Available for freelance & short projects. Prefer quick MVPs with clear scope.",
+
+        "footer.source":"Portfolio source:"
+      },
+
+      bm: {
+        "nav.projects":"Projek",
+        "nav.about":"Mengenai",
+        "nav.contact":"Hubungi",
+        "hero.title":"Ahmad Amsari — Pembina Web & Produk",
+        "hero.lead":"Saya bina aplikasi web ringan dan tapak — dari halaman pemasaran statik hingga PWA & integrasi (Google Sheets, WhatsApp, proxy)." ,
+        "hero.viewProjects":"Lihat Projek",
+        "hero.locationLabel":"Lokasi",
+        "hero.contactLabel":"Hubungi",
+        "hero.quickStats":"Stat ringkas",
+        "hero.webProjects":"Projek web",
+        "hero.activeTools":"Alat aktif: Bootstrap, FastAPI, Apps Script",
+        "hero.pitch":"Jika anda mahu laman pantas dan praktikal (tanpa kerangka berat) — saya boleh sampaikan MVP cepat: katalog + borang pesanan + Google Sheets backend + integrasi WhatsApp.",
+        "hero.workWithMe":"Bekerja dengan saya",
+
+        "projects.title":"Projek Terpilih",
+        "projects.subtitle":"Laman langsung, demo dan integrasi yang saya bina & urus.",
+        "projects.wirajaya.title":"Syarikat Wirajaya",
+        "projects.wirajaya.desc":"Halaman pemasaran bekalan & logistik + halaman produk.",
+        "projects.chris.title":"Chris Haircut Team",
+        "projects.chris.desc":"Laman salon / galeri dengan penapis imej & ciri galeri.",
+        "projects.fedborong.title":"FedBorong (Federation)",
+        "projects.fedborong.desc":"Laman korporat — galeri, program, sumber untuk federasi koperasi.",
+        "projects.brene.title":"Brene Spa Studio",
+        "projects.brene.desc":"Landing bisnes kecil + pautan tempahan (ringan).",
+        "projects.kraft.title":"Kedai Kraft Tangan",
+        "projects.kraft.desc":"Katalog + kontak + integrasi pesanan WhatsApp.",
+        "projects.live":"Laman",
+        "projects.repo":"Repo",
+        "projects.comingSoonTitle":"Akan Datang",
+        "projects.comingSoonDesc":"Dashboard ramalan crypto AI (MVP), carta masa nyata & sistem akaun (dalam perancangan).",
+        "projects.planningTag":"Perancangan",
+
+        "about.title":"Mengenai — Ahmad (Kienon)",
+        "about.desc":"Saya fokus pada penyelesaian web pragmatik untuk PKS dan koperasi: pantas, mudah diselenggara, dan kos rendah. Saya suka menggunakan bahagian serverless (GitHub Pages, Apps Script) dan proxy kecil bila perlu.",
+        "about.stack":"Bootstrap, FastAPI, Node (proxy kecil), Google Apps Script, SQLite / Postgres untuk projek lebih besar.",
+        "about.services":"Pembinaan laman, sistem pesanan (WhatsApp + Google Sheets), papan pemuka ringkas, setup PWA.",
+        "about.hire":"Sewa / Bercakap",
+        "about.availability":"Sedia untuk freelance & projek pendek. Prefer MVP cepat dengan skop jelas.",
+
+        "footer.source":"Sumber portfolio:"
+      },
+
+      zh: {
+        "nav.projects":"项目",
+        "nav.about":"关于",
+        "nav.contact":"联系",
+        "hero.title":"Ahmad Amsari — 网站与产品构建者",
+        "hero.lead":"我构建实用、轻量的 Web 应用与网站 — 从静态营销页面到 PWA 与集成（Google Sheets、WhatsApp、代理服务）。",
+        "hero.viewProjects":"查看项目",
+        "hero.locationLabel":"地点",
+        "hero.contactLabel":"联系",
+        "hero.quickStats":"快速统计",
+        "hero.webProjects":"网站项目",
+        "hero.activeTools":"活跃工具：Bootstrap，FastAPI，Apps Script",
+        "hero.pitch":"如果您想要快速、务实的网站（不使用沉重框架）— 我可以快速交付 MVP：目录 + 订单表单 + Google Sheets 后端 + WhatsApp 集成。",
+        "hero.workWithMe":"与我合作",
+
+        "projects.title":"精选项目",
+        "projects.subtitle":"我构建与管理的在线站点、演示和集成。",
+        "projects.wirajaya.title":"Syarikat Wirajaya",
+        "projects.wirajaya.desc":"供应与物流着陆页 + 产品页面。",
+        "projects.chris.title":"Chris Haircut Team",
+        "projects.chris.desc":"理发店 / 画廊站点，带图像过滤 & 画廊功能。",
+        "projects.fedborong.title":"FedBorong (Federation)",
+        "projects.fedborong.desc":"公司站点 — 画廊、计划、合作社联盟资源。",
+        "projects.brene.title":"Brene Spa Studio",
+        "projects.brene.desc":"小企业着陆页 + 预订链接（轻量）。",
+        "projects.kraft.title":"Kedai Kraft Tangan",
+        "projects.kraft.desc":"目录 + 联系 + WhatsApp 快速下单集成。",
+        "projects.live":"线上",
+        "projects.repo":"代码库",
+        "projects.comingSoonTitle":"敬请期待",
+        "projects.comingSoonDesc":"AI 加密预测仪表盘 (MVP)，实时图表与账户系统（规划中）。",
+        "projects.planningTag":"规划中",
+
+        "about.title":"关于 — Ahmad (Kienon)",
+        "about.desc":"我专注于为中小企业与合作社提供务实的 Web 解决方案：快速、易维护且运行成本低。我喜欢使用无服务器片段（GitHub Pages、Apps Script）和小型代理（proxy）。",
+        "about.stack":"Bootstrap, FastAPI, Node（小型代理）, Google Apps Script, SQLite / Postgres（用于较重项目）。",
+        "about.services":"网站构建、订单系统（WhatsApp + Google Sheets）、简易仪表盘、PWA 设置。",
+        "about.hire":"雇用 / 联系",
+        "about.availability":"可接自由职业与短期项目。偏好快速 MVP 并且范围明确。",
+
+        "footer.source":"作品来源："
+      }
+    };
+
+    // --- language helpers ---
+    const LANG_KEY = 'kienon_lang';
+    const defaultLang = 'en';
+
+    function getSavedLang() {
+      try { return localStorage.getItem(LANG_KEY) || defaultLang; } catch(e) { return defaultLang; }
+    }
+    function saveLang(lang) {
+      try { localStorage.setItem(LANG_KEY, lang); } catch(e) {}
+    }
+
+    function setLangUIIndicators(lang) {
+      const flag = (lang === 'en') ? '🇬🇧' : (lang === 'bm') ? '🇲🇾' : '🇨🇳';
+      const label = (lang === 'en') ? 'EN' : (lang === 'bm') ? 'BM' : '中文';
+      document.getElementById('langFlag').textContent = flag;
+      document.getElementById('langLabel').textContent = label;
+      document.getElementById('langFlagMob').textContent = flag;
+    }
+
+    function applyTranslations(lang) {
+      const dict = TRANSLATIONS[lang] || TRANSLATIONS[defaultLang];
+      // find all elements with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (!key) return;
+        const text = dict[key];
+        if (typeof text === 'undefined') {
+          // fallback to English if missing
+          el.textContent = TRANSLATIONS[defaultLang][key] || el.textContent;
+        } else {
+          // allow simple HTML for some fields (e.g. descriptions)
+          if (el.tagName.toLowerCase() === 'input' || el.tagName.toLowerCase() === 'img' ) {
+            el.value = text;
+          } else {
+            el.innerHTML = text;
+          }
+        }
+      });
+
+      // Some elements use specific IDs (if needed)
+      // (we already used data-i18n extensively)
+      setLangUIIndicators(lang);
+    }
+
+    // attach language selector buttons
+    document.querySelectorAll('.lang-select').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const lang = e.currentTarget.getAttribute('data-lang');
+        saveLang(lang);
+        applyTranslations(lang);
+      });
+    });
+
+    // initial load
+    (function initLang() {
+      const saved = getSavedLang();
+      applyTranslations(saved);
+    })();
+
+    // Smooth scroll for anchor links (works on nav & buttons)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const target = document.querySelector(this.getAttribute('href'));
+        if(!target) return;
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // ensure selected language persists across page loads (if changed via another UI)
+    window.addEventListener('storage', (e) => {
+      if (e.key === LANG_KEY) {
+        applyTranslations(e.newValue || defaultLang);
+      }
+    });
+
+    // Save language when user selects via keyboard (accessibility)
+    document.querySelectorAll('.lang-select').forEach(btn=>{
+      btn.addEventListener('keydown', (ev)=>{
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          btn.click();
+        }
+      });
+    });
+
+    // Ensure that initial AOS works after translations (if layout changed)
+    setTimeout(()=> AOS.refresh(), 600);
+
+  </script>
 </body>
 </html>

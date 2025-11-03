@@ -3,330 +3,264 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Kienon | Website Design & SEO Services</title>
-  <meta name="description" content="Perkhidmatan reka bentuk laman web dan SEO profesional oleh Kienon. Kami membantu anda membina website yang menarik dan dioptimumkan untuk SEO. Portfolio Ahmad Amsari — projek web, PWA, integrations. Showcase of sites and small apps." />
+  <title>Kienon — Web & Dev Portfolio</title>
+  <meta name="description" content="Portfolio Ahmad Amsari — projek web, PWA, integrations. Showcase of sites and small apps." />
   <meta name="author" content="Ahmad Amsari" />
-  <meta property="og:title" content="Kienon — Web Design & SEO Services">
-  <meta property="og:description" content="Perkhidmatan reka bentuk laman web dan SEO profesional oleh Kienon. Kami membantu anda membina website yang menarik dan dioptimumkan untuk SEO. Portfolio Ahmad Amsari — projek web, PWA, integrations. Showcase of sites and small apps.">
-  <meta property="og:image" content="https://kienon.github.io/assets/img/preview.png">
-  <meta property="og:url" content="https://kienon.github.io/">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" href="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle--150x150.png" sizes="32x32">
-  <link rel="icon" href="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle-.png" sizes="192x192">
-  <link rel="apple-touch-icon" href="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle-.png">
-  <meta name="msapplication-TileImage" content="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle-.png">
+  <link rel="icon" href="https://raw.githubusercontent.com/kienon/kienon.github.io/main/assets/img/favicon.png" />
 
-  <!-- Fonts -->
+  <!-- Fonts & Bootstrap -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- AOS (Animate on scroll) -->
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
   <style>
-    :root{
-      --accent:#e41f26;
-      --muted:#6b6b6b;
-      --bg:#ffffff;
-      --card:#ffffff;
+    :root {
+      --primary: #2B6CB0;
+      --accent: #2B6CB0;
+      --muted: #6b6b6b;
+      --bg: #ffffff;
+      --footer-bg: #1a1a1a;
+      --footer-text: #e0e0e0;
     }
-    html,body{height:100%}
-    body{
+
+    body {
       font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:var(--bg);
-      color:#222;
-      -webkit-font-smoothing:antialiased;
+      background: var(--bg);
+      color: #222;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header */
-    .navbar-brand{font-weight:700; letter-spacing:0.2px;}
-    .nav-link{color:rgba(0,0,0,0.75);}
-    .nav-link:hover{color:var(--accent);}
-
-    /* Hero */
-    .hero{
-      padding:80px 0 56px;
-      background: linear-gradient(180deg, rgba(228,31,38,0.04), rgba(0,0,0,0));
+    /* NAVBAR */
+    .navbar {
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-    .hero .lead{color:var(--muted); font-size:1.05rem;}
+    .navbar-brand img {
+      height: 42px;
+      width: 42px;
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .nav-link {
+      color: #333 !important;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-link:hover {
+      color: var(--primary) !important;
+    }
+    .btn-outline-primary {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .btn-outline-primary:hover {
+      background: var(--primary);
+      color: #fff;
+    }
 
-    /* Projects */
-    .project-card{border-radius:12px; overflow:hidden; transition:transform .18s ease, box-shadow .18s ease; border:1px solid rgba(0,0,0,0.04); background:var(--card);}
-    .project-card:hover{transform:translateY(-6px); box-shadow:0 20px 40px rgba(0,0,0,0.06);}
-    .project-thumb{width:100%; height:160px; object-fit:cover; display:block; background:#f4f4f4;}
-    .tag{font-size:.78rem; padding:.18rem .6rem; border-radius:999px; background:rgba(0,0,0,0.06); color:#333; display:inline-block;}
+    /* HERO */
+    .hero {
+      background: linear-gradient(180deg, rgba(43,108,176,0.05), rgba(0,0,0,0));
+      padding: 90px 0 60px;
+    }
+    .hero .lead { color: var(--muted); }
 
-    /* About */
-    .about-card{border-radius:12px; padding:24px; border:1px solid rgba(0,0,0,0.05); background:#fff;}
+    /* PROJECTS */
+    .project-card {
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.05);
+      background: #fff;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .project-thumb {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background: #f3f3f3;
+    }
 
-    /* Footer */
-    footer{padding:28px 0; color:#777; border-top:1px solid rgba(0,0,0,0.04);}
+    /* ABOUT */
+    .about-card {
+      border-radius: 12px;
+      padding: 24px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
 
-    /* small screens */
-    @media (max-width:576px){
-      .hero{padding:56px 0 36px;}
+    /* FOOTER */
+    footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 40px 0 30px;
+    }
+    footer a {
+      color: var(--footer-text);
+      text-decoration: none;
+    }
+    footer a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .footer-links a {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    @media(max-width:576px){
+      .hero{padding:70px 0 50px;}
       .project-thumb{height:140px;}
     }
   </style>
 </head>
+
 <body>
 
-  <!-- NAV -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
-    <div class="container">
-      <a class="navbar-brand" href="#">Kienon<span class="text-muted">.io</span></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="https://raw.githubusercontent.com/kienon/kienon.github.io/main/assets/img/logo.png" alt="Kienon Logo">
+      <strong>Kienon</strong><span class="text-muted">.io</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="collapse navbar-collapse" id="mainNav">
-        <ul class="navbar-nav ms-auto align-items-lg-center">
-          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
-          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://kienon.github.io/hubungi">Contact</a></li>
-          <li class="nav-item" <a class="nav-link" href="https://kienon.github.io/faq">FAQ</a></li>
-          <li class="nav-item ms-2"><a class="btn btn-outline-secondary btn-sm" href="https://github.com/kienon" target="_blank" rel="noopener">GitHub</a></li>
-        </ul>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        <li class="nav-item ms-2"><a class="btn btn-outline-primary btn-sm" href="https://github.com/kienon" target="_blank">GitHub</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero text-center text-lg-start">
+  <div class="container">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-7" data-aos="fade-up">
+        <h1 class="display-5 fw-bold text-primary">Ahmad Amsari — Web & Product Builder</h1>
+        <p class="lead mt-3">I build practical, lightweight web apps and sites — from static marketing pages to PWA & integrations (Google Sheets, WhatsApp, proxy services).</p>
+        <div class="mt-4">
+          <a href="#projects" class="btn btn-primary btn-lg me-2">View Projects</a>
+          <a href="https://github.com/kienon/kienon.github.io" class="btn btn-outline-primary btn-lg" target="_blank">Repo (this site)</a>
+        </div>
+      </div>
+      <div class="col-lg-5 text-center" data-aos="zoom-in">
+        <img src="https://raw.githubusercontent.com/kienon/kienon.github.io/main/assets/img/devphoto.png" class="img-fluid rounded shadow-sm" alt="Developer Photo">
       </div>
     </div>
-  </nav>
+  </div>
+</header>
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="container">
-      <div class="row align-items-center gy-4">
-        <div class="col-lg-7" data-aos="fade-up">
-          <h1 class="display-5 fw-bold">Ahmad Amsari — Web & Product Builder</h1>
-          <p class="lead mt-3">I build practical, lightweight web apps and sites — from static marketing pages to PWA & integrations (Google Sheets, WhatsApp, proxy services).</p>
-
-          <div class="mt-4">
-            <a href="#projects" class="btn btn-primary btn-lg me-2" style="background:var(--accent); border-color:var(--accent);">View Projects</a>
-            <a href="https://github.com/kienon/kienon.github.io" class="btn btn-outline-primary btn-lg" target="_blank" rel="noopener">Repo (this site)</a>
-          </div>
-
-          <div class="mt-4 d-flex gap-3 small text-muted">
-            <div><strong>Location</strong><div>Sabah, Malaysia</div></div>
-            <div><strong>Contact</strong><div>ahmad.amsari@example.com</div></div>
-          </div>
-        </div>
-
-        <div class="col-lg-5" data-aos="zoom-out">
-          <div class="card p-3 about-card shadow-sm">
-            <div class="mb-3">
-              <strong>Quick stats</strong>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mb-2">
-              <div>
-                <div class="h5 mb-0">5+</div>
-                <small class="text-muted">Web projects</small>
-              </div>
-              <div>
-                <div class="h5 mb-0">—</div>
-                <small class="text-muted">Active tools: Bootstrap, FastAPI, Apps Script</small>
-              </div>
-            </div>
-            <hr>
-            <p class="mb-2 small text-muted">If you want a fast, pragmatic site (no heavy frameworks) — I can deliver MVP quickly: catalog + order form + Google Sheets backend + WhatsApp integration.</p>
-            <a href="#contact" class="btn btn-sm btn-success">Work with me</a>
+<!-- PROJECTS -->
+<main class="py-5" id="projects">
+  <div class="container">
+    <h2 class="h3 mb-4 text-primary">Selected Projects</h2>
+    <div class="row g-4">
+      <!-- repeat cards (same as original structure) -->
+      <div class="col-md-6 col-lg-4" data-aos="fade-up">
+        <div class="project-card h-100">
+          <a href="https://syarikatwirajaya.github.io" target="_blank">
+            <img src="https://via.placeholder.com/800x450.png?text=Wirajaya+Site" class="project-thumb" alt="Wirajaya">
+          </a>
+          <div class="p-3">
+            <h5 class="mb-1">Syarikat Wirajaya</h5>
+            <p class="small text-muted">Supply & logistics landing + product pages.</p>
           </div>
         </div>
       </div>
-    </div>
-  </header>
 
-  <!-- PROJECTS -->
-  <main class="py-5">
-    <div class="container" id="projects">
-      <div class="d-flex align-items-end justify-content-between mb-4">
-        <div>
-          <h2 class="h3 mb-0" data-aos="fade-right">Selected Projects</h2>
-          <p class="small text-muted mb-0" data-aos="fade-right" data-aos-delay="60">Live sites, demos and integrations I've built & managed.</p>
-        </div>
-        <div class="d-flex gap-2 align-items-center">
-          <span class="tag">Bootstrap</span>
-          <span class="tag">PWA</span>
-          <span class="tag">Apps Script</span>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="60">
+        <div class="project-card h-100">
+          <a href="https://chrishaircutteam.github.io" target="_blank">
+            <img src="https://via.placeholder.com/800x450.png?text=Chris+Haircut" class="project-thumb" alt="Chris Haircut">
+          </a>
+          <div class="p-3">
+            <h5 class="mb-1">Chris Haircut Team</h5>
+            <p class="small text-muted">Salon gallery site with image filters.</p>
+          </div>
         </div>
       </div>
 
-      <div class="row g-4">
-        <!-- Project Cards -->
-        <div class="col-md-6 col-lg-4" data-aos="fade-up">
-          <div class="project-card h-100">
-            <a href="https://syarikatwirajaya.github.io" target="_blank" rel="noopener">
-              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=Wirajaya+Site" alt="Syarikat Wirajaya">
-            </a>
-            <div class="p-3">
-              <h5 class="mb-1">Syarikat Wirajaya</h5>
-              <p class="small text-muted mb-2">Supply & logistics landing + product pages.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <a class="btn btn-sm btn-outline-primary" href="https://syarikatwirajaya.github.io" target="_blank" rel="noopener">Live</a>
-                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/kienon/syarikatwirajaya.github.io" target="_blank" rel="noopener">Repo</a>
-                </div>
-                <small class="text-muted">Bootstrap</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="60">
-          <div class="project-card h-100">
-            <a href="https://chrishaircutteam.github.io" target="_blank" rel="noopener">
-              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=Chris+Haircut" alt="Chris Haircut Team">
-            </a>
-            <div class="p-3">
-              <h5 class="mb-1">Chris Haircut Team</h5>
-              <p class="small text-muted mb-2">Salon / gallery site with image filters & gallery features.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <a class="btn btn-sm btn-outline-primary" href="https://chrishaircutteam.github.io" target="_blank" rel="noopener">Live</a>
-                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/kienon/chrishaircutteam.github.io" target="_blank" rel="noopener">Repo</a>
-                </div>
-                <small class="text-muted">Isotope, GLightbox</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="120">
-          <div class="project-card h-100">
-            <a href="https://fedborong.github.io" target="_blank" rel="noopener">
-              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=FedBorong" alt="FedBorong">
-            </a>
-            <div class="p-3">
-              <h5 class="mb-1">FedBorong (Federation)</h5>
-              <p class="small text-muted mb-2">Corporate site — galleries, programs, resources for coop federation.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <a class="btn btn-sm btn-outline-primary" href="https://fedborong.github.io" target="_blank" rel="noopener">Live</a>
-                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/fedborong/fedborong.github.io" target="_blank" rel="noopener">Repo</a>
-                </div>
-                <small class="text-muted">Isotope, Glightbox</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4" data-aos="fade-up">
-          <div class="project-card h-100">
-            <a href="https://kienon.github.io/brenespastudio/" target="_blank" rel="noopener">
-              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=Brene+Spa+Studio" alt="Brene Spa Studio">
-            </a>
-            <div class="p-3">
-              <h5 class="mb-1">Brene Spa Studio</h5>
-              <p class="small text-muted mb-2">Small business landing + booking links (lightweight).</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <a class="btn btn-sm btn-outline-primary" href="https://kienon.github.io/brenespastudio/" target="_blank" rel="noopener">Live</a>
-                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/kienon/brenespastudio" target="_blank" rel="noopener">Repo</a>
-                </div>
-                <small class="text-muted">Bootstrap</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="60">
-          <div class="project-card h-100">
-            <a href="https://kienon.github.io/krafttangan" target="_blank" rel="noopener">
-              <img class="project-thumb" src="https://via.placeholder.com/800x450.png?text=Kraft+Tangan" alt="Kraft Tangan">
-            </a>
-            <div class="p-3">
-              <h5 class="mb-1">Kedai Kraft Tangan</h5>
-              <p class="small text-muted mb-2">Catalog + contact + WhatsApp quick-order integration.</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div>
-                  <a class="btn btn-sm btn-outline-primary" href="https://kienon.github.io/krafttangan" target="_blank" rel="noopener">Live</a>
-                  <a class="btn btn-sm btn-outline-secondary ms-2" href="https://github.com/kienon/krafttangan" target="_blank" rel="noopener">Repo</a>
-                </div>
-                <small class="text-muted">Frontend MVP</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="120">
-          <div class="project-card h-100 d-flex flex-column justify-content-between p-3">
-            <div>
-              <div class="h5">Coming Soon</div>
-              <p class="small text-muted">AI crypto prediction dashboard (MVP), realtime charts & account system (planned).</p>
-            </div>
-            <div class="mt-3 text-end">
-              <span class="tag">Planning</span>
-            </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="120">
+        <div class="project-card h-100">
+          <a href="https://fedborong.github.io" target="_blank">
+            <img src="https://via.placeholder.com/800x450.png?text=FedBorong" class="project-thumb" alt="FedBorong">
+          </a>
+          <div class="p-3">
+            <h5 class="mb-1">FedBorong</h5>
+            <p class="small text-muted">Corporate site for cooperative federation.</p>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</main>
 
-    <!-- About -->
-    <section id="about" class="py-5">
-      <div class="container">
-        <div class="row gy-4 align-items-center">
-          <div class="col-lg-7" data-aos="fade-right">
-            <h3>About — Ahmad (Kienon)</h3>
-            <p class="text-muted">I focus on pragmatic web solutions for SMEs and cooperatives: fast, maintainable, and cheap to run. I like using serverless pieces (GitHub Pages, Apps Script) and tiny proxies when needed.</p>
+<!-- ABOUT -->
+<section id="about" class="py-5 bg-light">
+  <div class="container" data-aos="fade-right">
+    <h3>About — Ahmad (Kienon)</h3>
+    <p class="text-muted">I focus on pragmatic web solutions for SMEs and cooperatives: fast, maintainable, and cheap to run.</p>
+  </div>
+</section>
 
-            <ul class="list-unstyled small text-muted">
-              <li><strong>Stack:</strong> Bootstrap, FastAPI, Node (small proxies), Google Apps Script, SQLite / Postgres for heavier projects.</li>
-              <li><strong>Services:</strong> Site builds, order-systems (WhatsApp + Google Sheets), simple dashboards, PWA setup.</li>
-            </ul>
-            <a href="#contact" class="btn btn-outline-primary">Hire / Talk</a>
-          </div>
+<!-- CONTACT -->
+<section id="contact" class="py-5">
+  <div class="container" data-aos="fade-up">
+    <h4>Contact</h4>
+    <p class="small text-muted">Email, WhatsApp or open an issue on the repo.</p>
+    <p><a href="mailto:ahmad.amsari@example.com">ahmad.amsari@example.com</a></p>
+    <p><a href="https://wa.me/60128169367" target="_blank">WhatsApp: +60 12-816 9367</a></p>
+  </div>
+</section>
 
-          <div class="col-lg-5" data-aos="fade-left">
-            <div class="about-card">
-              <img src="https://via.placeholder.com/800x600.png?text=Developer+Photo" class="img-fluid rounded mb-3" alt="Developer">
-              <p class="small text-muted mb-0">Available for freelance & short projects. Prefer quick MVPs with clear scope.</p>
-            </div>
-          </div>
-        </div>
+<!-- FOOTER -->
+<footer>
+  <div class="container text-center text-md-start">
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <h5>Kienon</h5>
+        <p>Bina Website Profesional & Tingkatkan SEO Anda.</p>
       </div>
-    </section>
-
-  </main>
-
-  <footer class="text-center">
-    <div class="container">
-      <p class="mb-1">© <span id="year"></span> Ahmad Amsari — Kienon. </p>
-      <p class="small text-muted mb-0">Portfolio source: <a href="https://github.com/kienon/kienon.github.io" target="_blank" rel="noopener">github.com/kienon/kienon.github.io</a></p>
+      <div class="col-md-2 footer-links">
+        <h6>Perkhidmatan</h6>
+        <a href="#">Pembangunan Web</a>
+        <a href="#">Integrasi WhatsApp</a>
+        <a href="#">Google Sheets Backend</a>
+      </div>
+      <div class="col-md-2 footer-links">
+        <h6>Maklumat</h6>
+        <a href="#about">Tentang</a>
+        <a href="#contact">Hubungi Kami</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div class="col-md-4 text-md-end mt-3 mt-md-0">
+        <p class="small mb-1">© <span id="year"></span> Ahmad Amsari — Kienon</p>
+        <p class="small mb-0"><a href="https://github.com/kienon/kienon.github.io" target="_blank">Repo source</a></p>
+      </div>
     </div>
-  </footer>
+  </div>
+</footer>
 
-  <!-- scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+AOS.init({ duration: 650, once: true });
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 
-  <script>
-    AOS.init({ duration: 650, once: true });
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    (function(){
-      const form = document.getElementById('contactForm');
-      const status = document.getElementById('contactStatus');
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        if (!form.checkValidity()) { form.classList.add('was-validated'); return; }
-        status.textContent = 'Sending...';
-        setTimeout(()=> {
-          status.textContent = 'Sent — I will reply soon.';
-          form.reset();
-          form.classList.remove('was-validated');
-        }, 800);
-      });
-    })();
-
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', function(e){
-        const target = document.querySelector(this.getAttribute('href'));
-        if(!target) return;
-        e.preventDefault();
-        target.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-    });
-  </script>
 </body>
 </html>

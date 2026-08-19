@@ -133,7 +133,11 @@
       line-height: 1.6;
       margin: 20px 0 15px 0;
       color: #e6fffa;
-      text-align: justify;
+      text-align: left;
+    }
+
+    .love-message p {
+      margin-bottom: 10px;
     }
 
     .highlight {
@@ -164,13 +168,14 @@
 
     .bday-mode {
       color: #ff4d6d !important;
-      font-size: 1.2rem !important;
+      font-size: 1.05rem !important;
+      line-height: 1.5;
       animation: pulse 1s infinite alternate;
     }
 
     @keyframes pulse {
       0% { transform: scale(1); }
-      100% { transform: scale(1.05); }
+      100% { transform: scale(1.03); }
     }
 
     .heart-particle {
@@ -211,12 +216,13 @@
       <div class="polaroid-caption">Kenangan Kita Berdua 📸</div>
     </div>
 
-    <!-- Ayat Gaya Berchat/Jujur -->
+    <!-- Mesej Utama (Fokus Luahan / Kenangan) -->
     <div class="love-message">
-      Jujur cakap, saya bukan pandai sangat susun ayat manis. Tapi setiap kali tengok gambar-gambar kita jalan/dating berdua, saya rasa bersyukur betul dapat kenal dan ada tunang macam <span class="highlight">My Baby Aina</span>. Thanks tau selalu buat hari-hari saya makin bermakna. I love you so much, baby! 💖
+      <p>baby, b nda pandai sangat susun ayat manis. Tapi setiap kali tengok gambar-gambar kita kann yang p dating, b rasa bersyukur betul dapat kenal dan ada tunang macam <span class="highlight">Baby</span>.</p>
+      <p>Thanks ya selalu buat hari-hari b semakin bermakna. I love you so much, baby! 💖</p>
     </div>
 
-    <!-- Countdown Timer & Auto Birthday Change -->
+    <!-- Countdown Timer & Ucapan Hari Jadi Automatik -->
     <div class="timer-container">
       <div id="timerTitle" class="timer-title">Tunggu Tarikh Lahir Baby... 🎂</div>
       <div id="countdown" class="timer">Membaca masa...</div>
@@ -259,21 +265,20 @@
     function updateCountdown() {
       var now = new Date();
       var currentYear = now.getFullYear();
-      var birthday = new Date(currentYear, 8, 26, 0, 0, 0); // 26 Sept 00:00:00
+      var birthday = new Date(currentYear, 8, 26, 0, 0, 0); // 26 Sept
 
       var diff = birthday - now;
 
       var countElem = document.getElementById("countdown");
       var titleElem = document.getElementById("timerTitle");
 
-      // Jika sekarang ialah HARI BIRTHDAY DIA (26 Sept)
+      // Bila tepat 26 September
       if (now.getMonth() === 8 && now.getDate() === 26) {
-        titleElem.innerHTML = "HARI NI HARI JADI BABY! 🎉";
-        countElem.innerHTML = "HAPPY BIRTHDAY MY BABY AINA! 🥳🎂❤️";
+        titleElem.innerHTML = "HARI NI HARI ISTIMEWA BABY! 🥳✨";
+        countElem.innerHTML = "Selamat Ulang Tahun Lahir Tunang B! Terima kasih sebab hadir ke hidup b. Semoga panjang umur, murah rezeki, makin cantik... muahhh🥰😘💖🌸";
         countElem.classList.add("bday-mode");
       } 
       else {
-        // Jika tarikh tahun ni dah lepas, kira untuk tahun depan
         if (diff < 0) {
           birthday = new Date(currentYear + 1, 8, 26, 0, 0, 0);
           diff = birthday - now;

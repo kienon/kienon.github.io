@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>For My Baby Aina ❤️</title>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -12,28 +11,270 @@
       padding: 0;
     }
 
-    html, body {
-      width: 100%;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
     body {
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at center, #134e4a, #042f2e, #021a19);
-      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at center, #008080, #042f2e, #021a19);
+      font-family: Arial, Helvetica, sans-serif;
       color: #fff;
       position: relative;
       padding: 20px 10px;
+      overflow-x: hidden;
     }
 
-    /* Partikel Hati Gugur */
+    /* Skrin Intro Pembuka - Inline Click Safe */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #021a19;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      cursor: pointer;
+    }
+
+    .pulse-heart {
+      font-size: 70px;
+      color: #ff4d6d;
+      margin-bottom: 20px;
+    }
+
+    .btn-open {
+      padding: 14px 28px;
+      background: #2dd4bf;
+      color: #042f2e;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      font-size: 1.05rem;
+      box-shadow: 0 0 20px rgba(45, 212, 191, 0.6);
+    }
+
+    /* Kad Utama (Sembunyi secara asal) */
+    .card {
+      display: none;
+      background: rgba(20, 184, 166, 0.15);
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      border-radius: 20px;
+      padding: 25px 20px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      z-index: 10;
+    }
+
+    h1 {
+      color: #2dd4bf;
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: #99f6e4;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    /* Frame Polaroid */
+    .polaroid-frame {
+      background: #ffffff;
+      padding: 10px 10px 32px 10px;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+      transform: rotate(-1.5deg);
+      position: relative;
+      margin: 0 auto;
+      max-width: 320px;
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+    }
+
+    .polaroid-caption {
+      position: absolute;
+      bottom: 6px;
+      left: 0;
+      width: 100%;
+      color: #333;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    /* Mesej Cinta */
+    .love-message {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 20px 0 15px 0;
+      color: #e6fffa;
+    }
+
+    .highlight {
+      color: #ff4d6d;
+      font-weight: bold;
+    }
+
+    /* Countdown Box */
+    .timer-container {
+      background: rgba(45, 212, 191, 0.15);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      border-radius: 16px;
+      padding: 12px;
+      margin-top: 15px;
+    }
+
+    .timer-title {
+      font-size: 0.75rem;
+      color: #99f6e4;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .timer {
+      font-weight: bold;
+      font-size: 1.05rem;
+      color: #5eead4;
+    }
+
+    /* Partikel Hati */
     .heart-particle {
       position: fixed;
       top: -20px;
       user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-5vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skrin Overlay: Direct Inline Onclick (100% Boleh Tekan) -->
+  <div id="overlay" onclick="bukaSurprise()">
+    <div class="pulse-heart">💖</div>
+    <button class="btn-open">Touch Here, My Baby Aina ✨</button>
+  </div>
+
+  <!-- Kad Utama -->
+  <div class="card" id="mainCard">
+    <h1>Para El Amor De Mi Vida</h1>
+    <div class="subtitle">Special For My Baby Aina</div>
+
+    <div class="polaroid-frame">
+      <div class="slideshow-container">
+        <img class="slide active" src="gambar1.jpg" alt="Sweet Moment 1">
+        <img class="slide" src="gambar2.jpg" alt="Dating Moment">
+        <img class="slide" src="gambar3.jpg" alt="My Baby Aina">
+        <img class="slide" src="gambar4.jpg" alt="Memories">
+      </div>
+      <div class="polaroid-caption">Our Special Moments ❤️</div>
+    </div>
+
+    <div class="love-message">
+      Setiap detik dengan <span class="highlight">My Baby Aina</span> sentiasa buat jantung saya degup berterusan. Terima kasih sebab hadir dan mewarnai hidup saya!
+    </div>
+
+    <div class="timer-container">
+      <div class="timer-title">Countdown To Birthday 🎂</div>
+      <div id="countdown" class="timer">Membaca masa...</div>
+    </div>
+  </div>
+
+  <script>
+    // Fungsi Direct Buka
+    function bukaSurprise() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('mainCard').style.display = 'block';
+    }
+
+    // Slideshow Gambar
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    if (slides.length > 0) {
+      setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }, 3500);
+    }
+
+    // Partikel Hati
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-particle');
+      const heartsList = ['💖', '❤️', '✨', '💕'];
+      heart.innerHTML = heartsList[Math.floor(Math.random() * heartsList.length)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+      heart.style.fontSize = Math.random() * 18 + 12 + 'px';
+      document.body.appendChild(heart);
+
+      setTimeout(() => { heart.remove(); }, 6000);
+    }
+    setInterval(createHeart, 300);
+
+    // Countdown Timer (26 Sept)
+    function updateCountdown() {
+      const now = new Date();
+      let currentYear = now.getFullYear();
+      let birthday = new Date(currentYear, 8, 26);
+
+      if (now > birthday) {
+        birthday = new Date(currentYear + 1, 8, 26);
+      }
+
+      const diff = birthday - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const countElem = document.getElementById("countdown");
+      if (countElem) {
+        countElem.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
       pointer-events: none;
       z-index: 1;
       animation: fall linear infinite;

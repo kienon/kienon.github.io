@@ -3,37 +3,342 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday My Baby Aina</title>
+  <title>For My Baby Aina ❤️</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
-    /* Gradient Background: Teal Blue Mix Light Green */
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      padding: 20px 0;
+      padding: 0;
+    }
+
+    body {
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #008080, #a8e6cf);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #2c3e50;
+      background: radial-gradient(circle at center, #134e4a, #042f2e, #021a19);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Efek Hati Gugur (Floating Hearts) */
+    /* Partikel Hati Gugur */
     .heart-particle {
-      position: absolute;
-      top: -10px;
-      color: rgba(255, 77, 109, 0.6);
-      font-size: 20px;
+      position: fixed;
+      top: -20px;
       user-select: none;
       pointer-events: none;
+      z-index: 1;
       animation: fall linear infinite;
+      filter: drop-shadow(0 0 6px rgba(255, 77, 109, 0.8));
     }
 
     @keyframes fall {
-      to {
-        transform: translateY(105vh) rotate(360deg);
+      0% { transform: translateY(-5vh) rotate(0deg) scale(0.8); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
+    }
+
+    /* Screen Intro Overlay (Masa Mula Buka) */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #021a19;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      transition: opacity 1.2s ease, visibility 1.2s;
+    }
+
+    .pulse-heart {
+      font-size: 80px;
+      color: #ff4d6d;
+      animation: heartBeat 1s infinite alternate;
+      cursor: pointer;
+      filter: drop-shadow(0 0 20px #ff4d6d);
+    }
+
+    @keyframes heartBeat {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.25); }
+    }
+
+    .btn-open {
+      margin-top: 25px;
+      padding: 14px 28px;
+      background: linear-gradient(45deg, #2dd4bf, #14b8a6);
+      color: #042f2e;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(45, 212, 191, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    .btn-open:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(45, 212, 191, 0.9);
+    }
+
+    /* Glassmorphism Card Container */
+    .card {
+      background: rgba(20, 184, 166, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      border-radius: 24px;
+      padding: 30px 25px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(20, 184, 166, 0.2);
+      z-index: 10;
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+      transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    }
+
+    .card.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, #a7f3d0, #2dd4bf, #f43f5e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: #99f6e4;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    /* Polaroid Photo Frame Effect */
+    .polaroid-frame {
+      background: #ffffff;
+      padding: 12px 12px 35px 12px;
+      border-radius: 12px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+      transform: rotate(-2deg);
+      transition: transform 0.5s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .polaroid-frame:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .slideshow-container {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.15);
+      transition: opacity 1.5s ease, transform 4s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .polaroid-caption {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 100%;
+      color: #333;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    /* Mesej Cinta */
+    .love-message {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin: 22px 0 15px 0;
+      color: #e6fffa;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .highlight {
+      color: #f43f5e;
+      font-weight: 600;
+    }
+
+    /* Countdown Timer Style */
+    .timer-container {
+      background: rgba(45, 212, 191, 0.12);
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      border-radius: 16px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    .timer-title {
+      font-size: 0.8rem;
+      color: #99f6e4;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .timer {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #5eead4;
+      text-shadow: 0 0 10px rgba(94, 234, 212, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Lagu Latar (Gantikan lagu.mp3 dengan fail lagu korang) -->
+  <audio id="bg-music" loop>
+    <source src="lagu.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Skrin Pembuka (Overlay) -->
+  <div id="overlay">
+    <div class="pulse-heart" onclick="openSurprise()">💖</div>
+    <button class="btn-open" onclick="openSurprise()">Touch Here, My Baby Aina ✨</button>
+  </div>
+
+  <!-- Kad Pentas Utama -->
+  <div class="card" id="mainCard">
+    <h1>Para El Amor De Mi Vida</h1>
+    <div class="subtitle">Special For My Baby Aina</div>
+
+    <!-- Polaroid Photo Frame -->
+    <div class="polaroid-frame">
+      <div class="slideshow-container">
+        <!-- Tukar nama fail gambar di bawah -->
+        <img class="slide active" src="gambar1.jpg" alt="Sweet Moment 1">
+        <img class="slide" src="gambar2.jpg" alt="Dating Moment">
+        <img class="slide" src="gambar3.jpg" alt="My Baby Aina">
+        <img class="slide" src="gambar4.jpg" alt="Memories">
+      </div>
+      <div class="polaroid-caption">Our Special Moments ❤️</div>
+    </div>
+
+    <!-- Ayat Romantic -->
+    <div class="love-message">
+      Setiap detik dengan <span class="highlight">My Baby Aina</span> sentiasa buat jantung saya degup berterusan. Terima kasih sebab hadir dan mewarnai hidup saya. Tak sabar nak lalu setiap detik indah depan hari bersama awak!
+    </div>
+
+    <!-- Countdown Timer (26 Sept 2000) -->
+    <div class="timer-container">
+      <div class="timer-title">Countdown To Birthday 🎂</div>
+      <div id="countdown" class="timer">Membaca masa...</div>
+    </div>
+  </div>
+
+  <script>
+    // 1. Mula Tayangan bila Butang Ditekan
+    function openSurprise() {
+      const overlay = document.getElementById('overlay');
+      const card = document.getElementById('mainCard');
+      const music = document.getElementById('bg-music');
+
+      overlay.style.opacity = '0';
+      setTimeout(() => {
+        overlay.style.visibility = 'hidden';
+        card.classList.add('show');
+      }, 800);
+
+      // Play Lagu (Jika ada fail lagu.mp3)
+      music.play().catch(() => {
+        console.log("Audio auto-play disekat browser, sila tekan play manual.");
+      });
+    }
+
+    // 2. Control Slideshow Gambar
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function nextSlide() {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+
+    setInterval(nextSlide, 3500);
+
+    // 3. Efek Partikel Hati Gugur 3D
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart-particle');
+      const heartsList = ['💖', '❤️', '✨', '💕', '🌸'];
+      heart.innerHTML = heartsList[Math.floor(Math.random() * heartsList.length)];
+      
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+      heart.style.fontSize = Math.random() * 18 + 12 + 'px';
+      
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }
+
+    setInterval(createHeart, 250);
+
+    // 4. Countdown Timer ke 26 September
+    function updateCountdown() {
+      const now = new Date();
+      let currentYear = now.getFullYear();
+      let birthday = new Date(currentYear, 8, 26); // 8 = September
+
+      if (now > birthday) {
+        birthday = new Date(currentYear + 1, 8, 26);
+      }
+
+      const diff = birthday - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML = 
+        `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
       }
     }
 

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday My Baby Aina</title>
+  <style>
+    /* Gradient Background: Teal Blue Mix Light Green */
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #008080, #a8e6cf);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #2c3e50;
+    }
+
+    /* Container Kad Utama */
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      max-width: 450px;
+      width: 90%;
+      position: relative;
+    }
+
+    h1 {
+      color: #006666;
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      color: #e74c3c;
+      font-size: 1.3rem;
+      margin-top: 0;
+    }
+
+    /* SVG Animasi Pokok Hati */
+    .tree-container {
+      margin: 20px 0;
+    }
+
+    .heart-leaf {
+      fill: #ff4d6d;
+      animation: pulse 1.5s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
+    /* Mesej Cinta */
+    .love-message {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 20px 0;
+      color: #34495e;
+      text-align: justify;
+    }
+
+    .love-message span {
+      display: block;
+      text-align: center;
+      font-weight: bold;
+      color: #d63031;
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
+
+    /* Countdown Timer Box */
+    .timer-container {
+      background: #e0f2f1;
+      border: 1px solid #80cbc4;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 15px;
+    }
+
+    .timer-title {
+      font-size: 0.85rem;
+      color: #004d40;
+      margin-bottom: 5px;
+    }
+
+    .timer {
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #00796b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Para El Amor De Mi Vida ❤️</h1>
+    <h2>Untuk My Baby Aina</h2>
+
+    <div class="tree-container">
+      <svg width="180" height="180" viewBox="0 0 200 200">
+        <path d="M95 190 Q95 130 100 110 T105 70" stroke="#5d4037" stroke-width="8" fill="none" stroke-linecap="round" />
+        <path d="M100 130 Q80 110 70 95" stroke="#5d4037" stroke-width="5" fill="none" stroke-linecap="round" />
+        <path d="M100 120 Q120 100 130 85" stroke="#5d4037" stroke-width="5" fill="none" stroke-linecap="round" />
+        
+        <g class="heart-leaf">
+          <path d="M100 40 C100 20, 70 20, 70 45 C70 65, 100 85, 100 85 C100 85, 130 65, 130 45 C130 20, 100 20, 100 40 Z" fill="#ff4d6d"/>
+          <path d="M75 60 C75 45, 50 45, 50 65 C50 80, 75 95, 75 95 C75 95, 100 80, 100 65 C100 45, 75 45, 75 60 Z" fill="#ff758f"/>
+          <path d="M125 60 C125 45, 100 45, 100 65 C100 80, 125 95, 125 95 C125 95, 150 80, 150 65 C150 45, 125 45, 125 60 Z" fill="#ffb3c1"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="love-message">
+      Masa berlalu begitu pantas, tapi setiap saat bersama <b>My Baby Aina</b> terasa amat bermakna. Terima kasih sebab wujud dalam hidup saya, penyeri hari-hari saya, dan bakal pelengkap masa depan saya. Tak sabar nak raikan setiap detik bahagia bersama!
+      <span>¡Te amo sangat-sangat! 💖</span>
+    </div>
+
+    <div class="timer-container">
+      <div class="timer-title">Menghitung hari ke ulang tahun kelahiran... 🎂</div>
+      <div id="countdown" class="timer">Membaca masa...</div>
+    </div>
+  </div>
+
+  <script>
+    // Tarikh lahir Aina: 26 September
+    function updateCountdown() {
+      const now = new Date();
+      let currentYear = now.getFullYear();
+      
+      // Tetapkan tarikh sasaran 26 Sept tahun semasa
+      let birthday = new Date(currentYear, 8, 26); // Bulan di JS bermula dari 0 (8 = Sept)
+
+      // Jika tarikh lahir tahun ini dah lepas, kira untuk tahun depan
+      if (now > birthday) {
+        birthday = new Date(currentYear + 1, 8, 26);
+      }
+
+      const diff = birthday - now;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML = 
+        `${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat`;
+    }
+
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>

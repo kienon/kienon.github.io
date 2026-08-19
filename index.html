@@ -1,73 +1,231 @@
 <!DOCTYPE html>
-<html lang="ms" class="no-js">
+<html lang="ms">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-	<title>Kienon | Professional Website Design & Digital Services</title>
-	<meta name="robots" content="index, follow">
-	<meta name="description" content="Perkhidmatan reka bentuk laman web profesional, SEO, kad ucapan digital Wishes, dan pembangunan web interaktif oleh Kienon.">
-	<link rel="canonical" href="https://kienon.github.io/">
-	
-	<!-- Google Fonts -->
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-	
-	<link rel="icon" href="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle--150x150.png" sizes="32x32">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+    <title>Kienon | Professional Website Design & Digital Services</title>
+    <meta name="robots" content="index, follow">
+    <meta name="description" content="Perkhidmatan reka bentuk laman web profesional, SEO, kad ucapan digital Wishes, dan pembangunan web interaktif oleh Kienon.">
+    <link rel="canonical" href="https://kienon.github.io/">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle--150x150.png" sizes="32x32">
 
-	<style>
-		body { background: #09030c; color: #f7eddc; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
-		
-		/* Header Navbar */
-		.site-header { background: rgba(9, 3, 12, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212, 175, 55, 0.2); position: sticky; top: 0; z-index: 1000; }
-		.nav-container { max-width: 1200px; margin: 0 auto; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-		.nav-menu { display: flex; list-style: none; gap: 25px; align-items: center; margin: 0; padding: 0; }
-		.nav-menu li a { color: #f7eddc; text-decoration: none; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s; }
-		.nav-menu li a:hover { color: #d4af37; }
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --slate-dark: #0f172a;
+            --slate-card: #ffffff;
+            --bg-body: #f8fafc;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+        }
 
-		/* Hero Section */
-		.hero-section { text-align: center; padding: 80px 20px 60px 20px; background: radial-gradient(circle at center, #220710 0%, #09030c 70%); position: relative; border-bottom: 1px solid rgba(212, 175, 55, 0.1); }
-		.hero-title { font-size: clamp(32px, 5vw, 52px); font-weight: 700; color: #fff; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
-		.hero-title span { background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-		.hero-desc { font-size: 15px; color: #cbd5e0; max-width: 650px; margin: 0 auto 30px auto; line-height: 1.6; font-weight: 300; }
+        body { 
+            background: var(--bg-body); 
+            color: var(--text-main); 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            overflow-x: hidden; 
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Header Navbar */
+        .site-header { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 1px solid var(--border-color); 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+        }
+        .nav-container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 16px 24px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        .nav-menu { 
+            display: flex; 
+            list-style: none; 
+            gap: 24px; 
+            align-items: center; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .nav-menu li a { 
+            color: var(--slate-dark); 
+            text-decoration: none; 
+            font-size: 14px; 
+            font-weight: 600; 
+            transition: color 0.2s; 
+        }
+        .nav-menu li a:hover { 
+            color: var(--primary); 
+        }
 
-		/* Container */
-		.main-container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        /* Hero Section */
+        .hero-section { 
+            text-align: center; 
+            padding: 90px 20px 70px 20px; 
+            background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .hero-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+        .hero-title { 
+            font-size: clamp(32px, 5vw, 54px); 
+            font-weight: 700; 
+            color: var(--slate-dark); 
+            margin-bottom: 20px; 
+            line-height: 1.2; 
+        }
+        .hero-title span { 
+            color: var(--primary); 
+        }
+        .hero-desc { 
+            font-size: 16px; 
+            color: var(--text-muted); 
+            max-width: 680px; 
+            margin: 0 auto 30px auto; 
+            line-height: 1.7; 
+        }
 
-		/* Section Headings */
-		.section-heading { text-align: center; font-size: 24px; color: #fcf6ba; text-transform: uppercase; margin: 60px 0 10px 0; font-weight: 600; letter-spacing: 1.5px; }
-		.section-sub { text-align: center; color: #94a3b8; font-size: 13px; margin-bottom: 40px; font-weight: 300; }
+        /* Container */
+        .main-container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 60px 24px; 
+        }
 
-		/* Portfolio Grid */
-		.portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-bottom: 40px; }
-		.portfolio-card { background: rgba(22, 5, 10, 0.7); border: 1px solid rgba(212, 175, 55, 0.2); padding: 25px; border-radius: 20px; backdrop-blur: blur(12px); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-		.portfolio-card:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.15); }
-		
-		.card-badge { display: inline-block; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; padding: 4px 12px; border-radius: 20px; font-weight: 600; margin-bottom: 12px; }
-		.badge-wishes { background: rgba(212, 175, 55, 0.15); color: #fcf6ba; border: 1px solid rgba(212, 175, 55, 0.3); }
-		.badge-web { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); }
+        /* Section Headings */
+        .section-heading { 
+            text-align: center; 
+            font-size: 26px; 
+            color: var(--slate-dark); 
+            text-transform: uppercase; 
+            margin: 0 0 10px 0; 
+            font-weight: 700; 
+            letter-spacing: 0.5px; 
+        }
+        .section-sub { 
+            text-align: center; 
+            color: var(--text-muted); 
+            font-size: 15px; 
+            margin-bottom: 40px; 
+        }
 
-		.portfolio-card h3 { font-size: 20px; color: #fff; margin-bottom: 8px; font-weight: 600; }
-		.portfolio-card p { font-size: 13px; color: #cbd5e0; margin-bottom: 25px; line-height: 1.6; font-weight: 300; }
-		
-		.portfolio-btn { display: block; background: linear-gradient(to right, #bf953f, #aa7c11); color: #000; padding: 12px 20px; text-align: center; text-decoration: none; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border-radius: 30px; transition: all 0.2s; box-shadow: 0 4px 15px rgba(191, 149, 63, 0.3); }
-		.portfolio-btn:hover { filter: brightness(1.1); transform: scale(1.02); }
+        /* Portfolio Grid */
+        .portfolio-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); 
+            gap: 24px; 
+            margin-bottom: 60px; 
+        }
+        .portfolio-card { 
+            background: var(--slate-card); 
+            border: 1px solid var(--border-color); 
+            padding: 30px; 
+            border-radius: 16px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            transition: all 0.25s ease; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+        }
+        .portfolio-card:hover { 
+            transform: translateY(-4px); 
+            border-color: #cbd5e1; 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02); 
+        }
+        
+        .card-badge { 
+            display: inline-block; 
+            font-size: 11px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            padding: 4px 10px; 
+            border-radius: 6px; 
+            font-weight: 600; 
+            margin-bottom: 16px; 
+        }
+        .badge-wishes { background: #fdf4ff; color: #c084fc; border: 1px solid #f3e8ff; }
+        .badge-web { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; }
 
-		.portfolio-btn-outline { background: transparent; color: #f7eddc; border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: none; }
-		.portfolio-btn-outline:hover { background: rgba(212, 175, 55, 0.1); color: #fff; }
+        .portfolio-card h3 { 
+            font-size: 20px; 
+            color: var(--slate-dark); 
+            margin-bottom: 10px; 
+            font-weight: 600; 
+        }
+        .portfolio-card p { 
+            font-size: 14px; 
+            color: var(--text-muted); 
+            margin-bottom: 24px; 
+            line-height: 1.6; 
+        }
+        
+        .portfolio-btn { 
+            display: block; 
+            background: var(--primary); 
+            color: #fff; 
+            padding: 12px 20px; 
+            text-align: center; 
+            text-decoration: none; 
+            font-size: 13px; 
+            font-weight: 600; 
+            border-radius: 8px; 
+            transition: background 0.2s; 
+        }
+        .portfolio-btn:hover { 
+            background: var(--primary-dark); 
+        }
 
-		/* Footer */
-		.site-footer { background: #050208; color: #737373; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center; font-size: 12px; }
-		
-		/* Mobile Nav */
-		.mobile-menu-btn { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
-		@media(max-width: 768px) {
-			.desktop-menu { display: none; }
-			.mobile-menu-btn { display: block; }
-		}
-		.mobile-drawer { display: none; background: #09030c; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; padding: 30px; box-sizing: border-box; }
-		.mobile-drawer ul { list-style: none; padding: 0; margin-top: 60px; text-align: center; }
-		.mobile-drawer ul li { margin-bottom: 25px; }
-		.mobile-drawer ul li a { color: #f7eddc; font-size: 16px; text-decoration: none; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-	</style>
+        .portfolio-btn-outline { 
+            background: #f1f5f9; 
+            color: var(--slate-dark); 
+        }
+        .portfolio-btn-outline:hover { 
+            background: #e2e8f0; 
+        }
+
+        /* Footer */
+        .site-footer { 
+            background: var(--slate-dark); 
+            color: #94a3b8; 
+            padding: 50px 24px; 
+            text-align: center; 
+            font-size: 14px; 
+            border-top: 1px solid #1e293b;
+        }
+        .site-footer p { margin: 0; }
+        
+        /* Mobile Nav */
+        .mobile-menu-btn { display: none; background: none; border: none; color: var(--slate-dark); font-size: 24px; cursor: pointer; }
+        @media(max-width: 768px) {
+            .desktop-menu { display: none; }
+            .mobile-menu-btn { display: block; }
+        }
+        .mobile-drawer { display: none; background: #fff; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2000; padding: 30px; box-sizing: border-box; }
+        .mobile-drawer ul { list-style: none; padding: 0; margin-top: 60px; text-align: center; }
+        .mobile-drawer ul li { margin-bottom: 24px; }
+        .mobile-drawer ul li a { color: var(--slate-dark); font-size: 18px; text-decoration: none; font-weight: 600; }
+    </style>
 </head>
 <body>
 
@@ -75,7 +233,7 @@
 	<header class="site-header">
 		<div class="nav-container">
 			<a href="https://kienon.github.io/">
-				<img width="45" height="45" src="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle-.png" alt="Kienon" style="border-radius: 50%;">
+				<img width="42" height="42" src="https://kienon.github.io/wp-content/uploads/2025/02/cropped-kienon-circle-.png" alt="Kienon" style="border-radius: 50%;">
 			</a>
 			
 			<nav class="desktop-menu">
@@ -95,7 +253,7 @@
 	<!-- Mobile Drawer Menu -->
 	<div id="mobile-drawer" class="mobile-drawer">
 		<div style="text-align: right;">
-			<button onclick="toggleMenu()" style="background:none; border:none; color:#fff; font-size:32px; cursor:pointer;">&times;</button>
+			<button onclick="toggleMenu()" style="background:none; border:none; color:var(--slate-dark); font-size:32px; cursor:pointer;">&times;</button>
 		</div>
 		<ul>
 			<li><a href="https://kienon.github.io/" onclick="toggleMenu()">Utama</a></li>
@@ -107,44 +265,42 @@
 	</div>
 
 	<!-- MAIN CONTENT -->
-	<div class="main-container">
+	<div class="main-container" style="padding-top: 0;">
 		
 		<!-- Hero Section -->
-		<section class="hero-section" style="border-radius: 24px; margin-bottom: 50px; border: 1px solid rgba(212, 175, 55, 0.2);">
-			<div style="position: relative; z-index: 2;">
-				<span class="card-badge badge-wishes" style="margin-bottom: 15px;">✦ Professional Digital Studio ✦</span>
-				<h1 class="hero-title">Bina Website & <span>Digital Experience</span> Bertaraf Premium</h1>
-				<p class="hero-desc">Pusat sehenti pembangunan web profesional, sistem e-dagang, kad ucapan digital interaktif (Wishes Studio), serta tempahan produk dan cenderahati eksklusif.</p>
-			</div>
+		<section class="hero-section">
+			<span class="hero-badge">✦ Professional Development Agency</span>
+			<h1 class="hero-title">Pembangunan Website & <span>Digital Solutions</span></h1>
+			<p class="hero-desc">Membina sistem laman web perniagaan berprestasi tinggi, kad ucapan digital interaktif (Wishes Studio), serta tempahan produk korporat eksklusif.</p>
 		</section>
 
 		<!-- PERKHIDMATAN & PRODUK KHAS -->
-		<div id="produk-khas"></div>
-		<h2 class="section-heading">Perkhidmatan Utama & Produk</h2>
-		<p class="section-sub">Solusi digital berteknologi tinggi dan pilihan produk fizikal eksklusif.</p>
+		<div id="produk-khas" style="padding-top: 20px;"></div>
+		<h2 class="section-heading">Perkhidmatan Utama</h2>
+		<p class="section-sub">Solusi teknologi moden dan pilihan produk fizikal berkualiti tinggi.</p>
 		
 		<div class="portfolio-grid">
 			<div class="portfolio-card">
 				<div>
-					<span class="card-badge badge-wishes">Flagship Service</span>
+					<span class="card-badge badge-wishes">Featured Service</span>
 					<h3>🎁 Kienon Wishes Studio</h3>
-					<p>Laman web kad ucapan digital interaktif mewah untuk Hari Jadi, Perkahwinan, dan Acara VIP. Dilengkapi passcode lock, 3D galaxy, flipbook, dan muzik.</p>
+					<p>Laman web kad ucapan digital interaktif mewah untuk Hari Jadi, Majlis Perkahwinan, dan Acara VIP lengkap dengan muzik, flipbook, dan animasi 3D.</p>
 				</div>
-				<a href="https://kienon.github.io/wishes/" class="portfolio-btn" target="_blank">Teroka Semua Wishes Demos →</a>
+				<a href="https://kienon.github.io/wishes/" class="portfolio-btn" target="_blank">Teroka Wishes Demos →</a>
 			</div>
 
 			<div class="portfolio-card">
 				<div>
-					<span class="card-badge badge-wishes">Exclusive Goods</span>
+					<span class="card-badge badge-web">Corporate Goods</span>
 					<h3>🛍️ Barangan Khas & Hadiah</h3>
-					<p>Tempahan produk pilihan korporat & peribadi seperti Perfume eksklusif, Payung custom bercetak, dan pelbagai cenderahati custom berkualiti tinggi.</p>
+					<p>Tempahan produk pilihan korporat & peribadi seperti Perfume eksklusif, Payung custom bercetak, dan pelbagai cenderahati korporat berkualiti.</p>
 				</div>
 				<a href="https://kienon.github.io/hubungi/" class="portfolio-btn portfolio-btn-outline">Tempah / Pertanyaan →</a>
 			</div>
 
 			<div class="portfolio-card">
 				<div>
-					<span class="card-badge badge-web">Core Service</span>
+					<span class="card-badge badge-web">Development</span>
 					<h3>💻 Web Design & SEO</h3>
 					<p>Pembangunan sistem laman web perniagaan yang pantas, responsif merentas peranti, serta pengoptimuman SEO untuk dominasi carian Google.</p>
 				</div>
@@ -154,14 +310,14 @@
 
 		<!-- PORTFOLIO DEMO WEBSITE -->
 		<div id="portfolio-demo" style="padding-top: 20px;"></div>
-		<h2 class="section-heading">Portfolio & Koleksi Live Demo</h2>
+		<h2 class="section-heading">Portfolio & Live Demo</h2>
 		<p class="section-sub">Barisan projek dan laman web interaktif sebenar yang telah berjaya dibangunkan.</p>
 
 		<div class="portfolio-grid">
 			<!-- Syarikat Wira Jaya -->
 			<div class="portfolio-card">
 				<div>
-					<span class="card-badge badge-web">Enterprise Web</span>
+					<span class="card-badge badge-web">Enterprise</span>
 					<h3>Syarikat Wira Jaya</h3>
 					<p>Laman web operasi logistik, pengurusan inventori, dan pentadbiran gudang cawangan Sabah.</p>
 				</div>
@@ -171,7 +327,7 @@
 			<!-- Chris Haircut Team -->
 			<div class="portfolio-card">
 				<div>
-					<span class="card-badge badge-web">Booking & Salun</span>
+					<span class="card-badge badge-web">Booking System</span>
 					<h3>Chris Haircut Team</h3>
 					<p>Website pameran gaya rambut moden dan portal tempahan slot masa untuk salun profesional.</p>
 				</div>
@@ -188,7 +344,7 @@
 				<a href="https://fedborong.github.io" class="portfolio-btn portfolio-btn-outline" target="_blank">Lawat Live Website →</a>
 			</div>
 
-			<!-- Kienon Kraftangan (Pautan betul /krafttangan) -->
+			<!-- Kienon Kraftangan -->
 			<div class="portfolio-card">
 				<div>
 					<span class="card-badge badge-wishes">Artisan Showcase</span>
@@ -211,7 +367,7 @@
 			<!-- Pran -->
 			<div class="portfolio-card">
 				<div>
-					<span class="card-badge badge-web">Corporate Minimal</span>
+					<span class="card-badge badge-web">Corporate</span>
 					<h3>Pran</h3>
 					<p>Laman web profil korporat eksklusif dan paparan projek khas berkonsepkan minimalis moden.</p>
 				</div>

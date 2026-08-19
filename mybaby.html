@@ -17,26 +17,24 @@
       justify-content: center;
       align-items: center;
       background: radial-gradient(circle at center, #008080, #042f2e, #021a19);
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: Arial, sans-serif;
       color: #fff;
-      position: relative;
-      padding: 20px 10px;
       overflow-x: hidden;
+      padding: 20px 10px;
     }
 
-    /* Skrin Intro Pembuka - Inline Click Safe */
     #overlay {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: #021a19;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 99999;
+      z-index: 999999;
       cursor: pointer;
     }
 
@@ -55,9 +53,9 @@
       font-weight: bold;
       font-size: 1.05rem;
       box-shadow: 0 0 20px rgba(45, 212, 191, 0.6);
+      pointer-events: none;
     }
 
-    /* Kad Utama (Sembunyi secara asal) */
     .card {
       display: none;
       background: rgba(20, 184, 166, 0.15);
@@ -85,7 +83,6 @@
       margin-bottom: 18px;
     }
 
-    /* Frame Polaroid */
     .polaroid-frame {
       background: #ffffff;
       padding: 10px 10px 32px 10px;
@@ -131,7 +128,6 @@
       font-weight: bold;
     }
 
-    /* Mesej Cinta */
     .love-message {
       font-size: 0.95rem;
       line-height: 1.6;
@@ -144,7 +140,6 @@
       font-weight: bold;
     }
 
-    /* Countdown Box */
     .timer-container {
       background: rgba(45, 212, 191, 0.15);
       border: 1px solid rgba(45, 212, 191, 0.3);
@@ -166,7 +161,6 @@
       color: #5eead4;
     }
 
-    /* Partikel Hati */
     .heart-particle {
       position: fixed;
       top: -20px;
@@ -184,301 +178,15 @@
 </head>
 <body>
 
-  <!-- Skrin Overlay: Direct Inline Onclick (100% Boleh Tekan) -->
-  <div id="overlay" onclick="bukaSurprise()">
-    <div class="pulse-heart">💖</div>
-    <button class="btn-open">Touch Here, My Baby Aina ✨</button>
-  </div>
-
-  <!-- Kad Utama -->
-  <div class="card" id="mainCard">
-    <h1>Para El Amor De Mi Vida</h1>
-    <div class="subtitle">Special For My Baby Aina</div>
-
-    <div class="polaroid-frame">
-      <div class="slideshow-container">
-        <img class="slide active" src="gambar1.jpg" alt="Sweet Moment 1">
-        <img class="slide" src="gambar2.jpg" alt="Dating Moment">
-        <img class="slide" src="gambar3.jpg" alt="My Baby Aina">
-        <img class="slide" src="gambar4.jpg" alt="Memories">
-      </div>
-      <div class="polaroid-caption">Our Special Moments ❤️</div>
-    </div>
-
-    <div class="love-message">
-      Setiap detik dengan <span class="highlight">My Baby Aina</span> sentiasa buat jantung saya degup berterusan. Terima kasih sebab hadir dan mewarnai hidup saya!
-    </div>
-
-    <div class="timer-container">
-      <div class="timer-title">Countdown To Birthday 🎂</div>
-      <div id="countdown" class="timer">Membaca masa...</div>
-    </div>
-  </div>
-
-  <script>
-    // Fungsi Direct Buka
-    function bukaSurprise() {
-      document.getElementById('overlay').style.display = 'none';
-      document.getElementById('mainCard').style.display = 'block';
-    }
-
-    // Slideshow Gambar
-    const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
-
-    if (slides.length > 0) {
-      setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }, 3500);
-    }
-
-    // Partikel Hati
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-particle');
-      const heartsList = ['💖', '❤️', '✨', '💕'];
-      heart.innerHTML = heartsList[Math.floor(Math.random() * heartsList.length)];
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-      heart.style.fontSize = Math.random() * 18 + 12 + 'px';
-      document.body.appendChild(heart);
-
-      setTimeout(() => { heart.remove(); }, 6000);
-    }
-    setInterval(createHeart, 300);
-
-    // Countdown Timer (26 Sept)
-    function updateCountdown() {
-      const now = new Date();
-      let currentYear = now.getFullYear();
-      let birthday = new Date(currentYear, 8, 26);
-
-      if (now > birthday) {
-        birthday = new Date(currentYear + 1, 8, 26);
-      }
-
-      const diff = birthday - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      const countElem = document.getElementById("countdown");
-      if (countElem) {
-        countElem.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-      }
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
-</html>
-      pointer-events: none;
-      z-index: 1;
-      animation: fall linear infinite;
-      filter: drop-shadow(0 0 6px rgba(255, 77, 109, 0.8));
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-5vh) rotate(0deg) scale(0.8); opacity: 1; }
-      100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
-
-    /* Screen Intro Overlay */
-    #overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #021a19;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      transition: opacity 0.6s ease, visibility 0.6s;
-      cursor: pointer;
-    }
-
-    #overlay.hide {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .pulse-heart {
-      font-size: 80px;
-      color: #ff4d6d;
-      animation: heartBeat 1s infinite alternate;
-      filter: drop-shadow(0 0 20px #ff4d6d);
-      margin-bottom: 15px;
-    }
-
-    @keyframes heartBeat {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.25); }
-    }
-
-    .btn-open {
-      padding: 14px 28px;
-      background: linear-gradient(45deg, #2dd4bf, #14b8a6);
-      color: #042f2e;
-      border: none;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 1.05rem;
-      box-shadow: 0 0 20px rgba(45, 212, 191, 0.6);
-      pointer-events: none; /* Sentuhan akan terus kena pada overlay */
-    }
-
-    /* Glassmorphism Card Container */
-    .card {
-      background: rgba(20, 184, 166, 0.12);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 24px;
-      padding: 25px 20px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(20, 184, 166, 0.2);
-      z-index: 10;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.8s ease;
-      margin: auto;
-    }
-
-    .card.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.2rem;
-      background: linear-gradient(45deg, #a7f3d0, #2dd4bf, #f43f5e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      color: #99f6e4;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    /* Polaroid Photo Frame Effect */
-    .polaroid-frame {
-      background: #ffffff;
-      padding: 10px 10px 32px 10px;
-      border-radius: 12px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-      transform: rotate(-1.5deg);
-      position: relative;
-      overflow: hidden;
-      margin: 0 auto;
-      max-width: 320px;
-    }
-
-    .slideshow-container {
-      position: relative;
-      width: 100%;
-      height: 260px;
-      border-radius: 6px;
-      overflow: hidden;
-      background: #111;
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transition: opacity 1.5s ease;
-    }
-
-    .slide.active {
-      opacity: 1;
-    }
-
-    .polaroid-caption {
-      position: absolute;
-      bottom: 6px;
-      left: 0;
-      width: 100%;
-      color: #333;
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-
-    /* Mesej Cinta */
-    .love-message {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 20px 0 15px 0;
-      color: #e6fffa;
-    }
-
-    .highlight {
-      color: #f43f5e;
-      font-weight: 600;
-    }
-
-    /* Countdown Timer Style */
-    .timer-container {
-      background: rgba(45, 212, 191, 0.15);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 16px;
-      padding: 12px;
-      margin-top: 15px;
-    }
-
-    .timer-title {
-      font-size: 0.75rem;
-      color: #99f6e4;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-    }
-
-    .timer {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #5eead4;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Audio Player -->
-  <audio id="bg-music" loop>
-    <source src="lagu.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Skrin Intro Overlay (Tekan Mana-mana Kawasan) -->
-  <div id="overlay">
+  <div id="overlay" onclick="bukaSurprise()" ontouchstart="bukaSurprise()">
     <div class="pulse-heart">💖</div>
     <div class="btn-open">Touch Here, My Baby Aina ✨</div>
   </div>
 
-  <!-- Kad Utama -->
   <div class="card" id="mainCard">
     <h1>Para El Amor De Mi Vida</h1>
     <div class="subtitle">Special For My Baby Aina</div>
 
-    <!-- Polaroid Photo Frame -->
     <div class="polaroid-frame">
       <div class="slideshow-container">
         <img class="slide active" src="gambar1.jpg" alt="Sweet Moment 1">
@@ -489,12 +197,10 @@
       <div class="polaroid-caption">Our Special Moments ❤️</div>
     </div>
 
-    <!-- Ayat Romantik -->
     <div class="love-message">
       Setiap detik dengan <span class="highlight">My Baby Aina</span> sentiasa buat jantung saya degup berterusan. Terima kasih sebab hadir dan mewarnai hidup saya!
     </div>
 
-    <!-- Countdown Timer -->
     <div class="timer-container">
       <div class="timer-title">Countdown To Birthday 🎂</div>
       <div id="countdown" class="timer">Membaca masa...</div>
@@ -502,875 +208,57 @@
   </div>
 
   <script>
-    const overlay = document.getElementById('overlay');
-    const card = document.getElementById('mainCard');
-    const music = document.getElementById('bg-music');
-
-    // Fungsi Pembuka
-    function startExperience() {
-      overlay.classList.add('hide');
-      card.classList.add('show');
-      
-      // Cuba mainkan lagu jika ada
-      if (music) {
-        music.play().catch(err => {
-          console.log("Audio play disekat atau fail tiada:", err);
-        });
-      }
+    function bukaSurprise() {
+      var ov = document.getElementById('overlay');
+      var card = document.getElementById('mainCard');
+      if (ov) ov.style.display = 'none';
+      if (card) card.style.display = 'block';
     }
 
-    // Event Listener yang responsive untuk Mobile Touch & Click
-    overlay.addEventListener('click', startExperience);
-    overlay.addEventListener('touchstart', startExperience, {passive: true});
-
-    // Control Slideshow Gambar
-    const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
-
+    var slides = document.querySelectorAll('.slide');
+    var currentSlide = 0;
     if (slides.length > 0) {
-      setInterval(() => {
+      setInterval(function() {
         slides[currentSlide].classList.remove('active');
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
       }, 3500);
     }
 
-    // Efek Partikel Hati Gugur
     function createHeart() {
-      const heart = document.createElement('div');
+      var heart = document.createElement('div');
       heart.classList.add('heart-particle');
-      const heartsList = ['💖', '❤️', '✨', '💕', '🌸'];
+      var heartsList = ['💖', '❤️', '✨', '💕'];
       heart.innerHTML = heartsList[Math.floor(Math.random() * heartsList.length)];
-      
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-      heart.style.fontSize = Math.random() * 18 + 12 + 'px';
-      
+      heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+      heart.style.fontSize = (Math.random() * 18 + 12) + 'px';
       document.body.appendChild(heart);
 
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
+      setTimeout(function() { heart.remove(); }, 6000);
     }
-
     setInterval(createHeart, 300);
 
-    // Countdown Timer ke 26 September
     function updateCountdown() {
-      const now = new Date();
-      let currentYear = now.getFullYear();
-      let birthday = new Date(currentYear, 8, 26);
+      var now = new Date();
+      var currentYear = now.getFullYear();
+      var birthday = new Date(currentYear, 8, 26);
 
       if (now > birthday) {
         birthday = new Date(currentYear + 1, 8, 26);
       }
 
-      const diff = birthday - now;
+      var diff = birthday - now;
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      const countElem = document.getElementById("countdown");
+      var countElem = document.getElementById("countdown");
       if (countElem) {
-        countElem.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+        countElem.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
       }
     }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
-</html>
-      pointer-events: none;
-      z-index: 1;
-      animation: fall linear infinite;
-      filter: drop-shadow(0 0 6px rgba(255, 77, 109, 0.8));
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-5vh) rotate(0deg) scale(0.8); opacity: 1; }
-      100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
-
-    /* Screen Intro Overlay */
-    #overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #021a19;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      transition: opacity 1.2s ease, visibility 1.2s;
-    }
-
-    .pulse-heart {
-      font-size: 80px;
-      color: #ff4d6d;
-      animation: heartBeat 1s infinite alternate;
-      cursor: pointer;
-      filter: drop-shadow(0 0 20px #ff4d6d);
-    }
-
-    @keyframes heartBeat {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.25); }
-    }
-
-    .btn-open {
-      margin-top: 25px;
-      padding: 14px 28px;
-      background: linear-gradient(45deg, #2dd4bf, #14b8a6);
-      color: #042f2e;
-      border: none;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 1.05rem;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(45, 212, 191, 0.6);
-      transition: all 0.3s ease;
-    }
-
-    .btn-open:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(45, 212, 191, 0.9);
-    }
-
-    /* Glassmorphism Card Container */
-    .card {
-      background: rgba(20, 184, 166, 0.12);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 24px;
-      padding: 25px 20px;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(20, 184, 166, 0.2);
-      z-index: 10;
-      opacity: 0;
-      transform: translateY(40px) scale(0.95);
-      transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-      margin: auto;
-    }
-
-    .card.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.2rem;
-      background: linear-gradient(45deg, #a7f3d0, #2dd4bf, #f43f5e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      font-size: 0.8rem;
-      letter-spacing: 2px;
-      color: #99f6e4;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-    }
-
-    /* Polaroid Photo Frame Effect */
-    .polaroid-frame {
-      background: #ffffff;
-      padding: 10px 10px 32px 10px;
-      border-radius: 12px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-      transform: rotate(-1.5deg);
-      transition: transform 0.5s ease;
-      position: relative;
-      overflow: hidden;
-      margin: 0 auto;
-      max-width: 320px;
-    }
-
-    .polaroid-frame:hover {
-      transform: rotate(0deg) scale(1.02);
-    }
-
-    .slideshow-container {
-      position: relative;
-      width: 100%;
-      height: 260px;
-      border-radius: 6px;
-      overflow: hidden;
-      background: #111;
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transform: scale(1.15);
-      transition: opacity 1.5s ease, transform 4s ease;
-    }
-
-    .slide.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .polaroid-caption {
-      position: absolute;
-      bottom: 6px;
-      left: 0;
-      width: 100%;
-      color: #333;
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-
-    /* Mesej Cinta */
-    .love-message {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin: 20px 0 15px 0;
-      color: #e6fffa;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .highlight {
-      color: #f43f5e;
-      font-weight: 600;
-    }
-
-    /* Countdown Timer Style */
-    .timer-container {
-      background: rgba(45, 212, 191, 0.15);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 16px;
-      padding: 12px;
-      margin-top: 15px;
-    }
-
-    .timer-title {
-      font-size: 0.75rem;
-      color: #99f6e4;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 4px;
-    }
-
-    .timer {
-      font-weight: 600;
-      font-size: 1rem;
-      color: #5eead4;
-      text-shadow: 0 0 10px rgba(94, 234, 212, 0.5);
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Audio Player (Pastikan fail lagu.mp3 wujud dalam repo GitHub) -->
-  <audio id="bg-music" loop>
-    <source src="lagu.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Skrin Intro Overlay -->
-  <div id="overlay">
-    <div class="pulse-heart" onclick="openSurprise()">💖</div>
-    <button class="btn-open" onclick="openSurprise()">Touch Here, My Baby Aina ✨</button>
-  </div>
-
-  <!-- Kad Pentas Utama -->
-  <div class="card" id="mainCard">
-    <h1>Para El Amor De Mi Vida</h1>
-    <div class="subtitle">Special For My Baby Aina</div>
-
-    <!-- Polaroid Photo Frame -->
-    <div class="polaroid-frame">
-      <div class="slideshow-container">
-        <!-- Nama gambar yang diselaraskan -->
-        <img class="slide active" src="gambar1.jpg" alt="Sweet Moment 1">
-        <img class="slide" src="gambar2.jpg" alt="Dating Moment">
-        <img class="slide" src="gambar3.jpg" alt="My Baby Aina">
-        <img class="slide" src="gambar4.jpg" alt="Memories">
-      </div>
-      <div class="polaroid-caption">Our Special Moments ❤️</div>
-    </div>
-
-    <!-- Ayat Romantik -->
-    <div class="love-message">
-      Setiap detik dengan <span class="highlight">My Baby Aina</span> sentiasa buat jantung saya degup berterusan. Terima kasih sebab hadir dan mewarnai hidup saya!
-    </div>
-
-    <!-- Countdown Timer -->
-    <div class="timer-container">
-      <div class="timer-title">Countdown To Birthday 🎂</div>
-      <div id="countdown" class="timer">Membaca masa...</div>
-    </div>
-  </div>
-
-  <script>
-    // 1. Mula Tayangan bila Butang Ditekan
-    function openSurprise() {
-      const overlay = document.getElementById('overlay');
-      const card = document.getElementById('mainCard');
-      const music = document.getElementById('bg-music');
-
-      overlay.style.opacity = '0';
-      setTimeout(() => {
-        overlay.style.visibility = 'hidden';
-        card.classList.add('show');
-      }, 800);
-
-      music.play().catch(() => {
-        console.log("Audio autoplay disekat browser.");
-      });
-    }
-
-    // 2. Control Slideshow Gambar
-    const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
-
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-
-    setInterval(nextSlide, 3500);
-
-    // 3. Efek Partikel Hati Gugur
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-particle');
-      const heartsList = ['💖', '❤️', '✨', '💕', '🌸'];
-      heart.innerHTML = heartsList[Math.floor(Math.random() * heartsList.length)];
-      
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-      heart.style.fontSize = Math.random() * 18 + 12 + 'px';
-      
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
-    }
-
-    setInterval(createHeart, 250);
-
-    // 4. Countdown Timer ke 26 September
-    function updateCountdown() {
-      const now = new Date();
-      let currentYear = now.getFullYear();
-      let birthday = new Date(currentYear, 8, 26); // 8 = September
-
-      if (now > birthday) {
-        birthday = new Date(currentYear + 1, 8, 26);
-      }
-
-      const diff = birthday - now;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerHTML = 
-        `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
-</html>
-
-    @keyframes fall {
-      0% { transform: translateY(-5vh) rotate(0deg) scale(0.8); opacity: 1; }
-      100% { transform: translateY(105vh) rotate(360deg) scale(1.2); opacity: 0; }
-    }
-
-    /* Screen Intro Overlay (Masa Mula Buka) */
-    #overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #021a19;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      transition: opacity 1.2s ease, visibility 1.2s;
-    }
-
-    .pulse-heart {
-      font-size: 80px;
-      color: #ff4d6d;
-      animation: heartBeat 1s infinite alternate;
-      cursor: pointer;
-      filter: drop-shadow(0 0 20px #ff4d6d);
-    }
-
-    @keyframes heartBeat {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.25); }
-    }
-
-    .btn-open {
-      margin-top: 25px;
-      padding: 14px 28px;
-      background: linear-gradient(45deg, #2dd4bf, #14b8a6);
-      color: #042f2e;
-      border: none;
-      border-radius: 30px;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(45, 212, 191, 0.6);
-      transition: all 0.3s ease;
-    }
-
-    .btn-open:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(45, 212, 191, 0.9);
-    }
-
-    /* Glassmorphism Card Container */
-    .card {
-      background: rgba(20, 184, 166, 0.08);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 24px;
-      padding: 30px 25px;
-      width: 90%;
-      max-width: 420px;
-      text-align: center;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(20, 184, 166, 0.2);
-      z-index: 10;
-      opacity: 0;
-      transform: translateY(40px) scale(0.95);
-      transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-    }
-
-    .card.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    h1 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem;
-      background: linear-gradient(45deg, #a7f3d0, #2dd4bf, #f43f5e);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      font-size: 0.85rem;
-      letter-spacing: 2px;
-      color: #99f6e4;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    /* Polaroid Photo Frame Effect */
-    .polaroid-frame {
-      background: #ffffff;
-      padding: 12px 12px 35px 12px;
-      border-radius: 12px;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.4);
-      transform: rotate(-2deg);
-      transition: transform 0.5s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .polaroid-frame:hover {
-      transform: rotate(0deg) scale(1.02);
-    }
-
-    .slideshow-container {
-      position: relative;
-      width: 100%;
-      height: 280px;
-      border-radius: 6px;
-      overflow: hidden;
-      background: #111;
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transform: scale(1.15);
-      transition: opacity 1.5s ease, transform 4s ease;
-    }
-
-    .slide.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .polaroid-caption {
-      position: absolute;
-      bottom: 8px;
-      left: 0;
-      width: 100%;
-      color: #333;
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.4rem;
-      font-weight: bold;
-    }
-
-    /* Mesej Cinta */
-    .love-message {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      margin: 22px 0 15px 0;
-      color: #e6fffa;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    .highlight {
-      color: #f43f5e;
-      font-weight: 600;
-    }
-
-    /* Countdown Timer Style */
-    .timer-container {
-      background: rgba(45, 212, 191, 0.12);
-      border: 1px solid rgba(45, 212, 191, 0.3);
-      border-radius: 16px;
-      padding: 15px;
-      margin-top: 20px;
-    }
-
-    .timer-title {
-      font-size: 0.8rem;
-      color: #99f6e4;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-
-    .timer {
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: #5eead4;
-      text-shadow: 0 0 10px rgba(94, 234, 212, 0.5);
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Lagu Latar (Gantikan lagu.mp3 dengan fail lagu korang) -->
-  <audio id="bg-music" loop>
-    <source src="lagu.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Skrin Pembuka (Overlay) -->
-  <div id="overlay">
-    <div class="pulse-heart" onclick="openSurprise()">💖</div>
-    <button class="btn-open" onclick="openSurprise()">Touch Here, My Baby Aina ✨</button>
-  </div>
-
-  <!-- Kad Pentas Utama -->
-  <div class="card" id="mainCard">
-    <h1>Para El Amor De Mi Vida</h1>
-    <div class="subtitle">Special For My Baby Aina</div>
-
-    <!-- Polaroid Photo Frame -->
-    <div class="polaroid-frame">
-      <div class="slideshow-container">
-        <!-- Tukar nama fail gambar di bawah -->
-        <img class="slide active" src="gambar1.jpg" alt="Sweet Moment 1">
-        <img class="slide" src="gambar2.jpg" alt="Dating Moment">
-        <img class="slide" src="gambar3.jpg" alt="My Baby Aina">
-        <img class="slide" src="gambar4.jpg" alt="Memories">
-      </div>
-      <div class="polaroid-caption">Our Special Moments ❤️</div>
-    </div>
-
-    <!-- Ayat Romantic -->
-    <div class="love-message">
-      Setiap detik dengan <span class="highlight">My Baby Aina</span> sentiasa buat jantung saya degup berterusan. Terima kasih sebab hadir dan mewarnai hidup saya. Tak sabar nak lalu setiap detik indah depan hari bersama awak!
-    </div>
-
-    <!-- Countdown Timer (26 Sept 2000) -->
-    <div class="timer-container">
-      <div class="timer-title">Countdown To Birthday 🎂</div>
-      <div id="countdown" class="timer">Membaca masa...</div>
-    </div>
-  </div>
-
-  <script>
-    // 1. Mula Tayangan bila Butang Ditekan
-    function openSurprise() {
-      const overlay = document.getElementById('overlay');
-      const card = document.getElementById('mainCard');
-      const music = document.getElementById('bg-music');
-
-      overlay.style.opacity = '0';
-      setTimeout(() => {
-        overlay.style.visibility = 'hidden';
-        card.classList.add('show');
-      }, 800);
-
-      // Play Lagu (Jika ada fail lagu.mp3)
-      music.play().catch(() => {
-        console.log("Audio auto-play disekat browser, sila tekan play manual.");
-      });
-    }
-
-    // 2. Control Slideshow Gambar
-    const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
-
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-
-    setInterval(nextSlide, 3500);
-
-    // 3. Efek Partikel Hati Gugur 3D
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-particle');
-      const heartsList = ['💖', '❤️', '✨', '💕', '🌸'];
-      heart.innerHTML = heartsList[Math.floor(Math.random() * heartsList.length)];
-      
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-      heart.style.fontSize = Math.random() * 18 + 12 + 'px';
-      
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 6000);
-    }
-
-    setInterval(createHeart, 250);
-
-    // 4. Countdown Timer ke 26 September
-    function updateCountdown() {
-      const now = new Date();
-      let currentYear = now.getFullYear();
-      let birthday = new Date(currentYear, 8, 26); // 8 = September
-
-      if (now > birthday) {
-        birthday = new Date(currentYear + 1, 8, 26);
-      }
-
-      const diff = birthday - now;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerHTML = 
-        `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
-  </script>
-</body>
-</html>
-      }
-    }
-
-    /* Container Kad Utama */
-    .card {
-      background: rgba(255, 255, 255, 0.94);
-      padding: 25px;
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      max-width: 420px;
-      width: 90%;
-      z-index: 10;
-    }
-
-    h1 {
-      color: #006666;
-      font-size: 1.6rem;
-      margin-bottom: 5px;
-    }
-
-    h2 {
-      color: #e74c3c;
-      font-size: 1.2rem;
-      margin-top: 0;
-    }
-
-    /* Frame Gambar / Slideshow Effect */
-    .slideshow-container {
-      position: relative;
-      width: 100%;
-      height: 280px;
-      margin: 15px 0;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      border: 4px solid #ffffff;
-    }
-
-    .slide {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transform: scale(1.1); /* Ken Burns effect (Zoom out sikit) */
-      transition: opacity 1.5s ease-in-out, transform 4s ease-out;
-    }
-
-    .slide.active {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    /* Mesej Cinta */
-    .love-message {
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin: 15px 0;
-      color: #34495e;
-      text-align: center;
-    }
-
-    .love-message span {
-      display: block;
-      font-weight: bold;
-      color: #d63031;
-      font-size: 1.1rem;
-      margin-top: 8px;
-    }
-
-    /* Countdown Timer Box */
-    .timer-container {
-      background: #e0f2f1;
-      border: 1px solid #80cbc4;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 15px;
-    }
-
-    .timer-title {
-      font-size: 0.85rem;
-      color: #004d40;
-      margin-bottom: 5px;
-    }
-
-    .timer {
-      font-weight: bold;
-      font-size: 1.05rem;
-      color: #00796b;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="card">
-    <h1>Para El Amor De Mi Vida ❤️</h1>
-    <h2>Untuk My Baby Aina</h2>
-
-    <div class="slideshow-container">
-      <img class="slide active" src="gambar1.jpg" alt="Dating 1">
-      <img class="slide" src="gambar2.jpg" alt="Dating 2">
-      <img class="slide" src="gambar3.jpg" alt="Gambar Random Aina">
-      <img class="slide" src="gambar4.jpg" alt="Sweet Moment">
-    </div>
-
-    <div class="love-message">
-      Setiap kenangan dan detik dating dengan <b>My Baby Aina</b> selalu buat saya tersenyum. Terima kasih sebab sentiasa ada dan menceriakan hidup saya!
-      <span>¡Te amo sangat-sangat! 💖</span>
-    </div>
-
-    <div class="timer-container">
-      <div class="timer-title">Menghitung hari ke ulang tahun kelahiran... 🎂</div>
-      <div id="countdown" class="timer">Membaca masa...</div>
-    </div>
-  </div>
-
-  <script>
-    // 1. Logic Slideshow Gambar Automatik
-    const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
-
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide = (currentSlide + 1) % slides.length;
-      slides[currentSlide].classList.add('active');
-    }
-
-    // Gambar bertukar setiap 3.5 saat
-    setInterval(nextSlide, 3500);
-
-    // 2. Logic Efek Hati Gugur
-    function createHeart() {
-      const heart = document.createElement('div');
-      heart.classList.add('heart-particle');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = Math.random() * 3 + 2 + 's';
-      heart.style.fontSize = Math.random() * 15 + 10 + 'px';
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
-    }
-
-    setInterval(createHeart, 300);
-
-    // 3. Logic Countdown Timer (26 Sept)
-    function updateCountdown() {
-      const now = new Date();
-      let currentYear = now.getFullYear();
-      let birthday = new Date(currentYear, 8, 26); // 8 = September
-
-      if (now > birthday) {
-        birthday = new Date(currentYear + 1, 8, 26);
-      }
-
-      const diff = birthday - now;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById("countdown").innerHTML = 
-        `${days} Hari ${hours} Jam ${minutes} Minit ${seconds} Saat`;
-    }
-
     setInterval(updateCountdown, 1000);
     updateCountdown();
   </script>

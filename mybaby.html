@@ -76,10 +76,10 @@
     }
 
     .subtitle {
-      font-size: 0.8rem;
-      letter-spacing: 2px;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
       color: #99f6e4;
-      text-transform: uppercase;
+      font-weight: bold;
       margin-bottom: 18px;
     }
 
@@ -124,7 +124,7 @@
       left: 0;
       width: 100%;
       color: #333;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       font-weight: bold;
     }
 
@@ -133,6 +133,7 @@
       line-height: 1.6;
       margin: 20px 0 15px 0;
       color: #e6fffa;
+      text-align: justify;
     }
 
     .highlight {
@@ -161,6 +162,17 @@
       color: #5eead4;
     }
 
+    .bday-mode {
+      color: #ff4d6d !important;
+      font-size: 1.2rem !important;
+      animation: pulse 1s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
+    }
+
     .heart-particle {
       position: fixed;
       top: -20px;
@@ -178,31 +190,35 @@
 </head>
 <body>
 
+  <!-- Overlay Screen -->
   <div id="overlay" onclick="bukaSurprise()" ontouchstart="bukaSurprise()">
     <div class="pulse-heart">💖</div>
-    <div class="btn-open">Touch Here, My Baby Aina ✨</div>
+    <div class="btn-open">Tekan Sini, My Baby Aina ✨</div>
   </div>
 
+  <!-- Kad Utama -->
   <div class="card" id="mainCard">
-    <h1>Para El Amor De Mi Vida</h1>
-    <div class="subtitle">Special For My Baby Aina</div>
+    <h1>Khas Untuk Tunang Saya ❤️</h1>
+    <div class="subtitle">My Baby Aina</div>
 
     <div class="polaroid-frame">
       <div class="slideshow-container">
-        <img class="slide active" src="gambar1.jpg" alt="Sweet Moment 1">
-        <img class="slide" src="gambar2.jpg" alt="Dating Moment">
-        <img class="slide" src="gambar3.jpg" alt="My Baby Aina">
-        <img class="slide" src="gambar4.jpg" alt="Memories">
+        <img class="slide active" src="gambar1.jpg" alt="Dating 1">
+        <img class="slide" src="gambar2.jpg" alt="Dating 2">
+        <img class="slide" src="gambar3.jpg" alt="Dating 3">
+        <img class="slide" src="gambar4.jpg" alt="Dating 4">
       </div>
-      <div class="polaroid-caption">Our Special Moments ❤️</div>
+      <div class="polaroid-caption">Kenangan Kita Berdua 📸</div>
     </div>
 
+    <!-- Ayat Gaya Berchat/Jujur -->
     <div class="love-message">
-      Setiap detik dengan <span class="highlight">My Baby Aina</span> sentiasa buat jantung saya degup berterusan. Terima kasih sebab hadir dan mewarnai hidup saya!
+      Jujur cakap, saya bukan pandai sangat susun ayat manis. Tapi setiap kali tengok gambar-gambar kita jalan/dating berdua, saya rasa bersyukur betul dapat kenal dan ada tunang macam <span class="highlight">My Baby Aina</span>. Thanks tau selalu buat hari-hari saya makin bermakna. I love you so much, baby! 💖
     </div>
 
+    <!-- Countdown Timer & Auto Birthday Change -->
     <div class="timer-container">
-      <div class="timer-title">Countdown To Birthday 🎂</div>
+      <div id="timerTitle" class="timer-title">Tunggu Tarikh Lahir Baby... 🎂</div>
       <div id="countdown" class="timer">Membaca masa...</div>
     </div>
   </div>
@@ -239,24 +255,38 @@
     }
     setInterval(createHeart, 300);
 
+    // Logic Countdown & Automatic Birthday Message
     function updateCountdown() {
       var now = new Date();
       var currentYear = now.getFullYear();
-      var birthday = new Date(currentYear, 8, 26);
-
-      if (now > birthday) {
-        birthday = new Date(currentYear + 1, 8, 26);
-      }
+      var birthday = new Date(currentYear, 8, 26, 0, 0, 0); // 26 Sept 00:00:00
 
       var diff = birthday - now;
-      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
       var countElem = document.getElementById("countdown");
-      if (countElem) {
-        countElem.innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+      var titleElem = document.getElementById("timerTitle");
+
+      // Jika sekarang ialah HARI BIRTHDAY DIA (26 Sept)
+      if (now.getMonth() === 8 && now.getDate() === 26) {
+        titleElem.innerHTML = "HARI NI HARI JADI BABY! 🎉";
+        countElem.innerHTML = "HAPPY BIRTHDAY MY BABY AINA! 🥳🎂❤️";
+        countElem.classList.add("bday-mode");
+      } 
+      else {
+        // Jika tarikh tahun ni dah lepas, kira untuk tahun depan
+        if (diff < 0) {
+          birthday = new Date(currentYear + 1, 8, 26, 0, 0, 0);
+          diff = birthday - now;
+        }
+
+        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        if (countElem) {
+          countElem.innerHTML = days + " Hari " + hours + " Jam " + minutes + " Minit " + seconds + " Saat";
+        }
       }
     }
     setInterval(updateCountdown, 1000);

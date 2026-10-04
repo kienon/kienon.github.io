@@ -2,13 +2,16 @@ User-agent: *
 # 1. Benarkan sistem baca fail sitemap kau
 Allow: /sitemap.xml
 
-# 2. Benarkan muka depan (Home) kienon.github.io sahaja
+# 2. Benarkan muka depan (root URL)
 Allow: /$
 
-# 3. Benarkan folder perfumes dan semua fail di dalamnya
-Allow: /perfumes
+# 3. Benarkan folder Kienon asal kau (PENTING berdasarkan sitemap kau)
+Allow: /Kienon/
 
-# 4. Sekat semua page/repo/folder lain dari masuk search engine
+# 4. Benarkan folder perfumes dan semua fail di dalamnya
+Allow: /perfumes/
+
+# 5. Sekat semua page/repo/folder lain dari masuk search engine
 Disallow: /
 
 Sitemap: https://kienon.github.io/sitemap.xml
